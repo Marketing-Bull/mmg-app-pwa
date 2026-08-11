@@ -1,0 +1,83 @@
+{
+  "slug": "pi-networking-mixer-august-2026",
+  "title": "Personal Injury Professionals Networking Mixer",
+  "seriesId": "pi-networking-mixers",
+  "date": "2026-08-27",
+  "startTime": "18:00",
+  "endTime": "21:00",
+  "venue": {
+    "name": "YOT Bar & Kitchen",
+    "address": "1500 SE 16th St",
+    "city": "Fort Lauderdale",
+    "state": "FL",
+    "zip": "33316"
+  },
+  "summary": "The August stop on the monthly mixer circuit. Waterfront patio, open conversation, and the usual mix of attorneys, providers, and partners from across Broward.",
+  "description": [
+    "The monthly mixer moves to Fort Lauderdale for August. Same format that works every month: a welcoming room, a drink in your hand, and no one running a structured networking exercise at you.",
+    "If it's your first MMG event, find Andrew at the door. He'll make two or three introductions based on who you're trying to meet, and the rest takes care of itself.",
+    "First round and passed appetisers are covered by our sponsors. Parking is validated in the marina lot."
+  ],
+  "hostId": "andrew-miller",
+  "sponsorIds": ["horizon-tbi", "sobe-rehab", "mario-lopez", "in-check"],
+  "capacity": 120,
+  "attendingCount": 86,
+  "tags": ["Mixer", "Evening", "Fort Lauderdale"],
+  "eventbriteUrl": "https://www.eventbrite.com/o/millers-marketing-group-68684991773",
+  "agenda": [
+    { "time": "18:00", "label": "Doors open", "detail": "Name tags, first round on the sponsors." },
+    { "time": "18:45", "label": "Welcome and sponsor recognition", "detail": "Five minutes, then back to the room." },
+    { "time": "19:00", "label": "Open networking", "detail": "Andrew is making introductions all evening — just ask." },
+    { "time": "21:00", "label": "Last call" }
+  ],
+  "attendees": [
+    { "name": "Elena Vasquez", "role": "attorney", "company": "Vasquez Injury Group" },
+    { "name": "Darnell Pierce", "role": "provider", "company": "Pierce Orthopedic Associates" },
+    { "name": "Hannah Goldstein", "role": "attorney", "company": "Goldstein & Reyes" },
+    { "name": "Miguel Santana", "role": "provider", "company": "Las Olas Rehab Center" },
+    { "name": "Carla Nguyen", "role": "sponsor", "company": "InventCare Consulting Group" },
+    { "name": "Terrence Booker", "role": "attorney", "company": "Booker Law PA" },
+    { "name": "Nadia Farouk", "role": "provider", "company": "Broward Neurodiagnostics" },
+    { "name": "Jonathan Reyes", "role": "attorney", "company": "Goldstein & Reyes" },
+    { "name": "Simone Clarke", "role": "provider", "company": "Clarke Wellness & Recovery" },
+    { "name": "Patrick O'Donnell", "role": "sponsor", "company": "Express Funding of America" },
+    { "name": "Yasmin Haddad", "role": "attorney", "company": "Haddad Trial Attorneys" },
+    { "name": "Gregory Lam", "role": "provider", "company": "Atlantic Pain & Spine" },
+    { "name": "Rochelle Baptiste", "role": "attorney", "company": "Baptiste Injury Firm" },
+    { "name": "Devon Wallace", "role": "sponsor", "company": "LienStar" }
+  ],
+  "comments": [
+    {
+      "id": "c-mix-aug-1",
+      "author": "Elena Vasquez",
+      "role": "attorney",
+      "company": "Vasquez Injury Group",
+      "body": "Bringing two associates who just moved over from defense work. Great room for them to meet providers.",
+      "createdAt": "2026-08-04T11:20:00-04:00"
+    },
+    {
+      "id": "c-mix-aug-2",
+      "author": "Nadia Farouk",
+      "role": "provider",
+      "company": "Broward Neurodiagnostics",
+      "body": "Is the patio covered? Last August we got caught in a downpour at the Weston one and everyone ended up inside.",
+      "createdAt": "2026-08-05T14:02:00-04:00"
+    },
+    {
+      "id": "c-mix-aug-3",
+      "author": "Andrew Miller",
+      "role": "sponsor",
+      "company": "Miller's Marketing Group",
+      "body": "Covered patio plus the private room inside — we have both this time. No repeat of Weston.",
+      "createdAt": "2026-08-05T16:35:00-04:00"
+    },
+    {
+      "id": "c-mix-aug-4",
+      "author": "Terrence Booker",
+      "role": "attorney",
+      "company": "Booker Law PA",
+      "body": "First one for me. Anyone else coming solo? Happy to meet at the bar beforehand so we're not both standing there.",
+      "createdAt": "2026-08-09T20:15:00-04:00"
+    }
+  ]
+}

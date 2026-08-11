@@ -1,0 +1,93 @@
+import type { Metadata, Viewport } from "next";
+import localFont from "next/font/local";
+import type { ReactNode } from "react";
+import { InstallPrompt } from "@/components/shell/install-prompt";
+import { ServiceWorkerRegistrar } from "@/components/shell/service-worker";
+import { TabBar } from "@/components/shell/tab-bar";
+import { ToastProvider } from "@/components/ui/toast";
+import { site } from "@/lib/content";
+import { StoreProvider } from "@/lib/store";
+import "./globals.css";
+
+/*
+ * Same pairing as the MMG marketing site, self-hosted as latin-subset variable
+ * fonts (~104KB for both). No request to Google at runtime, so the shell still
+ * renders in brand type when the app is opened offline from the home screen.
+ */
+const dmSans = localFont({
+  src: "../fonts/dm-sans-latin-var.woff2",
+  weight: "400 700",
+  style: "normal",
+  variable: "--font-dm-sans",
+  display: "swap",
+  fallback: ["ui-sans-serif", "system-ui", "-apple-system", "sans-serif"],
+});
+
+const fraunces = localFont({
+  src: "../fonts/fraunces-latin-var.woff2",
+  weight: "400 700",
+  style: "normal",
+  variable: "--font-fraunces",
+  display: "swap",
+  fallback: ["Georgia", "Times New Roman", "serif"],
+});
+
+export const metadata: Metadata = {
+  metadataBase: new URL("https://millersmarketingconnects.com"),
+  title: {
+    default: `${site.name} — ${site.tagline}`,
+    template: `%s · ${site.shortName}`,
+  },
+  description: site.description,
+  applicationName: site.shortName,
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    title: site.shortName,
+    statusBarStyle: "default",
+  },
+  icons: {
+    icon: [
+      { url: "/icons/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icons/favicon-16.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: "/icons/apple-touch-icon.png",
+  },
+  openGraph: {
+    type: "website",
+    siteName: site.name,
+    title: `${site.name} — ${site.tagline}`,
+    description: site.description,
+  },
+  formatDetection: { telephone: true },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fff7e8" },
+    { media: "(prefers-color-scheme: dark)", color: "#261d19" },
+  ],
+  width: "device-width",
+  initialScale: 1,
+  // Full-bleed under the iOS notch so the app shell reaches the screen edges.
+  viewportFit: "cover",
+};
+
+export default function RootLayout({ children }: { children: ReactNode }) {
+  return (
+    <html lang="en" className={`${dmSans.variable} ${fraunces.variable}`}>
+      <body className="font-sans antialiased">
+        <StoreProvider>
+          <ToastProvider>
+            <div className="mx-auto min-h-dvh max-w-2xl bg-cream shadow-[0_0_60px_rgba(75,38,27,0.06)]">
+              {children}
+            </div>
+            <TabBar />
+            <InstallPrompt />
+            <ServiceWorkerRegistrar />
+          </ToastProvider>
+        </StoreProvider>
+      </body>
+    </html>
+  );
+}

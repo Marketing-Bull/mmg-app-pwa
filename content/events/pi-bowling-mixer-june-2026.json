@@ -1,0 +1,119 @@
+{
+  "slug": "pi-bowling-mixer-june-2026",
+  "title": "Personal Injury Professionals Bowling Mixer",
+  "seriesId": "signature-experiences",
+  "date": "2026-06-25",
+  "startTime": "18:00",
+  "endTime": "22:00",
+  "venue": {
+    "name": "Lucky Strike",
+    "address": "1841 Way Pointe Pl",
+    "city": "Dania Beach",
+    "state": "FL",
+    "zip": "33004"
+  },
+  "summary": "Attorneys versus medical professionals across sixteen lanes. Relaxed, loud, and the easiest room of the year to walk into alone.",
+  "description": [
+    "A relaxed bowling-night mixer at Lucky Strike where attorneys, medical providers, sponsors, and community partners connected over conversation and friendly competition.",
+    "Bowling solves the hardest part of networking: you have something to do with your hands and a reason to talk to the person next to you. Attorneys took the trophy by eleven pins."
+  ],
+  "flyer": {
+    "src": "/assets/events/upcoming/bowling-mixer-flyer.webp",
+    "alt": "Personal Injury Professionals Networking & Bowling Mixer flyer, June 25 2026, Lucky Strikes, Dania FL"
+  },
+  "hostId": "andrew-miller",
+  "sponsorIds": [
+    "the-mri-guys",
+    "better-wellness-clinic",
+    "ceda-orthopedic-group",
+    "mario-lopez",
+    "plantation-chiropractic",
+    "earley-law-firm",
+    "align-the-spine",
+    "linder-diaz",
+    "horizon-tbi",
+    "sobe-rehab",
+    "in-check",
+    "inventcare",
+    "ae-law",
+    "express-funding",
+    "realign-chiropractic",
+    "selfcare-chiropractic"
+  ],
+  "capacity": 140,
+  "attendingCount": 132,
+  "tags": ["Signature", "Bowling", "Dania Beach"],
+  "attendees": [
+    { "name": "Elena Vasquez", "role": "attorney", "company": "Vasquez Injury Group" },
+    { "name": "Marcus Whitfield", "role": "provider", "company": "Beacon Spine & Rehab" },
+    { "name": "Terrence Booker", "role": "attorney", "company": "Booker Law PA" },
+    { "name": "Simone Clarke", "role": "provider", "company": "Clarke Wellness & Recovery" },
+    { "name": "Carla Nguyen", "role": "sponsor", "company": "InventCare Consulting Group" },
+    { "name": "Yasmin Haddad", "role": "attorney", "company": "Haddad Trial Attorneys" },
+    { "name": "Gregory Lam", "role": "provider", "company": "Atlantic Pain & Spine" },
+    { "name": "Miguel Santana", "role": "provider", "company": "Las Olas Rehab Center" },
+    { "name": "Rochelle Baptiste", "role": "attorney", "company": "Baptiste Injury Firm" },
+    { "name": "Patrick O'Donnell", "role": "sponsor", "company": "Express Funding of America" }
+  ],
+  "recap": {
+    "headline": "Attorneys 11 pins clear. Providers want a rematch.",
+    "body": [
+      "Sixteen lanes, 132 people, and one of the loudest rooms MMG has put together. The attorney team edged it out by eleven pins across the final frame, which the providers have formally disputed.",
+      "The format worked exactly as intended — nobody stood against a wall holding a drink, because everybody had a lane to be part of. We'll run this one again.",
+      "Thank you to the sixteen sponsors whose logos filled the bottom of that flyer. This is the event they made possible."
+    ],
+    "photos": [
+      {
+        "src": "/assets/events/recaps/networking-mixer-still.webp",
+        "alt": "A full room of attendees seated at tables during an MMG event",
+        "caption": "The room before the lanes opened."
+      },
+      {
+        "src": "/assets/events/upcoming/bowling-mixer-flyer.webp",
+        "alt": "The original bowling mixer flyer",
+        "caption": "The original flyer that started the invitation."
+      }
+    ],
+    "videoUrl": "https://www.instagram.com/millers_marketing_group34/reel/DX4IjeDOhYF/",
+    "videoLabel": "Watch the recap on Instagram",
+    "stats": [
+      { "value": "132", "label": "Attended" },
+      { "value": "16", "label": "Sponsors" },
+      { "value": "16", "label": "Lanes" }
+    ]
+  },
+  "comments": [
+    {
+      "id": "c-bowl-1",
+      "author": "Gregory Lam",
+      "role": "provider",
+      "company": "Atlantic Pain & Spine",
+      "body": "Eleven pins. Eleven. We want a rematch and we want it before the holiday social.",
+      "createdAt": "2026-06-26T08:22:00-04:00"
+    },
+    {
+      "id": "c-bowl-2",
+      "author": "Terrence Booker",
+      "role": "attorney",
+      "company": "Booker Law PA",
+      "body": "The scoreboard is the scoreboard, Gregory.",
+      "createdAt": "2026-06-26T08:41:00-04:00"
+    },
+    {
+      "id": "c-bowl-3",
+      "author": "Simone Clarke",
+      "role": "provider",
+      "company": "Clarke Wellness & Recovery",
+      "body": "Genuinely the easiest networking event I've ever walked into by myself. Having a lane assignment meant I had a group within two minutes.",
+      "createdAt": "2026-06-26T11:15:00-04:00"
+    },
+    {
+      "id": "c-bowl-4",
+      "author": "Carla Nguyen",
+      "role": "sponsor",
+      "company": "InventCare Consulting Group",
+      "body": "From the sponsor side — best value event of the year. Sixteen lanes means sixteen conversations, not one banner nobody looks at.",
+      "createdAt": "2026-06-27T09:05:00-04:00"
+    }
+  ]
+}

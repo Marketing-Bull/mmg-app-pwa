@@ -1,0 +1,62 @@
+{
+  "slug": "lunch-and-learn-september-2026",
+  "title": "PI Lunch & Learn: Letters of Protection, Honestly",
+  "seriesId": "lunch-and-learn",
+  "date": "2026-09-11",
+  "startTime": "12:00",
+  "endTime": "14:00",
+  "venue": {
+    "name": "Farmer's Table",
+    "address": "1901 N Military Trail",
+    "city": "Boca Raton",
+    "state": "FL",
+    "zip": "33431"
+  },
+  "summary": "An honest conversation about LOPs — what providers need to feel secure, what firms can realistically commit to, and where the friction usually starts.",
+  "description": [
+    "Letters of protection are where a lot of attorney-provider relationships quietly go wrong. This session is a candid, no-scripts conversation about what each side actually needs.",
+    "A billing manager, a treating provider, and a firm administrator take turns explaining what they see from their chair. The goal is fewer surprises, not a sales pitch.",
+    "Lunch is covered. Come with the question you've been too polite to ask."
+  ],
+  "hostId": "andrew-miller",
+  "sponsorIds": ["lienstar", "ceda-orthopedic-group", "earley-law-firm"],
+  "capacity": 60,
+  "attendingCount": 31,
+  "tags": ["Lunch & Learn", "Educational", "Boca Raton"],
+  "eventbriteUrl": "https://www.eventbrite.com/o/millers-marketing-group-68684991773",
+  "agenda": [
+    { "time": "12:00", "label": "Doors and lunch service" },
+    { "time": "12:30", "label": "Welcome and sponsor recognition" },
+    { "time": "12:40", "label": "Panel: three chairs, one LOP" },
+    { "time": "13:15", "label": "Open Q&A" },
+    { "time": "13:30", "label": "Open networking" }
+  ],
+  "attendees": [
+    { "name": "Camille Fortier", "role": "attorney", "company": "Fortier Injury Law" },
+    { "name": "Isaiah Brooks", "role": "provider", "company": "Brooks Spine Institute" },
+    { "name": "Lauren Petrakis", "role": "attorney", "company": "Petrakis & Wynn" },
+    { "name": "Damaris Ortiz", "role": "provider", "company": "Palm Beach Rehab Group" },
+    { "name": "Neil Abramson", "role": "sponsor", "company": "LienStar" },
+    { "name": "Whitney Charles", "role": "provider", "company": "Charles Family Chiropractic" },
+    { "name": "Omar Haddadin", "role": "attorney", "company": "Haddadin Law Group" },
+    { "name": "Beatriz Nunes", "role": "provider", "company": "Boca Diagnostic Imaging" }
+  ],
+  "comments": [
+    {
+      "id": "c-ll-sep-1",
+      "author": "Isaiah Brooks",
+      "role": "provider",
+      "company": "Brooks Spine Institute",
+      "body": "This is the topic I've been waiting for. Would love to see reduction expectations covered — that's where most of my friction is.",
+      "createdAt": "2026-08-07T13:45:00-04:00"
+    },
+    {
+      "id": "c-ll-sep-2",
+      "author": "Camille Fortier",
+      "role": "attorney",
+      "company": "Fortier Injury Law",
+      "body": "Seconding reductions. Also worth covering what happens when a case settles below the lien stack — that conversation is never fun and it's always last-minute.",
+      "createdAt": "2026-08-08T10:05:00-04:00"
+    }
+  ]
+}

@@ -1,0 +1,348 @@
+import { CalendarDays, Clock, ExternalLink, Instagram, MapPin, Play } from "lucide-react";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { AttendeeList } from "@/components/events/attendee-list";
+import { EventActions } from "@/components/events/event-actions";
+import { EventArt } from "@/components/events/event-art";
+import { PhotoGallery } from "@/components/events/photo-gallery";
+import { SeriesPill, Tag } from "@/components/events/series-pill";
+import { CommentThread } from "@/components/community/comment-thread";
+import { HostCard } from "@/components/shared/host-card";
+import { PartnerWall } from "@/components/shared/partner-wall";
+import { AppBar } from "@/components/shell/app-bar";
+import { Button } from "@/components/ui/button";
+import {
+  allEvents,
+  getEvent,
+  getHost,
+  getPartners,
+  getSeries,
+  isUpcoming,
+  site,
+  upcomingEvents,
+} from "@/lib/content";
+import {
+  formatFullDate,
+  formatTimeRange,
+  mapsUrl,
+  relativeToToday,
+  venueLine,
+} from "@/lib/format";
+import { eventCommentKey } from "@/lib/keys";
+
+export function generateStaticParams() {
+  return allEvents.map((event) => ({ slug: event.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const event = getEvent(slug);
+  if (!event) return { title: "Event not found" };
+  return {
+    title: event.title,
+    description: event.summary,
+    openGraph: {
+      title: event.title,
+      description: event.summary,
+      type: "article",
+    },
+  };
+}
+
+export default async function EventPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const event = getEvent(slug);
+  if (!event) notFound();
+
+  const series = getSeries(event.seriesId);
+  const host = getHost(event.hostId);
+  const sponsors = getPartners(event.sponsorIds);
+  const upcoming = isUpcoming(event);
+  const nextEvent = upcomingEvents.find((candidate) => candidate.slug !== event.slug);
+
+  return (
+    <>
+      <AppBar title={event.title} back="/events" />
+
+      <main className="pb-tabbar">
+        {/* Hero */}
+        <div className="px-4 pt-3">
+          <div className="overflow-hidden rounded-card border border-[var(--line)] shadow-card">
+            <EventArt
+              event={event}
+              series={series}
+              priority
+              className="aspect-[4/5] w-full sm:aspect-[16/11]"
+            />
+          </div>
+        </div>
+
+        <div className="px-4 pt-5">
+          <div className="flex flex-wrap items-center gap-2">
+            {series ? <SeriesPill series={series} /> : null}
+            <span className="text-[0.72rem] font-semibold text-muted">
+              {relativeToToday(event.date)}
+            </span>
+          </div>
+
+          <h1 className="mt-2.5 font-serif text-[2rem] leading-[0.98] font-semibold tracking-[-0.045em] text-balance">
+            {event.title}
+          </h1>
+          <p className="mt-3 text-[0.9rem] leading-relaxed text-muted text-pretty">
+            {event.summary}
+          </p>
+        </div>
+
+        {/* Key details */}
+        <div className="px-4 pt-5">
+          <dl className="divide-y divide-[var(--line)] overflow-hidden rounded-card border border-[var(--line)] bg-paper shadow-card">
+            <div className="flex items-start gap-3 p-3.5">
+              <CalendarDays className="mt-0.5 size-[1.15rem] shrink-0 text-red" />
+              <div>
+                <dt className="text-[0.7rem] font-bold tracking-[0.08em] text-muted uppercase">
+                  Date
+                </dt>
+                <dd className="text-[0.9rem] font-semibold">{formatFullDate(event.date)}</dd>
+              </div>
+            </div>
+            <div className="flex items-start gap-3 p-3.5">
+              <Clock className="mt-0.5 size-[1.15rem] shrink-0 text-red" />
+              <div>
+                <dt className="text-[0.7rem] font-bold tracking-[0.08em] text-muted uppercase">
+                  Time
+                </dt>
+                <dd className="text-[0.9rem] font-semibold">
+                  {formatTimeRange(event.startTime, event.endTime)}
+                </dd>
+              </div>
+            </div>
+            <a
+              href={mapsUrl(event.venue)}
+              target="_blank"
+              rel="noreferrer"
+              className="mmg-press flex items-start gap-3 p-3.5 hover:bg-sand-light/60"
+            >
+              <MapPin className="mt-0.5 size-[1.15rem] shrink-0 text-red" />
+              <div className="min-w-0 flex-1">
+                <dt className="text-[0.7rem] font-bold tracking-[0.08em] text-muted uppercase">
+                  Venue
+                </dt>
+                <dd className="text-[0.9rem] font-semibold">{event.venue.name}</dd>
+                <dd className="text-[0.8rem] text-muted">
+                  {event.venue.address}, {venueLine(event.venue)} {event.venue.zip}
+                </dd>
+                <span className="mt-1 inline-flex items-center gap-1 text-[0.75rem] font-semibold text-red">
+                  Open in Maps
+                  <ExternalLink className="size-3" />
+                </span>
+              </div>
+            </a>
+          </dl>
+        </div>
+
+        {/* Actions */}
+        <div className="px-4 pt-4">
+          <EventActions event={event} isPast={!upcoming} />
+        </div>
+
+        {/* Tags */}
+        {event.tags.length ? (
+          <div className="flex flex-wrap gap-1.5 px-4 pt-4">
+            {event.tags.map((tag) => (
+              <Tag key={tag}>{tag}</Tag>
+            ))}
+          </div>
+        ) : null}
+
+        {/* Description */}
+        <section className="space-y-3 px-4 pt-6">
+          <h2 className="font-serif text-[1.15rem] font-semibold tracking-[-0.03em]">
+            About this event
+          </h2>
+          {event.description.map((paragraph) => (
+            <p key={paragraph} className="text-[0.88rem] leading-relaxed text-muted text-pretty">
+              {paragraph}
+            </p>
+          ))}
+        </section>
+
+        {/* Agenda */}
+        {event.agenda?.length ? (
+          <section className="px-4 pt-7">
+            <h2 className="mb-3.5 font-serif text-[1.15rem] font-semibold tracking-[-0.03em]">
+              How the evening runs
+            </h2>
+            <ol className="overflow-hidden rounded-card border border-[var(--line)] bg-paper shadow-card">
+              {event.agenda.map((item, index) => (
+                <li
+                  key={`${item.time}-${item.label}`}
+                  className="flex gap-3.5 border-b border-[var(--line)] p-3.5 last:border-0"
+                >
+                  <span className="w-[3.4rem] shrink-0 pt-0.5 text-[0.78rem] font-bold text-red tabular-nums">
+                    {item.time}
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[0.87rem] font-semibold">{item.label}</p>
+                    {item.detail ? (
+                      <p className="mt-0.5 text-[0.78rem] leading-snug text-muted">
+                        {item.detail}
+                      </p>
+                    ) : null}
+                  </div>
+                  <span className="shrink-0 pt-1 text-[0.7rem] font-bold text-muted/50 tabular-nums">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </section>
+        ) : null}
+
+        {/* Recap */}
+        {event.recap ? (
+          <section className="px-4 pt-7">
+            <p className="mmg-eyebrow">Recap</p>
+            <h2 className="mt-1.5 font-serif text-[1.5rem] leading-[1.05] font-semibold tracking-[-0.04em] text-balance">
+              {event.recap.headline}
+            </h2>
+
+            {event.recap.stats?.length ? (
+              <ul className="mt-4 grid grid-cols-3 gap-2.5">
+                {event.recap.stats.map((stat) => (
+                  <li
+                    key={stat.label}
+                    className="rounded-2xl border border-[var(--line)] bg-paper px-2 py-3 text-center shadow-card"
+                  >
+                    <p className="mmg-display text-[1.6rem] text-red">{stat.value}</p>
+                    <p className="mt-0.5 text-[0.68rem] leading-tight font-semibold text-muted">
+                      {stat.label}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+
+            <div className="mt-4 space-y-3">
+              {event.recap.body.map((paragraph) => (
+                <p
+                  key={paragraph}
+                  className="text-[0.88rem] leading-relaxed text-muted text-pretty"
+                >
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+
+            {event.recap.videoUrl ? (
+              <Button asChild variant="espresso" block className="mt-4">
+                <a href={event.recap.videoUrl} target="_blank" rel="noreferrer">
+                  <Play className="fill-current" />
+                  {event.recap.videoLabel ?? "Watch the recap"}
+                  <Instagram />
+                </a>
+              </Button>
+            ) : null}
+
+            {event.recap.photos.length ? (
+              <div className="mt-5">
+                <h3 className="mb-3 text-[0.7rem] font-bold tracking-[0.12em] text-muted uppercase">
+                  Photo gallery
+                </h3>
+                <PhotoGallery photos={event.recap.photos} />
+              </div>
+            ) : null}
+          </section>
+        ) : null}
+
+        {/* Host */}
+        {host ? (
+          <section className="px-4 pt-7">
+            <HostCard host={host} compact />
+          </section>
+        ) : null}
+
+        {/* Attendees */}
+        <section className="px-4 pt-7">
+          <AttendeeList event={event} />
+        </section>
+
+        {/* Sponsors */}
+        {sponsors.length ? (
+          <section className="px-4 pt-7">
+            <h2 className="mb-1 font-serif text-[1.15rem] font-semibold tracking-[-0.03em]">
+              {upcoming ? "Sponsored by" : "Sponsor recognition"}
+            </h2>
+            <p className="mb-3.5 text-[0.8rem] text-muted">
+              {upcoming
+                ? "These partners make the evening possible."
+                : "Partners whose support made this gathering possible."}
+            </p>
+            <PartnerWall partners={sponsors} />
+            <Button asChild variant="outline" block className="mt-3">
+              <Link href="/sponsor">Sponsor a future event</Link>
+            </Button>
+          </section>
+        ) : null}
+
+        {/* Discussion */}
+        <section className="px-4 pt-8">
+          <CommentThread
+            storageKey={eventCommentKey(event.slug)}
+            seeded={event.comments}
+            placeholder={
+              upcoming ? "Ask a question about this event…" : "Share what you took away…"
+            }
+            emptyLabel={
+              upcoming
+                ? "No questions yet. Ask the first one — Andrew answers these."
+                : "No comments yet. Say hello to someone you met."
+            }
+          />
+        </section>
+
+        {/* Next up */}
+        {nextEvent ? (
+          <section className="px-4 pt-8 pb-4">
+            <Link
+              href={`/events/${nextEvent.slug}`}
+              className="mmg-press flex items-center gap-3 rounded-card bg-espresso p-4 text-cream shadow-mmg"
+            >
+              <div className="min-w-0 flex-1">
+                <p className="mmg-eyebrow text-gold">See the next gathering</p>
+                <p className="mt-1 font-serif text-[1.15rem] leading-tight font-semibold tracking-[-0.03em]">
+                  {nextEvent.title}
+                </p>
+                <p className="mt-1 text-[0.78rem] text-cream/65">
+                  {formatFullDate(nextEvent.date)} · {nextEvent.venue.city}
+                </p>
+              </div>
+            </Link>
+          </section>
+        ) : null}
+
+        {event.eventbriteUrl ? (
+          <div className="px-4 pb-4 text-center">
+            <a
+              href={event.eventbriteUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 text-[0.78rem] font-semibold text-muted hover:text-espresso"
+            >
+              Also listed on Eventbrite
+              <ExternalLink className="size-3.5" />
+            </a>
+          </div>
+        ) : null}
+
+        <p className="px-4 pb-6 text-center text-[0.7rem] leading-relaxed text-muted/70">
+          Questions? Call MMG at {site.phone}.
+        </p>
+      </main>
+    </>
+  );
+}

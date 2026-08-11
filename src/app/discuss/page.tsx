@@ -1,0 +1,132 @@
+import { MessageSquare } from "lucide-react";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { AvatarStack } from "@/components/ui/avatar";
+import { Section } from "@/components/shared/section";
+import { AppBar } from "@/components/shell/app-bar";
+import { allEvents, discussionThreads } from "@/lib/content";
+import { relativeTime } from "@/lib/format";
+
+export const metadata: Metadata = {
+  title: "Discuss",
+  description:
+    "Community threads and event conversations across Florida's personal injury professional network.",
+};
+
+export default function DiscussPage() {
+  // Events with the liveliest threads, newest activity first.
+  const eventThreads = allEvents
+    .filter((event) => event.comments.length > 0)
+    .map((event) => ({
+      event,
+      lastAt: event.comments.reduce(
+        (latest, comment) => (comment.createdAt > latest ? comment.createdAt : latest),
+        event.comments[0].createdAt,
+      ),
+    }))
+    .sort((a, b) => b.lastAt.localeCompare(a.lastAt));
+
+  return (
+    <>
+      <AppBar title="Discuss" />
+
+      <main className="pb-tabbar">
+        <div className="px-4 pt-4">
+          <p className="mmg-eyebrow">Community</p>
+          <h1 className="mt-1.5 font-serif text-[2rem] leading-[0.98] font-semibold tracking-[-0.045em] text-balance">
+            The conversation keeps going between events.
+          </h1>
+          <p className="mt-3 text-[0.88rem] leading-relaxed text-muted text-pretty">
+            Ask a question, share what worked, or introduce yourself before you walk into a room.
+            No account needed — just post.
+          </p>
+        </div>
+
+        <Section eyebrow="Community threads" title="Open discussions" className="pt-6">
+          <ul className="space-y-2.5">
+            {discussionThreads.map((thread) => {
+              const last = thread.comments[thread.comments.length - 1];
+              return (
+                <li key={thread.id}>
+                  <Link
+                    href={`/discuss/${thread.id}`}
+                    className="mmg-press block rounded-card border border-[var(--line)] bg-paper p-4 shadow-card transition-shadow hover:shadow-lift"
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="rounded-full bg-sand-light px-2.5 py-[0.2rem] text-[0.65rem] font-bold tracking-[0.08em] text-muted uppercase">
+                        {thread.topic}
+                      </span>
+                      <span className="ml-auto shrink-0 text-[0.7rem] text-muted">
+                        {relativeTime(last?.createdAt ?? thread.createdAt)}
+                      </span>
+                    </div>
+
+                    <h2 className="mt-2 font-serif text-[1.2rem] leading-[1.1] font-semibold tracking-[-0.03em] text-balance">
+                      {thread.title}
+                    </h2>
+                    <p className="mt-1.5 line-clamp-2 text-[0.83rem] leading-relaxed text-muted text-pretty">
+                      {thread.body}
+                    </p>
+
+                    <div className="mt-3 flex items-center gap-2.5">
+                      <AvatarStack
+                        names={[thread.author, ...thread.comments.map((c) => c.author)]}
+                        max={4}
+                      />
+                      <span className="inline-flex items-center gap-1.5 text-[0.75rem] font-medium text-muted">
+                        <MessageSquare className="size-3.5" />
+                        {thread.comments.length}{" "}
+                        {thread.comments.length === 1 ? "reply" : "replies"}
+                      </span>
+                    </div>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </Section>
+
+        <Section eyebrow="Event threads" title="Talking about specific events">
+          <ul className="space-y-2.5">
+            {eventThreads.map(({ event, lastAt }) => (
+              <li key={event.slug}>
+                <Link
+                  href={`/events/${event.slug}#discussion`}
+                  className="mmg-press block rounded-card border border-[var(--line)] bg-paper p-4 shadow-card transition-shadow hover:shadow-lift"
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="rounded-full bg-red/10 px-2.5 py-[0.2rem] text-[0.65rem] font-bold tracking-[0.08em] text-red uppercase">
+                      Event
+                    </span>
+                    <span className="ml-auto shrink-0 text-[0.7rem] text-muted">
+                      {relativeTime(lastAt)}
+                    </span>
+                  </div>
+
+                  <h2 className="mt-2 font-serif text-[1.1rem] leading-[1.12] font-semibold tracking-[-0.03em] text-balance">
+                    {event.title}
+                  </h2>
+                  <p className="mt-1 text-[0.75rem] text-muted">
+                    {event.venue.city}, {event.venue.state}
+                  </p>
+                  <p className="mt-2 line-clamp-2 text-[0.83rem] leading-relaxed text-muted text-pretty">
+                    &ldquo;{event.comments[event.comments.length - 1].body}&rdquo;
+                  </p>
+
+                  <div className="mt-3 flex items-center gap-2.5">
+                    <AvatarStack names={event.comments.map((c) => c.author)} max={4} />
+                    <span className="inline-flex items-center gap-1.5 text-[0.75rem] font-medium text-muted">
+                      <MessageSquare className="size-3.5" />
+                      {event.comments.length}{" "}
+                      {event.comments.length === 1 ? "comment" : "comments"}
+                    </span>
+                  </div>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </Section>
+      </main>
+    </>
+  );
+}

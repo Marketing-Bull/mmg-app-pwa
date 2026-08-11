@@ -1,0 +1,198 @@
+[
+  {
+    "id": "thread-intro-yourself",
+    "title": "New here? Introduce yourself.",
+    "topic": "Introductions",
+    "author": "Andrew Miller",
+    "role": "sponsor",
+    "company": "Miller's Marketing Group",
+    "createdAt": "2026-01-08T09:00:00-05:00",
+    "body": "If you're new to MMG, drop a note here — name, what you do, and who you're hoping to meet. I read every one of these and I'll make introductions at the next event you attend.",
+    "comments": [
+      {
+        "id": "c-intro-1",
+        "author": "Yasmin Haddad",
+        "role": "attorney",
+        "company": "Haddad Trial Attorneys",
+        "body": "Yasmin, PI attorney in Hollywood, three years on my own after eight at a bigger firm. Looking to build relationships with orthopedic and pain management providers in Broward.",
+        "createdAt": "2026-07-14T11:25:00-04:00"
+      },
+      {
+        "id": "c-intro-2",
+        "author": "Gregory Lam",
+        "role": "provider",
+        "company": "Atlantic Pain & Spine",
+        "body": "Gregory, pain management, two locations in Broward. Yasmin — we should talk at the August mixer.",
+        "createdAt": "2026-07-14T15:40:00-04:00"
+      },
+      {
+        "id": "c-intro-3",
+        "author": "Beatriz Nunes",
+        "role": "provider",
+        "company": "Boca Diagnostic Imaging",
+        "body": "Beatriz, imaging in Boca. Mostly looking to meet firms north of Broward — a lot of my referral relationships are Miami-Dade and the drive is a real problem for patients.",
+        "createdAt": "2026-08-02T08:15:00-04:00"
+      },
+      {
+        "id": "c-intro-4",
+        "author": "Andrew Miller",
+        "role": "sponsor",
+        "company": "Miller's Marketing Group",
+        "body": "Beatriz — September's Lunch & Learn is in Boca and skews heavily Palm Beach County. That's your room. I'll introduce you to Camille and Gwen.",
+        "createdAt": "2026-08-02T12:30:00-04:00"
+      }
+    ]
+  },
+  {
+    "id": "thread-venue-requests",
+    "title": "Where should the mixers go in 2027?",
+    "topic": "Events",
+    "author": "Andrew Miller",
+    "role": "sponsor",
+    "company": "Miller's Marketing Group",
+    "createdAt": "2026-07-02T10:00:00-04:00",
+    "body": "Planning next year's circuit now. The rotation has been West Palm Beach, Coral Gables, Weston, Plantation, Boynton Beach, Dania Pointe, Boca, Fort Lauderdale, Aventura, Doral. What's missing? Which ones should we drop?",
+    "comments": [
+      {
+        "id": "c-venue-1",
+        "author": "Rochelle Baptiste",
+        "role": "attorney",
+        "company": "Baptiste Injury Firm",
+        "body": "Miramar or Pembroke Pines. There's a real cluster of firms there and nothing on the calendar is a reasonable drive on a weeknight.",
+        "createdAt": "2026-07-02T13:20:00-04:00"
+      },
+      {
+        "id": "c-venue-2",
+        "author": "Colin Marsh",
+        "role": "attorney",
+        "company": "Marsh & Delgado",
+        "body": "Keep Coral Gables, keep Aventura. Weston was a tough draw both times I went.",
+        "createdAt": "2026-07-03T09:05:00-04:00"
+      },
+      {
+        "id": "c-venue-3",
+        "author": "Simone Clarke",
+        "role": "provider",
+        "company": "Clarke Wellness & Recovery",
+        "body": "Agree on Miramar. Also — more Friday lunches, fewer Thursday evenings? Evenings are hard for anyone with a clinic schedule and kids.",
+        "createdAt": "2026-07-05T17:30:00-04:00"
+      },
+      {
+        "id": "c-venue-4",
+        "author": "Marcus Whitfield",
+        "role": "provider",
+        "company": "Beacon Spine & Rehab",
+        "body": "Strongly seconding Simone. The Lunch & Learns are the only ones I can reliably make.",
+        "createdAt": "2026-07-06T08:44:00-04:00"
+      }
+    ]
+  },
+  {
+    "id": "thread-first-event-advice",
+    "title": "Going to my first mixer alone — any advice?",
+    "topic": "Introductions",
+    "author": "Terrence Booker",
+    "role": "attorney",
+    "company": "Booker Law PA",
+    "createdAt": "2026-08-09T20:20:00-04:00",
+    "body": "Solo practitioner, opened last year, and I've been putting off going to one of these for months. Walking into a room of 90 people where everyone already knows each other is genuinely the part I'm dreading. How do people handle it?",
+    "comments": [
+      {
+        "id": "c-first-1",
+        "author": "Simone Clarke",
+        "role": "provider",
+        "company": "Clarke Wellness & Recovery",
+        "body": "Get there at 6:00 sharp, not 7:00. The room is a third full, it's quiet, and you'll have three real conversations before it gets loud. Arriving late is what makes it hard.",
+        "createdAt": "2026-08-09T21:05:00-04:00"
+      },
+      {
+        "id": "c-first-2",
+        "author": "Andrew Miller",
+        "role": "sponsor",
+        "company": "Miller's Marketing Group",
+        "body": "Find me at the door, Terrence. Tell me what kind of cases you take and I'll walk you to two or three providers who'd be useful to know. That's the whole job.",
+        "createdAt": "2026-08-09T21:40:00-04:00"
+      },
+      {
+        "id": "c-first-3",
+        "author": "Elena Vasquez",
+        "role": "attorney",
+        "company": "Vasquez Injury Group",
+        "body": "Everyone in that room was new once. I came to my first one alone in 2024 and left with two provider relationships I still use.",
+        "createdAt": "2026-08-10T07:50:00-04:00"
+      }
+    ]
+  },
+  {
+    "id": "thread-case-manager-session",
+    "title": "A Lunch & Learn built for case managers and paralegals",
+    "topic": "Programming",
+    "author": "Renee Duplessis",
+    "role": "provider",
+    "company": "Gulfstream Orthopedic Partners",
+    "createdAt": "2026-05-12T09:30:00-04:00",
+    "body": "Following up on the May session. Nearly half that room was operational staff and the questions were the best I've heard at an MMG event. Can we get a session aimed squarely at them — records requests, scheduling, lien tracking, the unglamorous work?",
+    "comments": [
+      {
+        "id": "c-cm-1",
+        "author": "Sofia Marchetti",
+        "role": "attorney",
+        "company": "Marchetti Law",
+        "body": "Yes. I'd send four people. My paralegals learn more from other paralegals in an hour than from me in a month.",
+        "createdAt": "2026-05-12T11:15:00-04:00"
+      },
+      {
+        "id": "c-cm-2",
+        "author": "Alicia Bennett",
+        "role": "provider",
+        "company": "Bennett Physical Therapy",
+        "body": "Records requests specifically. The variation in what different firms need is enormous and nobody has ever written it down.",
+        "createdAt": "2026-05-13T14:00:00-04:00"
+      },
+      {
+        "id": "c-cm-3",
+        "author": "Andrew Miller",
+        "role": "sponsor",
+        "company": "Miller's Marketing Group",
+        "body": "It's on the calendar for Q1. Renee, would you sit on that panel?",
+        "createdAt": "2026-06-01T10:20:00-04:00"
+      }
+    ]
+  },
+  {
+    "id": "thread-sponsor-worth-it",
+    "title": "Sponsors: what actually came out of it?",
+    "topic": "Sponsorship",
+    "author": "Carla Nguyen",
+    "role": "sponsor",
+    "company": "InventCare Consulting Group",
+    "createdAt": "2026-06-28T10:00:00-04:00",
+    "body": "Honest thread for anyone weighing a tier. We've sponsored four MMG events now. Happy to answer questions about what worked and what didn't — and I'd like to hear from other sponsors too.",
+    "comments": [
+      {
+        "id": "c-spon-1",
+        "author": "Patrick O'Donnell",
+        "role": "sponsor",
+        "company": "Express Funding of America",
+        "body": "The banner does nothing. The three-minute speaking slot does everything. If you're weighing tiers, that's the line worth paying for.",
+        "createdAt": "2026-06-28T14:30:00-04:00"
+      },
+      {
+        "id": "c-spon-2",
+        "author": "Carla Nguyen",
+        "role": "sponsor",
+        "company": "InventCare Consulting Group",
+        "body": "Completely agree. Bowling was our best return by a distance — sixteen lanes meant sixteen small conversations instead of one logo nobody reads.",
+        "createdAt": "2026-06-28T15:10:00-04:00"
+      },
+      {
+        "id": "c-spon-3",
+        "author": "Devon Wallace",
+        "role": "sponsor",
+        "company": "LienStar",
+        "body": "Third-ing the speaking slot. Also: send someone who actually enjoys talking to people. We sent a sales rep to one event and an owner to the next, and the difference was not subtle.",
+        "createdAt": "2026-06-30T09:25:00-04:00"
+      }
+    ]
+  }
+]

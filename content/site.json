@@ -1,0 +1,45 @@
+{
+  "name": "Miller's Marketing Group",
+  "shortName": "MMG",
+  "tagline": "An environment where professionals connect organically.",
+  "description": "Marketing, sponsorship, and networking opportunities for Florida's personal injury professional community.",
+  "phone": "561-888-9450",
+  "phoneAlt": "954-869-8435",
+  "email": "contact@millersmarketinggroup.com",
+  "address": "8201 Peters Rd, Unit 1000, Plantation, FL",
+  "instagram": "https://www.instagram.com/millers_marketing_group34/",
+  "eventbrite": "https://www.eventbrite.com/o/millers-marketing-group-68684991773",
+  "website": "https://www.millersmarketinggroup.com/",
+  "disclaimer": "MMG is not a law firm or medical provider and does not provide legal or medical advice. Participation in MMG marketing programs or events does not guarantee referrals, clients, cases, or business outcomes.",
+  "valueProps": [
+    {
+      "title": "The right room",
+      "body": "Curated gatherings that bring together people with shared professional interests, then make it easy to begin a real conversation."
+    },
+    {
+      "title": "Organic connections",
+      "body": "From bowling to lunch and learns, each setting gives relationships room to develop naturally without forced networking."
+    },
+    {
+      "title": "No pressure",
+      "body": "The best relationships grow when people feel comfortable enough to have a real conversation. Show up, meet good people, see what happens."
+    }
+  ],
+  "audiences": [
+    {
+      "initials": "PI",
+      "title": "Personal Injury Attorneys",
+      "body": "Meet medical providers, vendors, and fellow professionals who understand the personal injury community."
+    },
+    {
+      "initials": "MD",
+      "title": "Medical Providers",
+      "body": "Build visibility and professional relationships with attorneys and industry partners across South Florida."
+    },
+    {
+      "initials": "VP",
+      "title": "Sponsors and Vendors",
+      "body": "Support memorable events and introduce your brand to a focused professional audience."
+    }
+  ]
+}

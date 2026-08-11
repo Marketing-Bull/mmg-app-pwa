@@ -1,0 +1,51 @@
+{
+  "slug": "pi-networking-mixer-september-2026",
+  "title": "Personal Injury Professionals Networking Mixer",
+  "seriesId": "pi-networking-mixers",
+  "date": "2026-09-24",
+  "startTime": "18:00",
+  "endTime": "21:00",
+  "venue": {
+    "name": "Sports & Social Aventura",
+    "address": "19501 Biscayne Blvd",
+    "city": "Aventura",
+    "state": "FL",
+    "zip": "33180"
+  },
+  "summary": "September's mixer heads north to Aventura. Expect a strong Miami-Dade and North Broward crossover crowd.",
+  "description": [
+    "Aventura pulls a different mix than the Broward stops — more Miami-Dade firms, more North Miami providers, and a good number of people who have never been to an MMG event before.",
+    "Same relaxed format. Show up when you can, stay as long as it's useful, and let Andrew know who you're hoping to meet."
+  ],
+  "hostId": "andrew-miller",
+  "sponsorIds": ["toti-health", "mlaw", "realign-chiropractic"],
+  "capacity": 120,
+  "attendingCount": 52,
+  "tags": ["Mixer", "Evening", "Aventura"],
+  "eventbriteUrl": "https://www.eventbrite.com/o/millers-marketing-group-68684991773",
+  "agenda": [
+    { "time": "18:00", "label": "Doors open" },
+    { "time": "18:45", "label": "Welcome and sponsor recognition" },
+    { "time": "19:00", "label": "Open networking" },
+    { "time": "21:00", "label": "Last call" }
+  ],
+  "attendees": [
+    { "name": "Adriana Kessler", "role": "attorney", "company": "Kessler Injury Advocates" },
+    { "name": "Julio Mendes", "role": "provider", "company": "Aventura Sports Medicine" },
+    { "name": "Farrah Lindo", "role": "attorney", "company": "Lindo Law" },
+    { "name": "Bruce Tanaka", "role": "provider", "company": "North Miami Imaging" },
+    { "name": "Serena Adeyemi", "role": "sponsor", "company": "InventCare Consulting Group" },
+    { "name": "Colin Marsh", "role": "attorney", "company": "Marsh & Delgado" },
+    { "name": "Ivette Corona", "role": "provider", "company": "Corona Physical Medicine" }
+  ],
+  "comments": [
+    {
+      "id": "c-mix-sep-1",
+      "author": "Farrah Lindo",
+      "role": "attorney",
+      "company": "Lindo Law",
+      "body": "Glad this one is north for a change. Aventura is a much easier drive from Hollywood than Coral Gables on a Thursday.",
+      "createdAt": "2026-08-10T08:50:00-04:00"
+    }
+  ]
+}

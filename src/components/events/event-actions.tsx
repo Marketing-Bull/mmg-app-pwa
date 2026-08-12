@@ -129,7 +129,8 @@ export function EventActions({ event, isPast }: { event: MMGEvent; isPast: boole
         </div>
       </div>
 
-      <RsvpDialog event={event} open={open} onOpenChange={setOpen} />
+      {/* Keyed so each open remounts with fresh state seeded from the profile. */}
+      <RsvpDialog key={open ? "open" : "closed"} event={event} open={open} onOpenChange={setOpen} />
     </>
   );
 }

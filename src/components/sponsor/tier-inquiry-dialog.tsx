@@ -1,7 +1,7 @@
 "use client";
 
 import { Check, Loader2, Phone } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { TextAreaField, TextField } from "@/components/ui/field";
 import { Sheet } from "@/components/ui/sheet";
@@ -23,35 +23,20 @@ export function TierInquiryDialog({
 }) {
   const { profile, addInquiry } = useStore();
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [company, setCompany] = useState("");
+  /*
+   * Seeded from the saved profile rather than reset by an effect — the caller
+   * remounts this per tier/open (see TierList), so sending an inquiry can't
+   * write the profile back and clear the success screen.
+   */
+  const [name, setName] = useState(profile?.name ?? "");
+  const [email, setEmail] = useState(profile?.email ?? "");
+  const [phone, setPhone] = useState(profile?.phone ?? "");
+  const [company, setCompany] = useState(profile?.company ?? "");
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [sent, setSent] = useState(false);
   const [delivery, setDelivery] = useState<DeliveryStatus | null>(null);
-
-  // Not a dependency: sending an inquiry can write the profile back to the
-  // store, which would otherwise re-run this effect and clear the success screen.
-  const profileRef = useRef(profile);
-  profileRef.current = profile;
-
-  useEffect(() => {
-    if (!open) return;
-    setSent(false);
-    setDelivery(null);
-    setErrors({});
-    setMessage("");
-    const saved = profileRef.current;
-    if (saved) {
-      setName(saved.name);
-      setEmail(saved.email);
-      setPhone(saved.phone);
-      setCompany(saved.company);
-    }
-  }, [open]);
 
   if (!tier) return null;
 

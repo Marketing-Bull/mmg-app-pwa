@@ -123,7 +123,13 @@ export function TierList({ tiers }: { tiers: SponsorTier[] }) {
         })}
       </ul>
 
-      <TierInquiryDialog tier={active} open={open} onOpenChange={setOpen} />
+      {/* Keyed so each tier/open remounts with fresh state from the profile. */}
+      <TierInquiryDialog
+        key={`${active?.id ?? "none"}-${open ? "open" : "closed"}`}
+        tier={active}
+        open={open}
+        onOpenChange={setOpen}
+      />
     </>
   );
 }

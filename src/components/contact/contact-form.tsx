@@ -1,7 +1,7 @@
 "use client";
 
 import { Check, Loader2, SendHorizonal } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { TextAreaField, TextField } from "@/components/ui/field";
 import { useToast } from "@/components/ui/toast";
@@ -19,14 +19,24 @@ const INTERESTS = [
   "General consultation",
 ] as const;
 
+/**
+ * Waits for the store to hydrate, then mounts the form keyed on that, so the
+ * fields can seed straight from the saved profile instead of being back-filled
+ * by an effect.
+ */
 export function ContactForm() {
-  const { profile, setProfile, hydrated } = useStore();
+  const { hydrated } = useStore();
+  return <ContactFormFields key={hydrated ? "hydrated" : "initial"} />;
+}
+
+function ContactFormFields() {
+  const { profile, setProfile } = useStore();
   const { toast } = useToast();
 
-  const [name, setName] = useState("");
-  const [company, setCompany] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [name, setName] = useState(profile?.name ?? "");
+  const [company, setCompany] = useState(profile?.company ?? "");
+  const [email, setEmail] = useState(profile?.email ?? "");
+  const [phone, setPhone] = useState(profile?.phone ?? "");
   const [interest, setInterest] = useState<string>(INTERESTS[3]);
   const [message, setMessage] = useState("");
   // Honeypot — bots fill hidden fields, people don't.
@@ -35,14 +45,6 @@ export function ContactForm() {
   const [submitting, setSubmitting] = useState(false);
   const [sent, setSent] = useState(false);
   const [delivery, setDelivery] = useState<DeliveryStatus | null>(null);
-
-  useEffect(() => {
-    if (!hydrated || !profile) return;
-    setName((prev) => prev || profile.name);
-    setCompany((prev) => prev || profile.company);
-    setEmail((prev) => prev || profile.email);
-    setPhone((prev) => prev || profile.phone);
-  }, [hydrated, profile]);
 
   const validate = () => {
     const next: Record<string, string> = {};

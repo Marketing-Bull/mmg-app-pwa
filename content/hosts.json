@@ -1,0 +1,19 @@
+[
+  {
+    "id": "andrew-miller",
+    "name": "Andrew Miller",
+    "title": "Founder, Miller's Marketing Group",
+    "bio": [
+      "Andrew grew up in Kingston, Jamaica, where he learned early that opportunity often begins with resourcefulness, trust, and people willing to help one another. That belief still shapes MMG today.",
+      "Part strategist, part host, and part connector, Andrew listens, makes thoughtful introductions, and keeps showing up for Florida's personal injury professional community."
+    ],
+    "quote": "Marketing is more than ads. It is about alignment, connection, and clarity.",
+    "portrait": {
+      "src": "/assets/brand/andrew-miller-portrait.webp",
+      "alt": "Andrew Miller, founder of Miller's Marketing Group"
+    },
+    "phone": "561-888-9450",
+    "email": "contact@millersmarketinggroup.com",
+    "instagram": "https://www.instagram.com/millers_marketing_group34/"
+  }
+]

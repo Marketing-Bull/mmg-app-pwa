@@ -1,0 +1,86 @@
+{
+  "slug": "pi-networking-mixer-february-2026",
+  "title": "Personal Injury Professionals Networking Mixer",
+  "seriesId": "pi-networking-mixers",
+  "date": "2026-02-26",
+  "startTime": "18:00",
+  "endTime": "21:00",
+  "venue": {
+    "name": "Yard House",
+    "address": "320 San Lorenzo Ave",
+    "city": "Coral Gables",
+    "state": "FL",
+    "zip": "33146"
+  },
+  "summary": "An evening at Yard House centered on new introductions, sponsor visibility, and stronger relationships across South Florida's personal injury community.",
+  "description": [
+    "The February mixer at Merrick Park set the tone for the year. It was the first event where the room felt genuinely self-sustaining — people arriving already knowing three or four others from previous months.",
+    "It's the venue people have asked to return to more than any other, which is why November is heading back."
+  ],
+  "flyer": {
+    "src": "/assets/events/past/february-mixer-flyer.webp",
+    "alt": "Personal Injury Professionals Networking Mixer flyer, February 26 2026, Coral Gables"
+  },
+  "hostId": "andrew-miller",
+  "sponsorIds": [
+    "the-mri-guys",
+    "mario-lopez",
+    "align-the-spine",
+    "in-check",
+    "realign-chiropractic"
+  ],
+  "capacity": 120,
+  "attendingCount": 97,
+  "tags": ["Mixer", "Evening", "Coral Gables"],
+  "attendees": [
+    { "name": "Priya Raman", "role": "attorney", "company": "Raman & Cole PLLC" },
+    { "name": "Tomás Aguilar", "role": "provider", "company": "Coral Way Diagnostic Imaging" },
+    { "name": "Adriana Kessler", "role": "attorney", "company": "Kessler Injury Advocates" },
+    { "name": "Julio Mendes", "role": "provider", "company": "Aventura Sports Medicine" },
+    { "name": "Jenna Okafor", "role": "sponsor", "company": "LienStar" },
+    { "name": "Colin Marsh", "role": "attorney", "company": "Marsh & Delgado" },
+    { "name": "Alicia Bennett", "role": "provider", "company": "Bennett Physical Therapy" }
+  ],
+  "recap": {
+    "headline": "The month the community started running itself.",
+    "body": [
+      "Ninety-seven people at Merrick Park, and for the first time a majority arrived already knowing someone else in the room. That's the point at which a networking series stops being an event and starts being a community.",
+      "Thank you to The MRI Guys, Law Offices of Mario E. Lopez, Align the Spine, In-Check, and Realign Chiropractic Center for the support."
+    ],
+    "photos": [
+      {
+        "src": "/assets/events/recaps/february-mixer-recap.webp",
+        "alt": "Attendees at the February networking mixer",
+        "caption": "Merrick Park, February."
+      },
+      {
+        "src": "/assets/events/past/february-mixer-flyer.webp",
+        "alt": "The original February mixer flyer",
+        "caption": "The original flyer."
+      }
+    ],
+    "stats": [
+      { "value": "97", "label": "Attended" },
+      { "value": "5", "label": "Sponsors" },
+      { "value": "1st", "label": "Repeat-majority room" }
+    ]
+  },
+  "comments": [
+    {
+      "id": "c-feb-1",
+      "author": "Adriana Kessler",
+      "role": "attorney",
+      "company": "Kessler Injury Advocates",
+      "body": "Walked in and immediately saw four people I'd met in January. That's when I stopped thinking of these as one-offs.",
+      "createdAt": "2026-02-27T10:12:00-05:00"
+    },
+    {
+      "id": "c-feb-2",
+      "author": "Julio Mendes",
+      "role": "provider",
+      "company": "Aventura Sports Medicine",
+      "body": "Yard House was a great venue. Loud in spots but the back area worked well.",
+      "createdAt": "2026-02-27T16:48:00-05:00"
+    }
+  ]
+}

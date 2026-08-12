@@ -1,0 +1,48 @@
+name: Bug report
+description: Something in the app is broken or looks wrong
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you saw, and what you expected instead.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: How to reproduce
+      placeholder: |
+        1. Open /events
+        2. Tap RSVP on the August mixer
+        3. ...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: device
+    attributes:
+      label: Device
+      options:
+        - iPhone (Safari)
+        - iPhone (installed to home screen)
+        - Android (Chrome)
+        - Android (installed to home screen)
+        - Desktop browser
+        - Other / not sure
+    validations:
+      required: true
+
+  - type: input
+    id: url
+    attributes:
+      label: Page
+      placeholder: /events/pi-networking-mixer-august-2026
+
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot
+      description: Paste an image if you have one.

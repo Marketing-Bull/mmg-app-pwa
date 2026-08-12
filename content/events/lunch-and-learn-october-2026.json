@@ -1,0 +1,33 @@
+{
+  "slug": "lunch-and-learn-october-2026",
+  "title": "PI Lunch & Learn: Building a Referral Relationship That Lasts",
+  "seriesId": "lunch-and-learn",
+  "date": "2026-10-09",
+  "startTime": "12:00",
+  "endTime": "14:00",
+  "venue": {
+    "name": "Avocado Grill",
+    "address": "125 Datura St",
+    "city": "West Palm Beach",
+    "state": "FL",
+    "zip": "33401"
+  },
+  "summary": "Two firms and two providers who have worked together for years explain how the relationship actually started and what keeps it going.",
+  "description": [
+    "Referral relationships get talked about constantly and explained almost never. This session brings four people who have worked together for years to describe the unglamorous version: the first case, the first problem, and why they kept going.",
+    "Useful for anyone building a practice from a standing start, and for anyone whose referral sources have quietly gone quiet."
+  ],
+  "hostId": "andrew-miller",
+  "sponsorIds": ["plantation-chiropractic", "ae-law"],
+  "capacity": 60,
+  "attendingCount": 18,
+  "tags": ["Lunch & Learn", "Educational", "West Palm Beach"],
+  "eventbriteUrl": "https://www.eventbrite.com/o/millers-marketing-group-68684991773",
+  "attendees": [
+    { "name": "Tessa Moreau", "role": "attorney", "company": "Moreau Injury Law" },
+    { "name": "Rafael Ibarra", "role": "provider", "company": "Ibarra Orthopedics" },
+    { "name": "Gwen Ashford", "role": "attorney", "company": "Ashford Legal" },
+    { "name": "Dominic Russo", "role": "sponsor", "company": "LienStar" }
+  ],
+  "comments": []
+}

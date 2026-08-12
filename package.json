@@ -1,0 +1,46 @@
+{
+  "name": "mmg-app-pwa",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Miller's Marketing Group \u2014 mobile-first PWA for Florida's personal injury professional community.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "smoke": "node scripts/smoke.mjs",
+    "verify": "npm run format:check && npm run lint && npm run typecheck && npm run build && npm run smoke"
+  },
+  "dependencies": {
+    "@radix-ui/react-dialog": "1.1.14",
+    "@radix-ui/react-label": "2.1.7",
+    "@radix-ui/react-slot": "1.2.3",
+    "@radix-ui/react-tabs": "1.1.12",
+    "class-variance-authority": "0.7.1",
+    "clsx": "2.1.1",
+    "lucide-react": "0.544.0",
+    "next": "^15.5.23",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "tailwind-merge": "3.3.1"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.6",
+    "@tailwindcss/postcss": "4.1.13",
+    "@types/node": "22.15.3",
+    "@types/react": "19.1.9",
+    "@types/react-dom": "19.1.7",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^15.5.23",
+    "prettier": "^3.9.6",
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "tailwindcss": "4.1.13",
+    "typescript": "5.8.3"
+  },
+  "engines": {
+    "node": ">=20.9"
+  }
+}

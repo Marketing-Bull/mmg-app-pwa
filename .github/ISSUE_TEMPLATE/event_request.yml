@@ -1,0 +1,76 @@
+name: Add or update an event
+description: Put a new mixer, Lunch & Learn, or recap on the calendar
+labels: ["content"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Events live as JSON in `content/events/`. Fill this in and whoever picks
+        it up has everything they need — no back and forth.
+
+  - type: input
+    id: title
+    attributes:
+      label: Event title
+      placeholder: Personal Injury Professionals Networking Mixer
+    validations:
+      required: true
+
+  - type: dropdown
+    id: series
+    attributes:
+      label: Series
+      options:
+        - PI Networking Mixers (last Thursday)
+        - Lunch & Learn (second Friday)
+        - Signature Experience (bowling, golf, pickleball, holiday)
+        - One-off
+    validations:
+      required: true
+
+  - type: input
+    id: date
+    attributes:
+      label: Date and time
+      placeholder: 2026-09-24, 6:00 PM – 9:00 PM
+    validations:
+      required: true
+
+  - type: input
+    id: venue
+    attributes:
+      label: Venue and full address
+      placeholder: YOT Bar & Kitchen, 1500 SE 16th St, Fort Lauderdale, FL 33316
+    validations:
+      required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary and description
+      description: A one-line summary plus a paragraph or two for the event page.
+    validations:
+      required: true
+
+  - type: input
+    id: capacity
+    attributes:
+      label: Capacity
+      placeholder: "120"
+
+  - type: textarea
+    id: sponsors
+    attributes:
+      label: Sponsors
+      description: Which partners are being recognized at this one?
+
+  - type: textarea
+    id: assets
+    attributes:
+      label: Flyer and photos
+      description: Attach the flyer, and recap photos if this is a past event.
+
+  - type: input
+    id: eventbrite
+    attributes:
+      label: Eventbrite link

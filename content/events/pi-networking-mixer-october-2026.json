@@ -1,0 +1,33 @@
+{
+  "slug": "pi-networking-mixer-october-2026",
+  "title": "Personal Injury Professionals Networking Mixer",
+  "seriesId": "pi-networking-mixers",
+  "date": "2026-10-29",
+  "startTime": "18:00",
+  "endTime": "21:00",
+  "venue": {
+    "name": "Bulla Gastrobar Doral",
+    "address": "5335 NW 87th Ave",
+    "city": "Doral",
+    "state": "FL",
+    "zip": "33178"
+  },
+  "summary": "October's mixer lands in Doral. Costumes optional and historically ignored, but the room is always a good one.",
+  "description": [
+    "The last Thursday of October puts us in Doral. Strong turnout from Miami-Dade firms and the West Kendall provider network.",
+    "Standard format. Sponsors cover the first round, Andrew handles introductions, and the room does the rest."
+  ],
+  "hostId": "andrew-miller",
+  "sponsorIds": ["selfcare-chiropractic", "express-funding", "the-mri-guys"],
+  "capacity": 120,
+  "attendingCount": 24,
+  "tags": ["Mixer", "Evening", "Doral"],
+  "eventbriteUrl": "https://www.eventbrite.com/o/millers-marketing-group-68684991773",
+  "attendees": [
+    { "name": "Luis Carvalho", "role": "attorney", "company": "Carvalho Accident Law" },
+    { "name": "Monique Etienne", "role": "provider", "company": "Doral Wellness Collective" },
+    { "name": "Stefan Adler", "role": "sponsor", "company": "Express Funding of America" },
+    { "name": "Rosa Villanueva", "role": "attorney", "company": "Villanueva Injury Group" }
+  ],
+  "comments": []
+}

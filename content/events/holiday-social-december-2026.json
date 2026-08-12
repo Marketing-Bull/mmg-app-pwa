@@ -1,0 +1,66 @@
+{
+  "slug": "holiday-social-december-2026",
+  "title": "MMG Holiday Social",
+  "seriesId": "signature-experiences",
+  "date": "2026-12-10",
+  "startTime": "18:30",
+  "endTime": "22:00",
+  "venue": {
+    "name": "Bokamper's Sports Bar & Grill",
+    "address": "1817 N Pine Island Rd",
+    "city": "Plantation",
+    "state": "FL",
+    "zip": "33324"
+  },
+  "summary": "The one night a year the whole community shows up at once. Dinner, awards, and a thank-you to the people who made the year work.",
+  "description": [
+    "Every December MMG closes the year with a single room instead of a rotating circuit. Attorneys, providers, sponsors, venues, and speakers from all twelve months in one place.",
+    "Dinner is served, the program is short, and the community awards are genuinely fun. Bring your team — this is the event people bring their teams to.",
+    "Space is capped and this one has sold out every year. RSVP early."
+  ],
+  "hostId": "andrew-miller",
+  "sponsorIds": [
+    "the-mri-guys",
+    "horizon-tbi",
+    "linder-diaz",
+    "sobe-rehab",
+    "lienstar",
+    "ceda-orthopedic-group"
+  ],
+  "capacity": 180,
+  "attendingCount": 63,
+  "tags": ["Signature", "Evening", "Plantation", "Sells out"],
+  "eventbriteUrl": "https://www.eventbrite.com/o/millers-marketing-group-68684991773",
+  "agenda": [
+    { "time": "18:30", "label": "Cocktail hour" },
+    { "time": "19:30", "label": "Dinner service" },
+    {
+      "time": "20:15",
+      "label": "Community awards",
+      "detail": "Voted on by attendees earlier in the month."
+    },
+    { "time": "20:45", "label": "Open floor" }
+  ],
+  "attendees": [
+    { "name": "Daniela Restrepo", "role": "attorney", "company": "Restrepo Injury Law" },
+    { "name": "Marcus Whitfield", "role": "provider", "company": "Beacon Spine & Rehab" },
+    { "name": "Elena Vasquez", "role": "attorney", "company": "Vasquez Injury Group" },
+    { "name": "Nadia Farouk", "role": "provider", "company": "Broward Neurodiagnostics" },
+    { "name": "Jenna Okafor", "role": "sponsor", "company": "LienStar" },
+    { "name": "Camille Fortier", "role": "attorney", "company": "Fortier Injury Law" },
+    { "name": "Isaiah Brooks", "role": "provider", "company": "Brooks Spine Institute" },
+    { "name": "Simone Clarke", "role": "provider", "company": "Clarke Wellness & Recovery" },
+    { "name": "Terrence Booker", "role": "attorney", "company": "Booker Law PA" },
+    { "name": "Serena Adeyemi", "role": "sponsor", "company": "InventCare Consulting Group" }
+  ],
+  "comments": [
+    {
+      "id": "c-hol-1",
+      "author": "Simone Clarke",
+      "role": "provider",
+      "company": "Clarke Wellness & Recovery",
+      "body": "Booking a table for six. Last year my whole front office came and they still talk about it.",
+      "createdAt": "2026-08-09T16:20:00-04:00"
+    }
+  ]
+}

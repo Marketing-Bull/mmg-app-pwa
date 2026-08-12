@@ -1,0 +1,32 @@
+{
+  "slug": "pi-networking-mixer-november-2026",
+  "title": "Personal Injury Professionals Networking Mixer",
+  "seriesId": "pi-networking-mixers",
+  "date": "2026-11-19",
+  "startTime": "18:00",
+  "endTime": "21:00",
+  "venue": {
+    "name": "Yard House",
+    "address": "320 San Lorenzo Ave",
+    "city": "Coral Gables",
+    "state": "FL",
+    "zip": "33146"
+  },
+  "summary": "Moved a week early so nobody is networking the night before Thanksgiving. Back at Yard House, which was the strongest room of the spring.",
+  "description": [
+    "The last Thursday of November falls on Thanksgiving, so this one moves up a week. Same room as the February mixer, which people asked us to come back to all year.",
+    "Expect a full house — the pre-holiday mixer runs bigger than a normal month."
+  ],
+  "hostId": "andrew-miller",
+  "sponsorIds": ["mario-lopez", "align-the-spine", "in-check", "horizon-tbi"],
+  "capacity": 130,
+  "attendingCount": 11,
+  "tags": ["Mixer", "Evening", "Coral Gables", "Date moved"],
+  "eventbriteUrl": "https://www.eventbrite.com/o/millers-marketing-group-68684991773",
+  "attendees": [
+    { "name": "Priya Raman", "role": "attorney", "company": "Raman & Cole PLLC" },
+    { "name": "Tomás Aguilar", "role": "provider", "company": "Coral Way Diagnostic Imaging" },
+    { "name": "Devon Wallace", "role": "sponsor", "company": "LienStar" }
+  ],
+  "comments": []
+}

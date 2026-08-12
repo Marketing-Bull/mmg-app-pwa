@@ -1,0 +1,54 @@
+[
+  {
+    "id": "community-partner",
+    "name": "Community Partner",
+    "price": "$500",
+    "cadence": "per event",
+    "tagline": "Get in the room and be recognized for supporting it.",
+    "accent": "sand",
+    "spotsLeft": 6,
+    "benefits": [
+      "Logo on the event flyer and app event page",
+      "2 reserved attendee spots",
+      "Verbal recognition from Andrew during the welcome",
+      "Tagged in the post-event recap on Instagram",
+      "Attendee list highlights shared after the event"
+    ]
+  },
+  {
+    "id": "featured-sponsor",
+    "name": "Featured Sponsor",
+    "price": "$1,500",
+    "cadence": "per event",
+    "tagline": "The table everyone walks past, plus time on the mic.",
+    "accent": "gold",
+    "featured": true,
+    "spotsLeft": 2,
+    "benefits": [
+      "Everything in Community Partner",
+      "Branded table or banner placement in the main room",
+      "3-minute speaking moment during the program",
+      "5 reserved attendee spots",
+      "Logo in the email invitation to the full MMG list",
+      "Dedicated sponsor spotlight post before the event",
+      "Featured placement in the app's sponsor wall for 30 days"
+    ]
+  },
+  {
+    "id": "presenting-partner",
+    "name": "Presenting Partner",
+    "price": "$6,000",
+    "cadence": "per quarter · 3 events",
+    "tagline": "Your name on the series, all quarter.",
+    "accent": "red",
+    "spotsLeft": 1,
+    "benefits": [
+      "Everything in Featured Sponsor, across three consecutive events",
+      "\"Presented by\" billing on flyers, app, and Eventbrite listings",
+      "10 reserved attendee spots per event",
+      "Co-branded Lunch & Learn topic of your choosing",
+      "Quarterly intro list: warm introductions to attendees who opt in",
+      "Year-round logo placement on the MMG app home screen"
+    ]
+  }
+]

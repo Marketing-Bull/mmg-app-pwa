@@ -1,0 +1,80 @@
+{
+  "slug": "pi-mixer-april-2026",
+  "title": "Personal Injury Attorneys & Medical Professionals Mixer",
+  "seriesId": "pi-networking-mixers",
+  "date": "2026-04-30",
+  "startTime": "18:00",
+  "endTime": "21:00",
+  "venue": {
+    "name": "The Cigar Room at Plantation",
+    "address": "1801 S University Dr",
+    "city": "Plantation",
+    "state": "FL",
+    "zip": "33324"
+  },
+  "summary": "An evening built around cigars, organic connections, and relaxed conversation for attorneys, medical providers, sponsors, and community partners.",
+  "description": [
+    "The April mixer traded the usual restaurant patio for a cigar lounge, and the pace of the room changed with it. Conversations ran longer and fewer people left at the first natural exit point.",
+    "It's now a fixture on the calendar. We'll be back in this format at least twice a year."
+  ],
+  "flyer": {
+    "src": "/assets/events/past/april-mixer-flyer.webp",
+    "alt": "Personal Injury Attorneys and Medical Professionals Mixer flyer, April 30 2026, Plantation"
+  },
+  "hostId": "andrew-miller",
+  "sponsorIds": ["sobe-rehab", "mlaw", "linder-diaz", "lienstar", "plantation-chiropractic"],
+  "capacity": 100,
+  "attendingCount": 91,
+  "tags": ["Mixer", "Evening", "Plantation"],
+  "attendees": [
+    { "name": "Hannah Goldstein", "role": "attorney", "company": "Goldstein & Reyes" },
+    { "name": "Darnell Pierce", "role": "provider", "company": "Pierce Orthopedic Associates" },
+    { "name": "Jonathan Reyes", "role": "attorney", "company": "Goldstein & Reyes" },
+    { "name": "Nadia Farouk", "role": "provider", "company": "Broward Neurodiagnostics" },
+    { "name": "Devon Wallace", "role": "sponsor", "company": "LienStar" },
+    { "name": "Victor Salazar", "role": "attorney", "company": "Salazar Accident Attorneys" },
+    { "name": "Ivette Corona", "role": "provider", "company": "Corona Physical Medicine" }
+  ],
+  "recap": {
+    "headline": "Slower room, longer conversations.",
+    "body": [
+      "Something about a cigar lounge makes people stop checking their phones. Ninety-one attendees and the room was still two-thirds full at 9:00, which almost never happens at a restaurant venue.",
+      "Sponsor recognition ran short on purpose. The point of the evening was the conversation, and it didn't need help."
+    ],
+    "photos": [
+      {
+        "src": "/assets/brand/relationship-conversation.webp",
+        "alt": "Two attendees deep in conversation at the April mixer",
+        "caption": "The kind of conversation the format was built for."
+      },
+      {
+        "src": "/assets/events/past/april-mixer-flyer.webp",
+        "alt": "The original April mixer flyer",
+        "caption": "The original flyer."
+      }
+    ],
+    "stats": [
+      { "value": "91", "label": "Attended" },
+      { "value": "5", "label": "Sponsors" },
+      { "value": "2/3", "label": "Still there at 9pm" }
+    ]
+  },
+  "comments": [
+    {
+      "id": "c-apr-1",
+      "author": "Hannah Goldstein",
+      "role": "attorney",
+      "company": "Goldstein & Reyes",
+      "body": "Best format MMG has run. Please do this one again — a lounge beats a loud restaurant every time when you're trying to actually talk to someone.",
+      "createdAt": "2026-05-01T09:45:00-04:00"
+    },
+    {
+      "id": "c-apr-2",
+      "author": "Darnell Pierce",
+      "role": "provider",
+      "company": "Pierce Orthopedic Associates",
+      "body": "Agreed. Also appreciated that the program was five minutes instead of thirty.",
+      "createdAt": "2026-05-01T14:20:00-04:00"
+    }
+  ]
+}

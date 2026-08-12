@@ -1,0 +1,97 @@
+{
+  "slug": "pi-networking-mixer-july-2026",
+  "title": "Personal Injury Professionals Networking Mixer",
+  "seriesId": "pi-networking-mixers",
+  "date": "2026-07-30",
+  "startTime": "18:00",
+  "endTime": "21:00",
+  "venue": {
+    "name": "Kapow Noodle Bar",
+    "address": "431 Plaza Real",
+    "city": "Boca Raton",
+    "state": "FL",
+    "zip": "33432"
+  },
+  "summary": "July's mixer at Mizner Park drew the largest Palm Beach County turnout of the year so far.",
+  "description": [
+    "The July stop pulled a heavier Palm Beach County crowd than usual — a lot of first-time attendees from firms north of Boca who had been watching the mixers from a distance.",
+    "The room ran long. We had the space until 9:00 and people were still talking at 9:40."
+  ],
+  "hero": {
+    "src": "/assets/brand/networking-hero.webp",
+    "alt": "Attorneys and medical providers in conversation at an MMG networking mixer"
+  },
+  "hostId": "andrew-miller",
+  "sponsorIds": ["the-mri-guys", "better-wellness-clinic", "earley-law-firm", "lienstar"],
+  "capacity": 120,
+  "attendingCount": 108,
+  "tags": ["Mixer", "Evening", "Boca Raton"],
+  "attendees": [
+    { "name": "Tessa Moreau", "role": "attorney", "company": "Moreau Injury Law" },
+    { "name": "Rafael Ibarra", "role": "provider", "company": "Ibarra Orthopedics" },
+    { "name": "Camille Fortier", "role": "attorney", "company": "Fortier Injury Law" },
+    { "name": "Damaris Ortiz", "role": "provider", "company": "Palm Beach Rehab Group" },
+    { "name": "Neil Abramson", "role": "sponsor", "company": "LienStar" },
+    { "name": "Gwen Ashford", "role": "attorney", "company": "Ashford Legal" },
+    { "name": "Beatriz Nunes", "role": "provider", "company": "Boca Diagnostic Imaging" },
+    { "name": "Omar Haddadin", "role": "attorney", "company": "Haddadin Law Group" }
+  ],
+  "recap": {
+    "headline": "108 in the room and nobody left early.",
+    "body": [
+      "Our biggest Palm Beach County turnout to date. Thirty-one first-time attendees, which is the highest share we've had at any mixer this year.",
+      "Thank you to The MRI Guys, Better Wellness Clinic, Earley Law Firm, and LienStar for making the evening possible — and to everyone who stayed past close to finish a conversation."
+    ],
+    "photos": [
+      {
+        "src": "/assets/brand/networking-hero.webp",
+        "alt": "Attendees talking in small groups at the July mixer",
+        "caption": "The room at 7:15, about an hour in."
+      },
+      {
+        "src": "/assets/brand/relationship-conversation.webp",
+        "alt": "Two professionals in conversation at an MMG event",
+        "caption": "Introductions turning into real conversations."
+      }
+    ],
+    "stats": [
+      { "value": "108", "label": "Attended" },
+      { "value": "31", "label": "First-timers" },
+      { "value": "4", "label": "Sponsors" }
+    ]
+  },
+  "comments": [
+    {
+      "id": "c-jul-1",
+      "author": "Tessa Moreau",
+      "role": "attorney",
+      "company": "Moreau Injury Law",
+      "body": "Best one yet. Met three providers I'd only ever emailed with. Rafael, good to finally put a face to the reports.",
+      "createdAt": "2026-07-31T09:14:00-04:00"
+    },
+    {
+      "id": "c-jul-2",
+      "author": "Rafael Ibarra",
+      "role": "provider",
+      "company": "Ibarra Orthopedics",
+      "body": "Likewise Tessa. Sent over that scheduling contact this morning.",
+      "createdAt": "2026-07-31T10:02:00-04:00"
+    },
+    {
+      "id": "c-jul-3",
+      "author": "Beatriz Nunes",
+      "role": "provider",
+      "company": "Boca Diagnostic Imaging",
+      "body": "Mizner Park was a great call. Easy parking, and being able to spill outside made a big difference to how the room felt.",
+      "createdAt": "2026-07-31T12:40:00-04:00"
+    },
+    {
+      "id": "c-jul-4",
+      "author": "Andrew Miller",
+      "role": "sponsor",
+      "company": "Miller's Marketing Group",
+      "body": "Appreciate everyone who came out. We'll be back in Boca in the spring — and August is Fort Lauderdale, waterfront patio. Details are up now.",
+      "createdAt": "2026-07-31T15:30:00-04:00"
+    }
+  ]
+}

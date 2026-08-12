@@ -1,0 +1,91 @@
+{
+  "slug": "pi-lunch-and-learn-may-2026",
+  "title": "PI Lunch & Learn",
+  "seriesId": "lunch-and-learn",
+  "date": "2026-05-08",
+  "startTime": "12:00",
+  "endTime": "14:00",
+  "venue": {
+    "name": "Rusty Pelican",
+    "address": "3201 Rickenbacker Cswy",
+    "city": "Miami",
+    "state": "FL",
+    "zip": "33149"
+  },
+  "summary": "A focused afternoon for attorneys, case managers, paralegals, and personal injury physicians to share knowledge, strengthen relationships, and learn together.",
+  "description": [
+    "The May session leaned harder into the operational side than usual, and the room responded. Case managers and paralegals made up nearly half the attendees — the people who actually move a file day to day.",
+    "The panel covered traumatic brain injury documentation in the personal injury setting, with a clinical walkthrough followed by a long, practical Q&A."
+  ],
+  "flyer": {
+    "src": "/assets/events/past/lunch-and-learn-flyer.webp",
+    "alt": "MMG PI Lunch and Learn flyer, May 2026, Miami"
+  },
+  "hostId": "andrew-miller",
+  "sponsorIds": ["ceda-orthopedic-group", "horizon-tbi", "toti-health"],
+  "capacity": 70,
+  "attendingCount": 64,
+  "tags": ["Lunch & Learn", "Educational", "Miami"],
+  "attendees": [
+    { "name": "Daniela Restrepo", "role": "attorney", "company": "Restrepo Injury Law" },
+    { "name": "Priya Raman", "role": "attorney", "company": "Raman & Cole PLLC" },
+    { "name": "Tomás Aguilar", "role": "provider", "company": "Coral Way Diagnostic Imaging" },
+    { "name": "Renee Duplessis", "role": "provider", "company": "Gulfstream Orthopedic Partners" },
+    { "name": "Sofia Marchetti", "role": "attorney", "company": "Marchetti Law" },
+    { "name": "Kevin Odom", "role": "provider", "company": "Odom Chiropractic & Wellness" },
+    { "name": "Alicia Bennett", "role": "provider", "company": "Bennett Physical Therapy" },
+    { "name": "Robert Chen", "role": "attorney", "company": "Chen Trial Group" }
+  ],
+  "recap": {
+    "headline": "Half the room was case managers. That changed the questions.",
+    "body": [
+      "The TBI panel was the draw, but the Q&A is what people remembered. When case managers and paralegals make up half a room, the questions stop being theoretical and start being about Tuesday.",
+      "Thanks to CEDA Orthopedic Group, Horizon TBI & Brain Center, and TOTI Health & Wellness for backing this one."
+    ],
+    "photos": [
+      {
+        "src": "/assets/events/recaps/lunch-and-learn-still.webp",
+        "alt": "Attendees seated during the MMG Lunch and Learn panel",
+        "caption": "Mid-panel, right before the Q&A opened up."
+      },
+      {
+        "src": "/assets/events/past/lunch-and-learn-flyer.webp",
+        "alt": "The original Lunch and Learn flyer",
+        "caption": "The original flyer."
+      }
+    ],
+    "videoUrl": "https://www.instagram.com/millers_marketing_group34/reel/DYKnPleRFrx/",
+    "videoLabel": "Watch the recap on Instagram",
+    "stats": [
+      { "value": "64", "label": "Attended" },
+      { "value": "47%", "label": "Case mgmt & paralegal" },
+      { "value": "3", "label": "Sponsors" }
+    ]
+  },
+  "comments": [
+    {
+      "id": "c-may-1",
+      "author": "Sofia Marchetti",
+      "role": "attorney",
+      "company": "Marchetti Law",
+      "body": "I sent two paralegals instead of coming myself and it was the right call. They came back with a checklist we've actually adopted.",
+      "createdAt": "2026-05-09T10:30:00-04:00"
+    },
+    {
+      "id": "c-may-2",
+      "author": "Renee Duplessis",
+      "role": "provider",
+      "company": "Gulfstream Orthopedic Partners",
+      "body": "More sessions aimed at the operational staff, please. They're the ones who make or break the file and they almost never get invited to anything.",
+      "createdAt": "2026-05-09T13:10:00-04:00"
+    },
+    {
+      "id": "c-may-3",
+      "author": "Andrew Miller",
+      "role": "sponsor",
+      "company": "Miller's Marketing Group",
+      "body": "Heard loud and clear. Building a session specifically for case managers into the fall calendar.",
+      "createdAt": "2026-05-10T09:00:00-04:00"
+    }
+  ]
+}

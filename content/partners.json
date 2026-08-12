@@ -1,0 +1,115 @@
+[
+  {
+    "id": "the-mri-guys",
+    "name": "The MRI Guys",
+    "category": "provider",
+    "logo": { "src": "/assets/partners/the-mri-guys.webp", "alt": "The MRI Guys" }
+  },
+  {
+    "id": "better-wellness-clinic",
+    "name": "Better Wellness Clinic",
+    "category": "provider",
+    "logo": {
+      "src": "/assets/partners/better-wellness-clinic.webp",
+      "alt": "Better Wellness Clinic"
+    }
+  },
+  {
+    "id": "ceda-orthopedic-group",
+    "name": "CEDA Orthopedic Group",
+    "category": "provider"
+  },
+  {
+    "id": "mario-lopez",
+    "name": "Law Offices of Mario E. Lopez",
+    "category": "attorney",
+    "logo": { "src": "/assets/partners/mario-lopez.webp", "alt": "Law Offices of Mario E. Lopez" }
+  },
+  {
+    "id": "sobe-rehab",
+    "name": "SOBE Rehab",
+    "category": "provider",
+    "logo": { "src": "/assets/partners/sobe-rehab.webp", "alt": "SOBE Rehab" }
+  },
+  {
+    "id": "toti-health",
+    "name": "TOTI Health & Wellness",
+    "category": "provider"
+  },
+  {
+    "id": "earley-law-firm",
+    "name": "Earley Law Firm",
+    "category": "attorney"
+  },
+  {
+    "id": "align-the-spine",
+    "name": "Align the Spine Chiropractic",
+    "category": "provider",
+    "logo": {
+      "src": "/assets/partners/align-the-spine-chiropractic.webp",
+      "alt": "Align the Spine Chiropractic and Wellness Center"
+    }
+  },
+  {
+    "id": "linder-diaz",
+    "name": "Linder Diaz",
+    "category": "attorney",
+    "logo": { "src": "/assets/partners/linder-diaz-logo.webp", "alt": "Linder Diaz" }
+  },
+  {
+    "id": "horizon-tbi",
+    "name": "Horizon TBI & Brain Center",
+    "category": "provider",
+    "logo": { "src": "/assets/partners/horizon.webp", "alt": "Horizon TBI & Brain Center" }
+  },
+  {
+    "id": "lienstar",
+    "name": "LienStar",
+    "category": "vendor"
+  },
+  {
+    "id": "in-check",
+    "name": "In-Check Health, Wellness & Beauty Centre",
+    "category": "provider",
+    "logo": {
+      "src": "/assets/partners/in-check.webp",
+      "alt": "In-Check Health, Wellness and Beauty Centre"
+    }
+  },
+  {
+    "id": "mlaw",
+    "name": "MLaw",
+    "category": "attorney"
+  },
+  {
+    "id": "plantation-chiropractic",
+    "name": "Plantation Chiropractic Services",
+    "category": "provider"
+  },
+  {
+    "id": "inventcare",
+    "name": "InventCare Consulting Group",
+    "category": "vendor"
+  },
+  {
+    "id": "ae-law",
+    "name": "AE Law",
+    "category": "attorney",
+    "logo": { "src": "/assets/partners/ae-law.webp", "alt": "AE Law" }
+  },
+  {
+    "id": "express-funding",
+    "name": "Express Funding of America",
+    "category": "vendor"
+  },
+  {
+    "id": "realign-chiropractic",
+    "name": "Realign Chiropractic Center",
+    "category": "provider"
+  },
+  {
+    "id": "selfcare-chiropractic",
+    "name": "Selfcare Chiropractic",
+    "category": "provider"
+  }
+]

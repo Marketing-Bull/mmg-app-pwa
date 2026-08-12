@@ -1,0 +1,31 @@
+[
+  {
+    "id": "pi-networking-mixers",
+    "name": "PI Networking Mixers",
+    "cadence": "Last Thursday each month",
+    "description": "Evening events bringing attorneys, medical providers, and industry professionals together for relationship-building and community. The room rotates across South Florida so the same faces meet new ones.",
+    "image": {
+      "src": "/assets/events/series/pi-mixer-schedule.webp",
+      "alt": "MMG monthly PI networking mixer schedule by city"
+    },
+    "accent": "red"
+  },
+  {
+    "id": "lunch-and-learn",
+    "name": "Lunch & Learn",
+    "cadence": "Second Friday each month",
+    "description": "Midday educational gatherings focused on useful conversations, collaboration, and actionable takeaways for the personal injury community. Lunch is covered, the panel is short, the conversation runs long.",
+    "image": {
+      "src": "/assets/events/series/lunch-and-learn-schedule.webp",
+      "alt": "MMG Lunch and Learn schedule"
+    },
+    "accent": "teal"
+  },
+  {
+    "id": "signature-experiences",
+    "name": "Signature Experiences",
+    "cadence": "A few times a year",
+    "description": "Bowling nights, pickleball, golf, and holiday socials. Relaxed settings where relationships develop without anyone having to work a room.",
+    "accent": "mango"
+  }
+]

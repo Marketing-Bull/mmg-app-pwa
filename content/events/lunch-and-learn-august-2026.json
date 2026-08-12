@@ -1,0 +1,86 @@
+{
+  "slug": "lunch-and-learn-august-2026",
+  "title": "PI Lunch & Learn: Documenting Soft Tissue Cases",
+  "seriesId": "lunch-and-learn",
+  "date": "2026-08-14",
+  "startTime": "12:00",
+  "endTime": "14:00",
+  "venue": {
+    "name": "Novecento Brickell",
+    "address": "1414 Brickell Ave",
+    "city": "Miami",
+    "state": "FL",
+    "zip": "33131"
+  },
+  "summary": "A working lunch on the records that actually move a soft tissue case, with a provider and an attorney taking the same file from intake to demand.",
+  "description": [
+    "Soft tissue claims live or die on documentation, and most of the gaps happen in the first three weeks. This session puts a treating provider and a plaintiff's attorney at the same table to walk one anonymised file end to end.",
+    "Expect specifics: what the initial exam note needs to say, how gaps in treatment get characterised, and the language adjusters look for when they decide what a case is worth. Bring a question about a file you're working.",
+    "Lunch is covered. The panel runs 35 minutes and the room stays open until 2:00 for conversation."
+  ],
+  "hostId": "andrew-miller",
+  "sponsorIds": ["the-mri-guys", "align-the-spine", "linder-diaz"],
+  "capacity": 60,
+  "attendingCount": 47,
+  "tags": ["Lunch & Learn", "Educational", "Miami"],
+  "eventbriteUrl": "https://www.eventbrite.com/o/millers-marketing-group-68684991773",
+  "agenda": [
+    {
+      "time": "12:00",
+      "label": "Doors and lunch service",
+      "detail": "Grab a plate, find a table, name tags at the door."
+    },
+    {
+      "time": "12:30",
+      "label": "Welcome from Andrew",
+      "detail": "Sponsor recognition and introductions around the room."
+    },
+    {
+      "time": "12:40",
+      "label": "Panel: one file, start to finish",
+      "detail": "Intake notes, imaging decisions, treatment gaps, demand package."
+    },
+    { "time": "13:15", "label": "Open Q&A", "detail": "Bring a real question about a real file." },
+    { "time": "13:30", "label": "Open networking", "detail": "Room stays yours until 2:00." }
+  ],
+  "attendees": [
+    { "name": "Daniela Restrepo", "role": "attorney", "company": "Restrepo Injury Law" },
+    { "name": "Marcus Whitfield", "role": "provider", "company": "Beacon Spine & Rehab" },
+    { "name": "Priya Raman", "role": "attorney", "company": "Raman & Cole PLLC" },
+    { "name": "Tomás Aguilar", "role": "provider", "company": "Coral Way Diagnostic Imaging" },
+    { "name": "Jenna Okafor", "role": "sponsor", "company": "LienStar" },
+    { "name": "Robert Chen", "role": "attorney", "company": "Chen Trial Group" },
+    { "name": "Alicia Bennett", "role": "provider", "company": "Bennett Physical Therapy" },
+    { "name": "Victor Salazar", "role": "attorney", "company": "Salazar Accident Attorneys" },
+    { "name": "Renee Duplessis", "role": "provider", "company": "Gulfstream Orthopedic Partners" },
+    { "name": "Andre Boucher", "role": "sponsor", "company": "Express Funding of America" },
+    { "name": "Sofia Marchetti", "role": "attorney", "company": "Marchetti Law" },
+    { "name": "Kevin Odom", "role": "provider", "company": "Odom Chiropractic & Wellness" }
+  ],
+  "comments": [
+    {
+      "id": "c-ll-aug-1",
+      "author": "Priya Raman",
+      "role": "attorney",
+      "company": "Raman & Cole PLLC",
+      "body": "Is the panel covering pre-suit demand timing, or mostly the treatment side? Happy either way, just want to know what to bring.",
+      "createdAt": "2026-08-06T15:12:00-04:00"
+    },
+    {
+      "id": "c-ll-aug-2",
+      "author": "Andrew Miller",
+      "role": "sponsor",
+      "company": "Miller's Marketing Group",
+      "body": "Both, Priya. Marcus is walking the clinical side and Daniela picks it up at the demand package. Bring the question.",
+      "createdAt": "2026-08-06T17:44:00-04:00"
+    },
+    {
+      "id": "c-ll-aug-3",
+      "author": "Kevin Odom",
+      "role": "provider",
+      "company": "Odom Chiropractic & Wellness",
+      "body": "Parking tip for anyone new to this one — the garage on SE 14th is validated, much easier than street parking on Brickell at noon.",
+      "createdAt": "2026-08-08T09:30:00-04:00"
+    }
+  ]
+}

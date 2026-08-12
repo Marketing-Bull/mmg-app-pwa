@@ -16,21 +16,44 @@ npm run build && npm start
 
 No environment variables are required to run it. See `.env.example` for the two optional ones.
 
+### Before you open a PR
+
+```bash
+npm run verify       # format, lint, types, build, smoke — same as CI
+```
+
+| Script              | What it does                                                     |
+| ------------------- | ---------------------------------------------------------------- |
+| `npm run lint`      | ESLint (flat config, `next/core-web-vitals` + `next/typescript`) |
+| `npm run typecheck` | `tsc --noEmit`                                                   |
+| `npm run format`    | Prettier, with Tailwind class sorting                            |
+| `npm run smoke`     | Builds are not enough — see below                                |
+
+**The smoke test.** `next build` can go green while a button quietly disappears
+from the rendered HTML — a server component's child getting deferred to an RSC
+chunk that never lands will do exactly that, and it happened during this build.
+`scripts/smoke.mjs` boots the production server on a free port and asserts every
+route returns 200 and still contains its key copy. It picks its own port and
+refuses to run if something is already listening, so it can never pass against
+a stale server.
+
+CI (`.github/workflows/ci.yml`) runs the same sequence on every PR.
+
 ---
 
 ## Routes
 
-| Route | What it is |
-| --- | --- |
-| `/` | Home — hero, next event, value props, series, recaps, host, partners |
-| `/events` | Upcoming mixers and Lunch & Learns |
+| Route            | What it is                                                              |
+| ---------------- | ----------------------------------------------------------------------- |
+| `/`              | Home — hero, next event, value props, series, recaps, host, partners    |
+| `/events`        | Upcoming mixers and Lunch & Learns                                      |
 | `/events/[slug]` | Event detail — venue, agenda, host, RSVP, attendees, sponsors, comments |
-| `/events/past` | Archive of past events with photo recaps and video highlights |
-| `/sponsor` | Three sponsorship tiers with interest forms |
-| `/discuss` | Community hub — standalone threads plus recent event conversation |
-| `/discuss/[id]` | A single thread with replies |
-| `/contact` | Contact channels, message form, host bio, demo reset |
-| `/offline` | Shown by the service worker when a page isn't cached |
+| `/events/past`   | Archive of past events with photo recaps and video highlights           |
+| `/sponsor`       | Three sponsorship tiers with interest forms                             |
+| `/discuss`       | Community hub — standalone threads plus recent event conversation       |
+| `/discuss/[id]`  | A single thread with replies                                            |
+| `/contact`       | Contact channels, message form, host bio, demo reset                    |
+| `/offline`       | Shown by the service worker when a page isn't cached                    |
 
 Bottom tab bar: **Home · Events · Discuss · Sponsor · Contact**.
 
@@ -108,16 +131,16 @@ Verify a change to the worker with **DevTools → Application → Service Worker
 
 Design tokens are inherited verbatim from the MMG marketing site's `:root`, so the app and the site read as one brand.
 
-| Token | Value | Use |
-| --- | --- | --- |
-| `--color-espresso` | `#261d19` | Text, dark panels |
-| `--color-red` | `#a52e2a` | Primary actions, eyebrows |
-| `--color-red-dark` | `#76211f` | Hover |
-| `--color-gold` | `#f2c94c` | Featured sponsor tier, accents on dark |
-| `--color-cream` / `--color-paper` | `#fff7e8` / `#fffdf8` | Page and card surfaces |
-| `--color-sand` / `--color-sand-light` | `#eadbc4` / `#f4eadd` | Chips, secondary fills |
-| `--color-teal` | `#2e7772` | Confirmations, provider role |
-| `--color-muted` | `#6c5e56` | Secondary text |
+| Token                                 | Value                 | Use                                    |
+| ------------------------------------- | --------------------- | -------------------------------------- |
+| `--color-espresso`                    | `#261d19`             | Text, dark panels                      |
+| `--color-red`                         | `#a52e2a`             | Primary actions, eyebrows              |
+| `--color-red-dark`                    | `#76211f`             | Hover                                  |
+| `--color-gold`                        | `#f2c94c`             | Featured sponsor tier, accents on dark |
+| `--color-cream` / `--color-paper`     | `#fff7e8` / `#fffdf8` | Page and card surfaces                 |
+| `--color-sand` / `--color-sand-light` | `#eadbc4` / `#f4eadd` | Chips, secondary fills                 |
+| `--color-teal`                        | `#2e7772`             | Confirmations, provider role           |
+| `--color-muted`                       | `#6c5e56`             | Secondary text                         |
 
 Type is **Fraunces** (display) over **DM Sans** (UI) — the same pairing as the site, self-hosted as latin-subset variable fonts (~104KB total). No runtime request to Google, so the shell still renders in brand type when opened offline from the home screen.
 

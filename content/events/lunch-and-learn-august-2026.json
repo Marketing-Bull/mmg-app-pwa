@@ -25,9 +25,21 @@
   "tags": ["Lunch & Learn", "Educational", "Miami"],
   "eventbriteUrl": "https://www.eventbrite.com/o/millers-marketing-group-68684991773",
   "agenda": [
-    { "time": "12:00", "label": "Doors and lunch service", "detail": "Grab a plate, find a table, name tags at the door." },
-    { "time": "12:30", "label": "Welcome from Andrew", "detail": "Sponsor recognition and introductions around the room." },
-    { "time": "12:40", "label": "Panel: one file, start to finish", "detail": "Intake notes, imaging decisions, treatment gaps, demand package." },
+    {
+      "time": "12:00",
+      "label": "Doors and lunch service",
+      "detail": "Grab a plate, find a table, name tags at the door."
+    },
+    {
+      "time": "12:30",
+      "label": "Welcome from Andrew",
+      "detail": "Sponsor recognition and introductions around the room."
+    },
+    {
+      "time": "12:40",
+      "label": "Panel: one file, start to finish",
+      "detail": "Intake notes, imaging decisions, treatment gaps, demand package."
+    },
     { "time": "13:15", "label": "Open Q&A", "detail": "Bring a real question about a real file." },
     { "time": "13:30", "label": "Open networking", "detail": "Room stays yours until 2:00." }
   ],

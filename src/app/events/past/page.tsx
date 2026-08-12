@@ -26,7 +26,7 @@ export default function PastEventsPage() {
           <h1 className="mt-1.5 font-serif text-[2rem] leading-[0.98] font-semibold tracking-[-0.045em] text-balance">
             The flyer starts the invitation. The recap shows the connection.
           </h1>
-          <p className="mt-3 text-[0.88rem] leading-relaxed text-muted text-pretty">
+          <p className="text-muted mt-3 text-[0.88rem] leading-relaxed text-pretty">
             Every past event keeps its original flyer and brings the gathering back to life through
             photos, sponsor recognition, and a short recap of what happened in the room.
           </p>
@@ -42,7 +42,7 @@ export default function PastEventsPage() {
                 <li key={event.slug}>
                   <Link
                     href={`/events/${event.slug}`}
-                    className="mmg-press block overflow-hidden rounded-card border border-[var(--line)] bg-paper shadow-card transition-shadow hover:shadow-lift"
+                    className="mmg-press rounded-card bg-paper shadow-card hover:shadow-lift block overflow-hidden border border-[var(--line)] transition-shadow"
                   >
                     <div className="relative">
                       <EventArt
@@ -53,19 +53,19 @@ export default function PastEventsPage() {
                       />
                       <div
                         aria-hidden
-                        className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-espresso/85 to-transparent"
+                        className="from-espresso/85 absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t to-transparent"
                       />
                       <div className="absolute inset-x-0 bottom-0 flex flex-wrap items-center gap-1.5 p-3">
-                        <span className="rounded-full bg-paper/95 px-2.5 py-1 text-[0.65rem] font-bold tracking-[0.08em] text-espresso uppercase backdrop-blur">
+                        <span className="bg-paper/95 text-espresso rounded-full px-2.5 py-1 text-[0.65rem] font-bold tracking-[0.08em] uppercase backdrop-blur">
                           {formatFullDate(event.date)}
                         </span>
                         {event.flyer ? (
-                          <span className="rounded-full bg-espresso/70 px-2.5 py-1 text-[0.65rem] font-bold tracking-[0.06em] text-cream uppercase backdrop-blur">
+                          <span className="bg-espresso/70 text-cream rounded-full px-2.5 py-1 text-[0.65rem] font-bold tracking-[0.06em] uppercase backdrop-blur">
                             Flyer archive
                           </span>
                         ) : null}
                         {event.recap?.videoUrl ? (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-red px-2.5 py-1 text-[0.65rem] font-bold tracking-[0.06em] text-cream uppercase">
+                          <span className="bg-red text-cream inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[0.65rem] font-bold tracking-[0.06em] uppercase">
                             <Play className="size-3 fill-current" />
                             Video recap
                           </span>
@@ -78,17 +78,17 @@ export default function PastEventsPage() {
                       <h2 className="mt-2 font-serif text-[1.3rem] leading-[1.08] font-semibold tracking-[-0.035em] text-balance">
                         {event.title}
                       </h2>
-                      <p className="mt-1 text-[0.78rem] text-muted">
+                      <p className="text-muted mt-1 text-[0.78rem]">
                         {event.venue.name} · {venueLine(event.venue)}
                       </p>
 
                       {event.recap ? (
-                        <p className="mt-2.5 font-serif text-[1rem] leading-snug tracking-[-0.02em] text-espresso">
+                        <p className="text-espresso mt-2.5 font-serif text-[1rem] leading-snug tracking-[-0.02em]">
                           {event.recap.headline}
                         </p>
                       ) : null}
 
-                      <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[0.75rem] text-muted">
+                      <div className="text-muted mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[0.75rem]">
                         <span className="inline-flex items-center gap-1.5">
                           <Users className="size-3.5" />
                           {event.attendingCount} attended
@@ -109,7 +109,7 @@ export default function PastEventsPage() {
                           {photos.slice(0, 3).map((photo) => (
                             <div
                               key={photo.src}
-                              className="relative aspect-square w-16 overflow-hidden rounded-xl bg-sand-light"
+                              className="bg-sand-light relative aspect-square w-16 overflow-hidden rounded-xl"
                             >
                               <Image
                                 src={photo.src}

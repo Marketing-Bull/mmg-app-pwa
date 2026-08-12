@@ -27,9 +27,9 @@ export default function EventsPage() {
           <h1 className="mt-1.5 font-serif text-[2rem] leading-[0.98] font-semibold tracking-[-0.045em] text-balance">
             Come meet the personal injury community.
           </h1>
-          <p className="mt-3 text-[0.88rem] leading-relaxed text-muted text-pretty">
-            MMG events are designed to make professional networking feel natural. Expect a
-            welcoming room, real conversation, and an experience people enjoy returning to.
+          <p className="text-muted mt-3 text-[0.88rem] leading-relaxed text-pretty">
+            MMG events are designed to make professional networking feel natural. Expect a welcoming
+            room, real conversation, and an experience people enjoy returning to.
           </p>
         </div>
 
@@ -56,13 +56,13 @@ export default function EventsPage() {
             {seriesList.map((series) => (
               <li
                 key={series.id}
-                className="rounded-card border border-[var(--line)] bg-paper p-4 shadow-card"
+                className="rounded-card bg-paper shadow-card border border-[var(--line)] p-4"
               >
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <SeriesPill series={series} />
-                  <span className="text-[0.72rem] font-semibold text-muted">{series.cadence}</span>
+                  <span className="text-muted text-[0.72rem] font-semibold">{series.cadence}</span>
                 </div>
-                <p className="mt-2.5 text-[0.84rem] leading-relaxed text-muted text-pretty">
+                <p className="text-muted mt-2.5 text-[0.84rem] leading-relaxed text-pretty">
                   {series.description}
                 </p>
               </li>
@@ -73,24 +73,24 @@ export default function EventsPage() {
         <Section className="pt-0">
           <Link
             href="/events/past"
-            className="mmg-press flex items-center gap-3 rounded-card border border-[var(--line)] bg-paper p-4 shadow-card"
+            className="mmg-press rounded-card bg-paper shadow-card flex items-center gap-3 border border-[var(--line)] p-4"
           >
             <div className="min-w-0 flex-1">
               <p className="mmg-eyebrow">Past events</p>
               <p className="mt-1 font-serif text-[1.2rem] leading-tight font-semibold tracking-[-0.03em]">
                 Photo recaps &amp; video highlights
               </p>
-              <p className="mt-1 text-[0.78rem] text-muted">
+              <p className="text-muted mt-1 text-[0.78rem]">
                 {pastEvents.length} gatherings in the archive
               </p>
             </div>
-            <ArrowRight className="size-5 shrink-0 text-red" />
+            <ArrowRight className="text-red size-5 shrink-0" />
           </Link>
         </Section>
 
         <Section className="pt-0 pb-4">
-          <div className="rounded-card border border-[var(--line)] bg-sand-light p-4 text-center">
-            <p className="text-[0.85rem] leading-relaxed text-muted text-pretty">
+          <div className="rounded-card bg-sand-light border border-[var(--line)] p-4 text-center">
+            <p className="text-muted text-[0.85rem] leading-relaxed text-pretty">
               Dates are also posted on Eventbrite as they open.
             </p>
             <Button asChild variant="outline" size="sm" className="mt-3">

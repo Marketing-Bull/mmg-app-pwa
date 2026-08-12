@@ -79,22 +79,22 @@ export function InstallPrompt() {
       className="fixed inset-x-0 z-50 px-4"
       style={{ bottom: "calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px) + 0.75rem)" }}
     >
-      <div className="mx-auto flex max-w-[26rem] items-center gap-3 rounded-2xl border border-[var(--line)] bg-paper px-3.5 py-3 shadow-mmg">
-        <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-espresso">
+      <div className="bg-paper shadow-mmg mx-auto flex max-w-[26rem] items-center gap-3 rounded-2xl border border-[var(--line)] px-3.5 py-3">
+        <span className="bg-espresso grid size-10 shrink-0 place-items-center rounded-xl">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/assets/brand/mmg-official-logo.webp" alt="" className="h-5 w-auto" />
         </span>
         <div className="min-w-0 flex-1">
           <p className="text-[0.84rem] leading-snug font-semibold">Add MMG to your home screen</p>
           {showIosTip ? (
-            <p className="mt-0.5 flex flex-wrap items-center gap-x-1 text-[0.75rem] leading-snug text-muted">
+            <p className="text-muted mt-0.5 flex flex-wrap items-center gap-x-1 text-[0.75rem] leading-snug">
               Tap <Share className="inline size-3.5" /> then
-              <span className="inline-flex items-center gap-0.5 font-medium text-espresso">
+              <span className="text-espresso inline-flex items-center gap-0.5 font-medium">
                 <SquarePlus className="size-3.5" /> Add to Home Screen
               </span>
             </p>
           ) : (
-            <p className="mt-0.5 text-[0.75rem] leading-snug text-muted">
+            <p className="text-muted mt-0.5 text-[0.75rem] leading-snug">
               Opens full screen, works offline.
             </p>
           )}
@@ -108,7 +108,7 @@ export function InstallPrompt() {
           type="button"
           onClick={dismiss}
           aria-label="Dismiss"
-          className="mmg-press grid size-8 shrink-0 place-items-center rounded-full text-muted hover:bg-sand-light"
+          className="mmg-press text-muted hover:bg-sand-light grid size-8 shrink-0 place-items-center rounded-full"
         >
           <X className="size-4" />
         </button>

@@ -14,14 +14,14 @@ export default function OfflinePage() {
   return (
     <>
       <AppBar title="Offline" />
-      <main className="flex min-h-[70dvh] flex-col items-center justify-center px-6 pb-tabbar text-center">
-        <span className="grid size-16 place-items-center rounded-full bg-sand-light">
-          <WifiOff className="size-7 text-muted" />
+      <main className="pb-tabbar flex min-h-[70dvh] flex-col items-center justify-center px-6 text-center">
+        <span className="bg-sand-light grid size-16 place-items-center rounded-full">
+          <WifiOff className="text-muted size-7" />
         </span>
         <h1 className="mt-5 font-serif text-[1.7rem] leading-tight font-semibold tracking-[-0.04em]">
           You&rsquo;re offline.
         </h1>
-        <p className="mt-2.5 max-w-[22rem] text-[0.88rem] leading-relaxed text-muted text-pretty">
+        <p className="text-muted mt-2.5 max-w-[22rem] text-[0.88rem] leading-relaxed text-pretty">
           Pages you&rsquo;ve already opened are still available. Reconnect to load the rest — or
           call MMG at {site.phone}.
         </p>

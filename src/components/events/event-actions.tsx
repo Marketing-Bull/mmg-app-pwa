@@ -56,14 +56,14 @@ export function EventActions({ event, isPast }: { event: MMGEvent; isPast: boole
             Share this recap
           </Button>
         ) : going ? (
-          <div className="rounded-card border border-teal/35 bg-teal/[0.07] p-3.5">
+          <div className="rounded-card border-teal/35 bg-teal/[0.07] border p-3.5">
             <div className="flex items-center gap-2.5">
-              <span className="grid size-9 shrink-0 place-items-center rounded-full bg-teal text-cream">
+              <span className="bg-teal text-cream grid size-9 shrink-0 place-items-center rounded-full">
                 <Check className="size-5 stroke-[3]" />
               </span>
               <div className="min-w-0 flex-1">
-                <p className="text-[0.9rem] font-semibold text-teal-dark">You&rsquo;re going</p>
-                <p className="text-[0.75rem] text-muted">
+                <p className="text-teal-dark text-[0.9rem] font-semibold">You&rsquo;re going</p>
+                <p className="text-muted text-[0.75rem]">
                   Your spot is held. Name tags are at the door.
                 </p>
               </div>

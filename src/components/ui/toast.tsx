@@ -61,7 +61,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
           return (
             <div
               key={item.id}
-              className="pointer-events-auto flex w-full max-w-[26rem] items-start gap-3 rounded-2xl bg-espresso px-3.5 py-3 text-cream shadow-mmg animate-[mmg-toast-in_0.32s_var(--ease-out-soft)]"
+              className="bg-espresso text-cream shadow-mmg pointer-events-auto flex w-full max-w-[26rem] animate-[mmg-toast-in_0.32s_var(--ease-out-soft)] items-start gap-3 rounded-2xl px-3.5 py-3"
             >
               <span className={cn("grid size-8 shrink-0 place-items-center rounded-full", chip)}>
                 <Icon className="size-[1.05rem]" />
@@ -69,7 +69,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
               <div className="min-w-0 flex-1 pt-0.5">
                 <p className="text-[0.87rem] leading-snug font-semibold">{item.title}</p>
                 {item.body ? (
-                  <p className="mt-0.5 text-[0.78rem] leading-snug text-cream/70">{item.body}</p>
+                  <p className="text-cream/70 mt-0.5 text-[0.78rem] leading-snug">{item.body}</p>
                 ) : null}
               </div>
             </div>

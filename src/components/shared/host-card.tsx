@@ -5,7 +5,7 @@ import type { Host } from "@/lib/types";
 export function HostCard({ host, compact }: { host: Host; compact?: boolean }) {
   if (compact) {
     return (
-      <div className="flex items-center gap-3 rounded-card border border-[var(--line)] bg-paper p-3.5 shadow-card">
+      <div className="rounded-card bg-paper shadow-card flex items-center gap-3 border border-[var(--line)] p-3.5">
         <Image
           src={host.portrait.src}
           alt={host.portrait.alt}
@@ -15,15 +15,15 @@ export function HostCard({ host, compact }: { host: Host; compact?: boolean }) {
           className="size-14 shrink-0 rounded-full object-cover"
         />
         <div className="min-w-0 flex-1">
-          <p className="text-[0.7rem] font-bold tracking-[0.1em] text-red uppercase">Hosted by</p>
+          <p className="text-red text-[0.7rem] font-bold tracking-[0.1em] uppercase">Hosted by</p>
           <p className="text-[0.95rem] font-semibold">{host.name}</p>
-          <p className="truncate text-[0.76rem] text-muted">{host.title}</p>
+          <p className="text-muted truncate text-[0.76rem]">{host.title}</p>
         </div>
         {host.phone ? (
           <a
             href={`tel:${host.phone.replace(/\D/g, "")}`}
             aria-label={`Call ${host.name}`}
-            className="mmg-press grid size-10 shrink-0 place-items-center rounded-full bg-sand-light text-espresso hover:bg-sand"
+            className="mmg-press bg-sand-light text-espresso hover:bg-sand grid size-10 shrink-0 place-items-center rounded-full"
           >
             <Phone className="size-[1.05rem]" />
           </a>
@@ -33,7 +33,7 @@ export function HostCard({ host, compact }: { host: Host; compact?: boolean }) {
   }
 
   return (
-    <div className="overflow-hidden rounded-card border border-[var(--line)] bg-paper shadow-card">
+    <div className="rounded-card bg-paper shadow-card overflow-hidden border border-[var(--line)]">
       <div className="flex gap-4 p-4">
         <Image
           src={host.portrait.src}
@@ -48,40 +48,40 @@ export function HostCard({ host, compact }: { host: Host; compact?: boolean }) {
           <h3 className="mt-1 font-serif text-[1.35rem] leading-tight font-semibold tracking-[-0.035em]">
             {host.name}
           </h3>
-          <p className="mt-0.5 text-[0.78rem] text-muted">{host.title}</p>
+          <p className="text-muted mt-0.5 text-[0.78rem]">{host.title}</p>
         </div>
       </div>
 
       <div className="space-y-2.5 px-4 pb-1">
         {host.bio.map((paragraph) => (
-          <p key={paragraph} className="text-[0.86rem] leading-relaxed text-muted text-pretty">
+          <p key={paragraph} className="text-muted text-[0.86rem] leading-relaxed text-pretty">
             {paragraph}
           </p>
         ))}
       </div>
 
       {host.quote ? (
-        <blockquote className="mx-4 my-4 border-l-2 border-red pl-3.5 font-serif text-[1.05rem] leading-snug tracking-[-0.02em] text-espresso">
+        <blockquote className="border-red text-espresso mx-4 my-4 border-l-2 pl-3.5 font-serif text-[1.05rem] leading-snug tracking-[-0.02em]">
           &ldquo;{host.quote}&rdquo;
         </blockquote>
       ) : null}
 
-      <div className="flex flex-wrap gap-2 border-t border-[var(--line)] bg-cream/60 p-3.5">
+      <div className="bg-cream/60 flex flex-wrap gap-2 border-t border-[var(--line)] p-3.5">
         {host.phone ? (
           <a
             href={`tel:${host.phone.replace(/\D/g, "")}`}
-            className="mmg-press inline-flex items-center gap-1.5 rounded-full bg-paper px-3 py-2 text-[0.78rem] font-semibold shadow-card"
+            className="mmg-press bg-paper shadow-card inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-[0.78rem] font-semibold"
           >
-            <Phone className="size-3.5 text-red" />
+            <Phone className="text-red size-3.5" />
             {host.phone}
           </a>
         ) : null}
         {host.email ? (
           <a
             href={`mailto:${host.email}`}
-            className="mmg-press inline-flex items-center gap-1.5 rounded-full bg-paper px-3 py-2 text-[0.78rem] font-semibold shadow-card"
+            className="mmg-press bg-paper shadow-card inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-[0.78rem] font-semibold"
           >
-            <Mail className="size-3.5 text-red" />
+            <Mail className="text-red size-3.5" />
             Email
           </a>
         ) : null}
@@ -90,9 +90,9 @@ export function HostCard({ host, compact }: { host: Host; compact?: boolean }) {
             href={host.instagram}
             target="_blank"
             rel="noreferrer"
-            className="mmg-press inline-flex items-center gap-1.5 rounded-full bg-paper px-3 py-2 text-[0.78rem] font-semibold shadow-card"
+            className="mmg-press bg-paper shadow-card inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-[0.78rem] font-semibold"
           >
-            <Instagram className="size-3.5 text-red" />
+            <Instagram className="text-red size-3.5" />
             Instagram
           </a>
         ) : null}

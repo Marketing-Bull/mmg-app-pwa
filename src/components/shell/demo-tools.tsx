@@ -23,19 +23,19 @@ export function DemoTools() {
   const total = stats.reduce((sum, stat) => sum + stat.value, 0);
 
   return (
-    <div className="rounded-card border border-[var(--line)] bg-paper p-4 shadow-card">
-      <p className="text-[0.85rem] leading-relaxed text-muted text-pretty">
+    <div className="rounded-card bg-paper shadow-card border border-[var(--line)] p-4">
+      <p className="text-muted text-[0.85rem] leading-relaxed text-pretty">
         Everything you do in this app — RSVPs, comments, saved events — is stored on this device
         only. Nothing is shared with other visitors.
       </p>
 
       <ul className="mt-3.5 grid grid-cols-4 gap-2">
         {stats.map((stat) => (
-          <li key={stat.label} className="rounded-xl bg-cream px-1 py-2.5 text-center">
-            <p className="mmg-display text-[1.3rem] text-espresso tabular-nums">
+          <li key={stat.label} className="bg-cream rounded-xl px-1 py-2.5 text-center">
+            <p className="mmg-display text-espresso text-[1.3rem] tabular-nums">
               {hydrated ? stat.value : 0}
             </p>
-            <p className="text-[0.62rem] leading-tight font-semibold text-muted">{stat.label}</p>
+            <p className="text-muted text-[0.62rem] leading-tight font-semibold">{stat.label}</p>
           </li>
         ))}
       </ul>

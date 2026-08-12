@@ -23,7 +23,7 @@ export function SeriesPill({ series, className }: { series: Series; className?: 
 
 export function Tag({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-flex items-center rounded-full border border-[var(--line)] bg-sand-light px-2.5 py-[0.25rem] text-[0.7rem] font-medium text-muted">
+    <span className="bg-sand-light text-muted inline-flex items-center rounded-full border border-[var(--line)] px-2.5 py-[0.25rem] text-[0.7rem] font-medium">
       {children}
     </span>
   );

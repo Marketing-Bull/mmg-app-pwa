@@ -24,10 +24,10 @@ export function AppBar({
   return (
     <header
       className={cn(
-        "sticky top-0 z-30 pt-safe transition-colors",
+        "pt-safe sticky top-0 z-30 transition-colors",
         transparent
           ? "bg-transparent"
-          : "border-b border-[var(--line)] bg-cream/88 backdrop-blur-xl",
+          : "bg-cream/88 border-b border-[var(--line)] backdrop-blur-xl",
       )}
     >
       <div className="mx-auto flex h-14 max-w-2xl items-center gap-2 px-3">
@@ -50,7 +50,7 @@ export function AppBar({
           </button>
         ) : (
           <Link href="/" className="mmg-press flex shrink-0 items-center gap-2 pl-1">
-            <span className="grid size-9 place-items-center rounded-xl bg-espresso">
+            <span className="bg-espresso grid size-9 place-items-center rounded-xl">
               <Image
                 src="/assets/brand/mmg-official-logo.webp"
                 alt=""

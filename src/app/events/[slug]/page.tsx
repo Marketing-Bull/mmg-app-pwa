@@ -22,13 +22,7 @@ import {
   site,
   upcomingEvents,
 } from "@/lib/content";
-import {
-  formatFullDate,
-  formatTimeRange,
-  mapsUrl,
-  relativeToToday,
-  venueLine,
-} from "@/lib/format";
+import { formatFullDate, formatTimeRange, mapsUrl, relativeToToday, venueLine } from "@/lib/format";
 import { eventCommentKey } from "@/lib/keys";
 
 export function generateStaticParams() {
@@ -72,7 +66,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
       <main className="pb-tabbar">
         {/* Hero */}
         <div className="px-4 pt-3">
-          <div className="overflow-hidden rounded-card border border-[var(--line)] shadow-card">
+          <div className="rounded-card shadow-card overflow-hidden border border-[var(--line)]">
             <EventArt
               event={event}
               series={series}
@@ -85,7 +79,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
         <div className="px-4 pt-5">
           <div className="flex flex-wrap items-center gap-2">
             {series ? <SeriesPill series={series} /> : null}
-            <span className="text-[0.72rem] font-semibold text-muted">
+            <span className="text-muted text-[0.72rem] font-semibold">
               {relativeToToday(event.date)}
             </span>
           </div>
@@ -93,27 +87,27 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
           <h1 className="mt-2.5 font-serif text-[2rem] leading-[0.98] font-semibold tracking-[-0.045em] text-balance">
             {event.title}
           </h1>
-          <p className="mt-3 text-[0.9rem] leading-relaxed text-muted text-pretty">
+          <p className="text-muted mt-3 text-[0.9rem] leading-relaxed text-pretty">
             {event.summary}
           </p>
         </div>
 
         {/* Key details */}
         <div className="px-4 pt-5">
-          <dl className="divide-y divide-[var(--line)] overflow-hidden rounded-card border border-[var(--line)] bg-paper shadow-card">
+          <dl className="rounded-card bg-paper shadow-card divide-y divide-[var(--line)] overflow-hidden border border-[var(--line)]">
             <div className="flex items-start gap-3 p-3.5">
-              <CalendarDays className="mt-0.5 size-[1.15rem] shrink-0 text-red" />
+              <CalendarDays className="text-red mt-0.5 size-[1.15rem] shrink-0" />
               <div>
-                <dt className="text-[0.7rem] font-bold tracking-[0.08em] text-muted uppercase">
+                <dt className="text-muted text-[0.7rem] font-bold tracking-[0.08em] uppercase">
                   Date
                 </dt>
                 <dd className="text-[0.9rem] font-semibold">{formatFullDate(event.date)}</dd>
               </div>
             </div>
             <div className="flex items-start gap-3 p-3.5">
-              <Clock className="mt-0.5 size-[1.15rem] shrink-0 text-red" />
+              <Clock className="text-red mt-0.5 size-[1.15rem] shrink-0" />
               <div>
-                <dt className="text-[0.7rem] font-bold tracking-[0.08em] text-muted uppercase">
+                <dt className="text-muted text-[0.7rem] font-bold tracking-[0.08em] uppercase">
                   Time
                 </dt>
                 <dd className="text-[0.9rem] font-semibold">
@@ -125,18 +119,18 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
               href={mapsUrl(event.venue)}
               target="_blank"
               rel="noreferrer"
-              className="mmg-press flex items-start gap-3 p-3.5 hover:bg-sand-light/60"
+              className="mmg-press hover:bg-sand-light/60 flex items-start gap-3 p-3.5"
             >
-              <MapPin className="mt-0.5 size-[1.15rem] shrink-0 text-red" />
+              <MapPin className="text-red mt-0.5 size-[1.15rem] shrink-0" />
               <div className="min-w-0 flex-1">
-                <dt className="text-[0.7rem] font-bold tracking-[0.08em] text-muted uppercase">
+                <dt className="text-muted text-[0.7rem] font-bold tracking-[0.08em] uppercase">
                   Venue
                 </dt>
                 <dd className="text-[0.9rem] font-semibold">{event.venue.name}</dd>
-                <dd className="text-[0.8rem] text-muted">
+                <dd className="text-muted text-[0.8rem]">
                   {event.venue.address}, {venueLine(event.venue)} {event.venue.zip}
                 </dd>
-                <span className="mt-1 inline-flex items-center gap-1 text-[0.75rem] font-semibold text-red">
+                <span className="text-red mt-1 inline-flex items-center gap-1 text-[0.75rem] font-semibold">
                   Open in Maps
                   <ExternalLink className="size-3" />
                 </span>
@@ -165,7 +159,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
             About this event
           </h2>
           {event.description.map((paragraph) => (
-            <p key={paragraph} className="text-[0.88rem] leading-relaxed text-muted text-pretty">
+            <p key={paragraph} className="text-muted text-[0.88rem] leading-relaxed text-pretty">
               {paragraph}
             </p>
           ))}
@@ -177,24 +171,22 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
             <h2 className="mb-3.5 font-serif text-[1.15rem] font-semibold tracking-[-0.03em]">
               How the evening runs
             </h2>
-            <ol className="overflow-hidden rounded-card border border-[var(--line)] bg-paper shadow-card">
+            <ol className="rounded-card bg-paper shadow-card overflow-hidden border border-[var(--line)]">
               {event.agenda.map((item, index) => (
                 <li
                   key={`${item.time}-${item.label}`}
                   className="flex gap-3.5 border-b border-[var(--line)] p-3.5 last:border-0"
                 >
-                  <span className="w-[3.4rem] shrink-0 pt-0.5 text-[0.78rem] font-bold text-red tabular-nums">
+                  <span className="text-red w-[3.4rem] shrink-0 pt-0.5 text-[0.78rem] font-bold tabular-nums">
                     {item.time}
                   </span>
                   <div className="min-w-0 flex-1">
                     <p className="text-[0.87rem] font-semibold">{item.label}</p>
                     {item.detail ? (
-                      <p className="mt-0.5 text-[0.78rem] leading-snug text-muted">
-                        {item.detail}
-                      </p>
+                      <p className="text-muted mt-0.5 text-[0.78rem] leading-snug">{item.detail}</p>
                     ) : null}
                   </div>
-                  <span className="shrink-0 pt-1 text-[0.7rem] font-bold text-muted/50 tabular-nums">
+                  <span className="text-muted/50 shrink-0 pt-1 text-[0.7rem] font-bold tabular-nums">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                 </li>
@@ -216,10 +208,10 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
                 {event.recap.stats.map((stat) => (
                   <li
                     key={stat.label}
-                    className="rounded-2xl border border-[var(--line)] bg-paper px-2 py-3 text-center shadow-card"
+                    className="bg-paper shadow-card rounded-2xl border border-[var(--line)] px-2 py-3 text-center"
                   >
-                    <p className="mmg-display text-[1.6rem] text-red">{stat.value}</p>
-                    <p className="mt-0.5 text-[0.68rem] leading-tight font-semibold text-muted">
+                    <p className="mmg-display text-red text-[1.6rem]">{stat.value}</p>
+                    <p className="text-muted mt-0.5 text-[0.68rem] leading-tight font-semibold">
                       {stat.label}
                     </p>
                   </li>
@@ -231,7 +223,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
               {event.recap.body.map((paragraph) => (
                 <p
                   key={paragraph}
-                  className="text-[0.88rem] leading-relaxed text-muted text-pretty"
+                  className="text-muted text-[0.88rem] leading-relaxed text-pretty"
                 >
                   {paragraph}
                 </p>
@@ -250,7 +242,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
 
             {event.recap.photos.length ? (
               <div className="mt-5">
-                <h3 className="mb-3 text-[0.7rem] font-bold tracking-[0.12em] text-muted uppercase">
+                <h3 className="text-muted mb-3 text-[0.7rem] font-bold tracking-[0.12em] uppercase">
                   Photo gallery
                 </h3>
                 <PhotoGallery photos={event.recap.photos} />
@@ -277,7 +269,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
             <h2 className="mb-1 font-serif text-[1.15rem] font-semibold tracking-[-0.03em]">
               {upcoming ? "Sponsored by" : "Sponsor recognition"}
             </h2>
-            <p className="mb-3.5 text-[0.8rem] text-muted">
+            <p className="text-muted mb-3.5 text-[0.8rem]">
               {upcoming
                 ? "These partners make the evening possible."
                 : "Partners whose support made this gathering possible."}
@@ -310,14 +302,14 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
           <section className="px-4 pt-8 pb-4">
             <Link
               href={`/events/${nextEvent.slug}`}
-              className="mmg-press flex items-center gap-3 rounded-card bg-espresso p-4 text-cream shadow-mmg"
+              className="mmg-press rounded-card bg-espresso text-cream shadow-mmg flex items-center gap-3 p-4"
             >
               <div className="min-w-0 flex-1">
                 <p className="mmg-eyebrow text-gold">See the next gathering</p>
                 <p className="mt-1 font-serif text-[1.15rem] leading-tight font-semibold tracking-[-0.03em]">
                   {nextEvent.title}
                 </p>
-                <p className="mt-1 text-[0.78rem] text-cream/65">
+                <p className="text-cream/65 mt-1 text-[0.78rem]">
                   {formatFullDate(nextEvent.date)} · {nextEvent.venue.city}
                 </p>
               </div>
@@ -331,7 +323,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
               href={event.eventbriteUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 text-[0.78rem] font-semibold text-muted hover:text-espresso"
+              className="text-muted hover:text-espresso inline-flex items-center gap-1.5 text-[0.78rem] font-semibold"
             >
               Also listed on Eventbrite
               <ExternalLink className="size-3.5" />
@@ -339,7 +331,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
           </div>
         ) : null}
 
-        <p className="px-4 pb-6 text-center text-[0.7rem] leading-relaxed text-muted/70">
+        <p className="text-muted/70 px-4 pb-6 text-center text-[0.7rem] leading-relaxed">
           Questions? Call MMG at {site.phone}.
         </p>
       </main>

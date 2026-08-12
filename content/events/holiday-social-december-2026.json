@@ -34,7 +34,11 @@
   "agenda": [
     { "time": "18:30", "label": "Cocktail hour" },
     { "time": "19:30", "label": "Dinner service" },
-    { "time": "20:15", "label": "Community awards", "detail": "Voted on by attendees earlier in the month." },
+    {
+      "time": "20:15",
+      "label": "Community awards",
+      "detail": "Voted on by attendees earlier in the month."
+    },
     { "time": "20:45", "label": "Open floor" }
   ],
   "attendees": [

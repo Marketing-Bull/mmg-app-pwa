@@ -79,7 +79,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className="font-sans antialiased">
         <StoreProvider>
           <ToastProvider>
-            <div className="mx-auto min-h-dvh max-w-2xl bg-cream shadow-[0_0_60px_rgba(75,38,27,0.06)]">
+            <div className="bg-cream mx-auto min-h-dvh max-w-2xl shadow-[0_0_60px_rgba(75,38,27,0.06)]">
               {children}
             </div>
             <TabBar />

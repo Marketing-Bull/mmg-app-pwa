@@ -26,8 +26,16 @@
   "eventbriteUrl": "https://www.eventbrite.com/o/millers-marketing-group-68684991773",
   "agenda": [
     { "time": "18:00", "label": "Doors open", "detail": "Name tags, first round on the sponsors." },
-    { "time": "18:45", "label": "Welcome and sponsor recognition", "detail": "Five minutes, then back to the room." },
-    { "time": "19:00", "label": "Open networking", "detail": "Andrew is making introductions all evening — just ask." },
+    {
+      "time": "18:45",
+      "label": "Welcome and sponsor recognition",
+      "detail": "Five minutes, then back to the room."
+    },
+    {
+      "time": "19:00",
+      "label": "Open networking",
+      "detail": "Andrew is making introductions all evening — just ask."
+    },
     { "time": "21:00", "label": "Last call" }
   ],
   "attendees": [

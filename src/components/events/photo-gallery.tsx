@@ -39,7 +39,7 @@ export function PhotoGallery({ photos }: { photos: RecapPhoto[] }) {
             <button
               type="button"
               onClick={() => setIndex(i)}
-              className="mmg-press group relative block aspect-[4/3] w-full overflow-hidden rounded-2xl bg-sand-light"
+              className="mmg-press group bg-sand-light relative block aspect-[4/3] w-full overflow-hidden rounded-2xl"
             >
               <Image
                 src={photo.src}
@@ -52,9 +52,9 @@ export function PhotoGallery({ photos }: { photos: RecapPhoto[] }) {
                 <>
                   <span
                     aria-hidden
-                    className="absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-espresso/80 to-transparent"
+                    className="from-espresso/80 absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t to-transparent"
                   />
-                  <span className="absolute inset-x-0 bottom-0 p-2.5 text-left text-[0.7rem] leading-snug font-medium text-cream">
+                  <span className="text-cream absolute inset-x-0 bottom-0 p-2.5 text-left text-[0.7rem] leading-snug font-medium">
                     {photo.caption}
                   </span>
                 </>
@@ -66,7 +66,7 @@ export function PhotoGallery({ photos }: { photos: RecapPhoto[] }) {
 
       <Dialog.Root open={index !== null} onOpenChange={(open) => !open && close()}>
         <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 z-50 bg-espresso/92 backdrop-blur-sm" />
+          <Dialog.Overlay className="bg-espresso/92 fixed inset-0 z-50 backdrop-blur-sm" />
           <Dialog.Content className="fixed inset-0 z-50 flex flex-col outline-none">
             <Dialog.Title className="sr-only">Event photo</Dialog.Title>
             <Dialog.Description className="sr-only">
@@ -76,7 +76,7 @@ export function PhotoGallery({ photos }: { photos: RecapPhoto[] }) {
             <div className="flex justify-end p-3 pt-[calc(0.75rem+env(safe-area-inset-top,0px))]">
               <Dialog.Close
                 aria-label="Close"
-                className="mmg-press grid size-10 place-items-center rounded-full bg-cream/15 text-cream backdrop-blur"
+                className="mmg-press bg-cream/15 text-cream grid size-10 place-items-center rounded-full backdrop-blur"
               >
                 <X className="size-5" />
               </Dialog.Close>
@@ -96,7 +96,7 @@ export function PhotoGallery({ photos }: { photos: RecapPhoto[] }) {
 
             <div className="p-4 pb-[calc(1rem+env(safe-area-inset-bottom,0px))] text-center">
               {active?.caption ? (
-                <p className="mx-auto max-w-md text-[0.82rem] leading-snug text-cream/85 text-pretty">
+                <p className="text-cream/85 mx-auto max-w-md text-[0.82rem] leading-snug text-pretty">
                   {active.caption}
                 </p>
               ) : null}
@@ -106,18 +106,18 @@ export function PhotoGallery({ photos }: { photos: RecapPhoto[] }) {
                     type="button"
                     onClick={() => step(-1)}
                     aria-label="Previous photo"
-                    className="mmg-press grid size-11 place-items-center rounded-full bg-cream/15 text-cream backdrop-blur"
+                    className="mmg-press bg-cream/15 text-cream grid size-11 place-items-center rounded-full backdrop-blur"
                   >
                     <ChevronLeft className="size-5" />
                   </button>
-                  <span className="text-[0.78rem] font-semibold text-cream/70 tabular-nums">
+                  <span className="text-cream/70 text-[0.78rem] font-semibold tabular-nums">
                     {(index ?? 0) + 1} / {photos.length}
                   </span>
                   <button
                     type="button"
                     onClick={() => step(1)}
                     aria-label="Next photo"
-                    className="mmg-press grid size-11 place-items-center rounded-full bg-cream/15 text-cream backdrop-blur"
+                    className="mmg-press bg-cream/15 text-cream grid size-11 place-items-center rounded-full backdrop-blur"
                   >
                     <ChevronRight className="size-5" />
                   </button>

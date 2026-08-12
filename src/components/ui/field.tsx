@@ -26,7 +26,7 @@ function FieldShell({
     <div className="space-y-1.5">
       <Label.Root
         htmlFor={id}
-        className="flex items-baseline gap-1.5 text-[0.78rem] font-semibold tracking-[0.02em] text-espresso"
+        className="text-espresso flex items-baseline gap-1.5 text-[0.78rem] font-semibold tracking-[0.02em]"
       >
         {label}
         {required ? (
@@ -34,14 +34,14 @@ function FieldShell({
             *
           </span>
         ) : (
-          <span className="text-[0.7rem] font-normal text-muted">optional</span>
+          <span className="text-muted text-[0.7rem] font-normal">optional</span>
         )}
       </Label.Root>
       {children}
       {error ? (
-        <p className="text-[0.75rem] font-medium text-red">{error}</p>
+        <p className="text-red text-[0.75rem] font-medium">{error}</p>
       ) : hint ? (
-        <p className="text-[0.75rem] text-muted">{hint}</p>
+        <p className="text-muted text-[0.75rem]">{hint}</p>
       ) : null}
     </div>
   );
@@ -90,7 +90,12 @@ export const TextAreaField = forwardRef<HTMLTextAreaElement, TextAreaFieldProps>
           id={fieldId}
           required={required}
           aria-invalid={error ? true : undefined}
-          className={cn(controlClasses, "min-h-[6.5rem] resize-y", error && "border-red", className)}
+          className={cn(
+            controlClasses,
+            "min-h-[6.5rem] resize-y",
+            error && "border-red",
+            className,
+          )}
           {...props}
         />
       </FieldShell>

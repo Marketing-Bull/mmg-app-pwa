@@ -40,7 +40,7 @@ export default function HomePage() {
       <main className="pb-tabbar">
         {/* Hero */}
         <section className="relative overflow-hidden px-4 pt-4 pb-2">
-          <div className="relative overflow-hidden rounded-card bg-espresso text-cream shadow-mmg">
+          <div className="rounded-card bg-espresso text-cream shadow-mmg relative overflow-hidden">
             <Image
               src="/assets/brand/networking-hero.webp"
               alt=""
@@ -54,7 +54,7 @@ export default function HomePage() {
               className="absolute inset-0 bg-[linear-gradient(165deg,rgba(38,29,25,0.72),rgba(38,29,25,0.94))]"
             />
             <div className="relative px-5 py-8">
-              <p className="inline-flex items-center gap-2 rounded-full bg-cream/12 px-3 py-1 text-[0.68rem] font-bold tracking-[0.12em] text-gold uppercase">
+              <p className="bg-cream/12 text-gold inline-flex items-center gap-2 rounded-full px-3 py-1 text-[0.68rem] font-bold tracking-[0.12em] uppercase">
                 Florida&rsquo;s PI community
               </p>
               <h1 className="mt-4 font-serif text-[2.6rem] leading-[0.94] font-semibold tracking-[-0.05em] text-balance">
@@ -62,7 +62,7 @@ export default function HomePage() {
                 <br />
                 <span className="text-gold">changes everything.</span>
               </h1>
-              <p className="mt-3.5 max-w-[26rem] text-[0.9rem] leading-relaxed text-cream/75 text-pretty">
+              <p className="text-cream/75 mt-3.5 max-w-[26rem] text-[0.9rem] leading-relaxed text-pretty">
                 MMG brings personal injury attorneys, medical providers, and trusted industry
                 partners together through curated events across Florida.
               </p>
@@ -72,10 +72,7 @@ export default function HomePage() {
                 boundary just to carry button styling.
               */}
               <div className="mt-5 flex flex-wrap gap-2.5">
-                <Link
-                  href="/events"
-                  className={buttonVariants({ variant: "gold", size: "lg" })}
-                >
+                <Link href="/events" className={buttonVariants({ variant: "gold", size: "lg" })}>
                   Find your next event
                   <ArrowRight />
                 </Link>
@@ -110,12 +107,12 @@ export default function HomePage() {
             {site.valueProps.map((prop) => (
               <li
                 key={prop.title}
-                className="rounded-card border border-[var(--line)] bg-paper p-4 shadow-card"
+                className="rounded-card bg-paper shadow-card border border-[var(--line)] p-4"
               >
                 <h3 className="font-serif text-[1.1rem] leading-tight font-semibold tracking-[-0.03em]">
                   {prop.title}
                 </h3>
-                <p className="mt-1.5 text-[0.84rem] leading-relaxed text-muted text-pretty">
+                <p className="text-muted mt-1.5 text-[0.84rem] leading-relaxed text-pretty">
                   {prop.body}
                 </p>
               </li>
@@ -144,13 +141,13 @@ export default function HomePage() {
             {seriesList.map((series) => (
               <li
                 key={series.id}
-                className="rounded-card border border-[var(--line)] bg-paper p-4 shadow-card"
+                className="rounded-card bg-paper shadow-card border border-[var(--line)] p-4"
               >
                 <div className="flex items-center justify-between gap-3">
                   <SeriesPill series={series} />
-                  <span className="text-[0.72rem] font-semibold text-muted">{series.cadence}</span>
+                  <span className="text-muted text-[0.72rem] font-semibold">{series.cadence}</span>
                 </div>
-                <p className="mt-2.5 text-[0.84rem] leading-relaxed text-muted text-pretty">
+                <p className="text-muted mt-2.5 text-[0.84rem] leading-relaxed text-pretty">
                   {series.description}
                 </p>
               </li>
@@ -177,18 +174,23 @@ export default function HomePage() {
         <Section className="pt-0">
           <div className="grid grid-cols-3 gap-2.5">
             {[
-              { href: "/events", icon: CalendarDays, label: "Events", sub: `${upcomingEvents.length} upcoming` },
+              {
+                href: "/events",
+                icon: CalendarDays,
+                label: "Events",
+                sub: `${upcomingEvents.length} upcoming`,
+              },
               { href: "/discuss", icon: MessageSquare, label: "Discuss", sub: "Community" },
               { href: "/sponsor", icon: Handshake, label: "Sponsor", sub: "3 tiers" },
             ].map(({ href, icon: Icon, label, sub }) => (
               <Link
                 key={href}
                 href={href}
-                className="mmg-press flex flex-col items-center gap-1.5 rounded-card border border-[var(--line)] bg-paper px-2 py-4 text-center shadow-card"
+                className="mmg-press rounded-card bg-paper shadow-card flex flex-col items-center gap-1.5 border border-[var(--line)] px-2 py-4 text-center"
               >
-                <Icon className="size-5 text-red" />
+                <Icon className="text-red size-5" />
                 <span className="text-[0.82rem] font-semibold">{label}</span>
-                <span className="text-[0.68rem] text-muted">{sub}</span>
+                <span className="text-muted text-[0.68rem]">{sub}</span>
               </Link>
             ))}
           </div>
@@ -206,19 +208,19 @@ export default function HomePage() {
           action={{ href: "/sponsor", label: "Sponsor" }}
         >
           <PartnerWall partners={partners.slice(0, 12)} />
-          <p className="mt-3 text-center text-[0.75rem] text-muted">
+          <p className="text-muted mt-3 text-center text-[0.75rem]">
             Current clients and sponsors featured by MMG.
           </p>
         </Section>
 
         {/* Closing CTA */}
         <Section className="pb-4">
-          <div className="rounded-card bg-espresso p-5 text-cream shadow-mmg">
+          <div className="rounded-card bg-espresso text-cream shadow-mmg p-5">
             <p className="mmg-eyebrow text-gold">Start with a conversation</p>
             <h2 className="mt-2 font-serif text-[1.6rem] leading-[1.05] font-semibold tracking-[-0.04em] text-balance">
               Who do you want to meet?
             </h2>
-            <p className="mt-2.5 text-[0.86rem] leading-relaxed text-cream/70 text-pretty">
+            <p className="text-cream/70 mt-2.5 text-[0.86rem] leading-relaxed text-pretty">
               Tell Andrew about your practice and the relationships you want to build. He&rsquo;ll
               recommend the right room.
             </p>
@@ -229,19 +231,18 @@ export default function HomePage() {
               </Link>
             </Button>
             {featuredEvent ? (
-              <p className="mt-3 text-center text-[0.75rem] text-cream/55">
-                Or just come to {formatShortDate(featuredEvent.date)} in{" "}
-                {featuredEvent.venue.city}.
+              <p className="text-cream/55 mt-3 text-center text-[0.75rem]">
+                Or just come to {formatShortDate(featuredEvent.date)} in {featuredEvent.venue.city}.
               </p>
             ) : null}
           </div>
         </Section>
 
         <footer className="px-4 pb-6 text-center">
-          <p className="text-[0.7rem] leading-relaxed text-muted/80 text-pretty">
+          <p className="text-muted/80 text-[0.7rem] leading-relaxed text-pretty">
             {site.disclaimer}
           </p>
-          <p className="mt-2 text-[0.7rem] text-muted/70">
+          <p className="text-muted/70 mt-2 text-[0.7rem]">
             © {new Date().getFullYear()} {site.name}
           </p>
         </footer>

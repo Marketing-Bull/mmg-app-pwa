@@ -156,7 +156,7 @@ export function RsvpDialog({
         {submitting ? <Loader2 className="animate-spin" /> : null}
         {submitting ? "Confirming…" : `Confirm RSVP${guests ? ` · ${total} spots` : ""}`}
       </Button>
-      <p className="mt-2.5 text-center text-[0.72rem] leading-snug text-muted">
+      <p className="text-muted mt-2.5 text-center text-[0.72rem] leading-snug">
         Goes straight to Andrew at {site.email}. No account needed.
       </p>
     </div>
@@ -179,7 +179,7 @@ export function RsvpDialog({
       ) : (
         <div className="space-y-5">
           {returning ? (
-            <p className="rounded-2xl bg-teal/10 px-3.5 py-2.5 text-[0.78rem] leading-snug text-teal-dark">
+            <p className="bg-teal/10 text-teal-dark rounded-2xl px-3.5 py-2.5 text-[0.78rem] leading-snug">
               Welcome back, {profile?.name.split(" ")[0]}. Your details are filled in — just
               confirm.
             </p>
@@ -202,7 +202,7 @@ export function RsvpDialog({
                       "mmg-press flex items-center gap-3 rounded-2xl border px-3.5 py-3 text-left transition-colors",
                       active
                         ? "border-red bg-red/[0.07]"
-                        : "border-[var(--line-strong)] bg-paper hover:bg-sand-light",
+                        : "bg-paper hover:bg-sand-light border-[var(--line-strong)]",
                     )}
                   >
                     <span
@@ -215,7 +215,7 @@ export function RsvpDialog({
                     </span>
                     <span className="min-w-0 flex-1">
                       <span className="block text-[0.88rem] font-semibold">{option.label}</span>
-                      <span className="block text-[0.74rem] leading-snug text-muted">
+                      <span className="text-muted block text-[0.74rem] leading-snug">
                         {option.blurb}
                       </span>
                     </span>
@@ -276,10 +276,10 @@ export function RsvpDialog({
             />
           </div>
 
-          <div className="flex items-center justify-between rounded-2xl border border-[var(--line-strong)] bg-paper px-3.5 py-3">
+          <div className="bg-paper flex items-center justify-between rounded-2xl border border-[var(--line-strong)] px-3.5 py-3">
             <div>
               <p className="text-[0.82rem] font-semibold">Bringing anyone?</p>
-              <p className="text-[0.74rem] text-muted">Colleagues from your team are welcome.</p>
+              <p className="text-muted text-[0.74rem]">Colleagues from your team are welcome.</p>
             </div>
             <div className="flex items-center gap-1">
               <button
@@ -287,7 +287,7 @@ export function RsvpDialog({
                 onClick={() => setGuests((g) => Math.max(0, g - 1))}
                 disabled={guests === 0}
                 aria-label="Remove a guest"
-                className="mmg-press grid size-9 place-items-center rounded-full bg-sand-light text-espresso disabled:opacity-40"
+                className="mmg-press bg-sand-light text-espresso grid size-9 place-items-center rounded-full disabled:opacity-40"
               >
                 <Minus className="size-4" />
               </button>
@@ -297,7 +297,7 @@ export function RsvpDialog({
                 onClick={() => setGuests((g) => Math.min(9, g + 1))}
                 disabled={guests === 9}
                 aria-label="Add a guest"
-                className="mmg-press grid size-9 place-items-center rounded-full bg-sand-light text-espresso disabled:opacity-40"
+                className="mmg-press bg-sand-light text-espresso grid size-9 place-items-center rounded-full disabled:opacity-40"
               >
                 <Plus className="size-4" />
               </button>
@@ -343,7 +343,7 @@ function SuccessPanel({
 
   return (
     <div className="text-center">
-      <div className="mx-auto grid size-[4.5rem] place-items-center rounded-full bg-teal/12 animate-[mmg-pop_0.4s_var(--ease-out-soft)]">
+      <div className="bg-teal/12 mx-auto grid size-[4.5rem] animate-[mmg-pop_0.4s_var(--ease-out-soft)] place-items-center rounded-full">
         <svg viewBox="0 0 48 48" className="size-9" aria-hidden>
           <path
             d="M13 25.5 20.5 33 35 16"
@@ -361,19 +361,19 @@ function SuccessPanel({
       <h3 className="mt-4 font-serif text-[1.5rem] leading-tight font-semibold tracking-[-0.035em]">
         See you there, {name.split(" ")[0]}.
       </h3>
-      <p className="mx-auto mt-2 max-w-[22rem] text-[0.86rem] leading-relaxed text-muted text-pretty">
+      <p className="text-muted mx-auto mt-2 max-w-[22rem] text-[0.86rem] leading-relaxed text-pretty">
         {total > 1 ? `${total} spots are` : "Your spot is"} held for{" "}
-        <span className="font-semibold text-espresso">{event.title}</span> on{" "}
+        <span className="text-espresso font-semibold">{event.title}</span> on{" "}
         {formatFullDate(event.date)}. A calendar invite just downloaded.
       </p>
 
-      <div className="mt-5 rounded-2xl border border-[var(--line)] bg-cream p-3.5 text-left">
-        <p className="text-[0.7rem] font-bold tracking-[0.1em] text-red uppercase">Where to go</p>
+      <div className="bg-cream mt-5 rounded-2xl border border-[var(--line)] p-3.5 text-left">
+        <p className="text-red text-[0.7rem] font-bold tracking-[0.1em] uppercase">Where to go</p>
         <p className="mt-1.5 text-[0.88rem] font-semibold">{event.venue.name}</p>
-        <p className="text-[0.8rem] text-muted">
+        <p className="text-muted text-[0.8rem]">
           {event.venue.address}, {event.venue.city}, {event.venue.state} {event.venue.zip}
         </p>
-        <p className="mt-2 text-[0.8rem] text-muted">
+        <p className="text-muted mt-2 text-[0.8rem]">
           {formatTimeRange(event.startTime, event.endTime)} · Name tags at the door
         </p>
       </div>
@@ -381,7 +381,7 @@ function SuccessPanel({
       <button
         type="button"
         onClick={share}
-        className="mmg-press mt-4 inline-flex items-center gap-2 text-[0.82rem] font-semibold text-red"
+        className="mmg-press text-red mt-4 inline-flex items-center gap-2 text-[0.82rem] font-semibold"
       >
         <Share2 className="size-4" />
         Invite someone from your team
@@ -395,7 +395,7 @@ function SuccessPanel({
 function DeliveryNote({ delivery }: { delivery: DeliveryStatus | null }) {
   if (delivery === null) {
     return (
-      <p className="mt-4 flex items-center justify-center gap-1.5 text-[0.72rem] text-muted">
+      <p className="text-muted mt-4 flex items-center justify-center gap-1.5 text-[0.72rem]">
         <Loader2 className="size-3 animate-spin" />
         Sending your details to MMG…
       </p>
@@ -403,14 +403,14 @@ function DeliveryNote({ delivery }: { delivery: DeliveryStatus | null }) {
   }
   if (delivery === "sent") {
     return (
-      <p className="mt-4 text-[0.72rem] text-muted">
+      <p className="text-muted mt-4 text-[0.72rem]">
         Your details are with Andrew. He&rsquo;ll follow up before the event.
       </p>
     );
   }
   if (delivery === "skipped") {
     return (
-      <p className="mt-4 text-[0.72rem] text-muted">
+      <p className="text-muted mt-4 text-[0.72rem]">
         Demo mode — email delivery is turned off in this environment.
       </p>
     );
@@ -418,7 +418,7 @@ function DeliveryNote({ delivery }: { delivery: DeliveryStatus | null }) {
   // "pending" and "failed" both mean: your spot is held, the email is not our
   // guest's problem. Don't undermine a confirmation they've already been given.
   return (
-    <p className="mt-4 text-[0.72rem] text-muted">
+    <p className="text-muted mt-4 text-[0.72rem]">
       Your spot is held. If you don&rsquo;t hear from MMG, reach Andrew at {site.phone}.
     </p>
   );

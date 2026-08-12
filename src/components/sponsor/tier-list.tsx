@@ -50,13 +50,13 @@ export function TierList({ tiers }: { tiers: SponsorTier[] }) {
             <li
               key={tier.id}
               className={cn(
-                "relative overflow-hidden rounded-card border-2 bg-paper shadow-card",
+                "rounded-card bg-paper shadow-card relative overflow-hidden border-2",
                 accent.border,
                 tier.featured && "shadow-lift",
               )}
             >
               {tier.featured ? (
-                <div className="flex items-center justify-center gap-1.5 bg-gold py-1.5 text-[0.66rem] font-bold tracking-[0.14em] text-espresso uppercase">
+                <div className="bg-gold text-espresso flex items-center justify-center gap-1.5 py-1.5 text-[0.66rem] font-bold tracking-[0.14em] uppercase">
                   <Sparkles className="size-3.5" />
                   Most popular
                 </div>
@@ -68,13 +68,13 @@ export function TierList({ tiers }: { tiers: SponsorTier[] }) {
                     <h3 className="font-serif text-[1.35rem] leading-tight font-semibold tracking-[-0.035em]">
                       {tier.name}
                     </h3>
-                    <p className="mt-1 text-[0.82rem] leading-snug text-muted text-pretty">
+                    <p className="text-muted mt-1 text-[0.82rem] leading-snug text-pretty">
                       {tier.tagline}
                     </p>
                   </div>
                   <div className="shrink-0 text-right">
                     <p className={cn("mmg-display text-[1.7rem]", accent.price)}>{tier.price}</p>
-                    <p className="text-[0.68rem] leading-tight font-semibold text-muted">
+                    <p className="text-muted text-[0.68rem] leading-tight font-semibold">
                       {tier.cadence}
                     </p>
                   </div>
@@ -92,7 +92,7 @@ export function TierList({ tiers }: { tiers: SponsorTier[] }) {
                 <ul className="mt-3.5 space-y-2 border-t border-[var(--line)] pt-3.5">
                   {tier.benefits.map((benefit) => (
                     <li key={benefit} className="flex gap-2.5">
-                      <Check className="mt-[0.15rem] size-4 shrink-0 text-teal" />
+                      <Check className="text-teal mt-[0.15rem] size-4 shrink-0" />
                       <span className="text-[0.84rem] leading-snug text-pretty">{benefit}</span>
                     </li>
                   ))}

@@ -92,31 +92,31 @@ export function ContactForm() {
 
   if (sent) {
     return (
-      <div className="rounded-card border border-[var(--line)] bg-paper p-6 text-center shadow-card">
-        <div className="mx-auto grid size-[4.5rem] place-items-center rounded-full bg-teal/12 animate-[mmg-pop_0.4s_var(--ease-out-soft)]">
-          <Check className="size-9 stroke-[3] text-teal" />
+      <div className="rounded-card bg-paper shadow-card border border-[var(--line)] p-6 text-center">
+        <div className="bg-teal/12 mx-auto grid size-[4.5rem] animate-[mmg-pop_0.4s_var(--ease-out-soft)] place-items-center rounded-full">
+          <Check className="text-teal size-9 stroke-[3]" />
         </div>
         <h3 className="mt-4 font-serif text-[1.45rem] leading-tight font-semibold tracking-[-0.035em]">
           Message on its way.
         </h3>
-        <p className="mx-auto mt-2 max-w-[24rem] text-[0.86rem] leading-relaxed text-muted text-pretty">
-          Andrew personally reviews consultation requests and follows up to schedule a
-          conversation. In the meantime, {site.phone} reaches him directly.
+        <p className="text-muted mx-auto mt-2 max-w-[24rem] text-[0.86rem] leading-relaxed text-pretty">
+          Andrew personally reviews consultation requests and follows up to schedule a conversation.
+          In the meantime, {site.phone} reaches him directly.
         </p>
 
         {delivery === null ? (
-          <p className="mt-4 flex items-center justify-center gap-1.5 text-[0.72rem] text-muted">
+          <p className="text-muted mt-4 flex items-center justify-center gap-1.5 text-[0.72rem]">
             <Loader2 className="size-3 animate-spin" />
             Sending…
           </p>
         ) : delivery === "sent" ? (
-          <p className="mt-4 text-[0.72rem] text-muted">Delivered to {site.email}.</p>
+          <p className="text-muted mt-4 text-[0.72rem]">Delivered to {site.email}.</p>
         ) : delivery === "skipped" ? (
-          <p className="mt-4 text-[0.72rem] text-muted">
+          <p className="text-muted mt-4 text-[0.72rem]">
             Demo mode — email delivery is turned off in this environment.
           </p>
         ) : (
-          <p className="mt-4 text-[0.72rem] text-muted">
+          <p className="text-muted mt-4 text-[0.72rem]">
             If you don&rsquo;t hear back within two business days, call {site.phone}.
           </p>
         )}
@@ -129,7 +129,7 @@ export function ContactForm() {
   }
 
   return (
-    <div className="rounded-card border border-[var(--line)] bg-paper p-4 shadow-card">
+    <div className="rounded-card bg-paper shadow-card border border-[var(--line)] p-4">
       <div className="space-y-3.5">
         <TextField
           label="Full name"
@@ -183,7 +183,7 @@ export function ContactForm() {
                   "mmg-press rounded-2xl border px-3 py-2.5 text-[0.8rem] leading-snug font-semibold transition-colors",
                   interest === option
                     ? "border-red bg-red/[0.07] text-red"
-                    : "border-[var(--line-strong)] bg-cream text-muted hover:text-espresso",
+                    : "bg-cream text-muted hover:text-espresso border-[var(--line-strong)]",
                 )}
               >
                 {option}
@@ -219,7 +219,7 @@ export function ContactForm() {
         Send request
       </Button>
 
-      <p className="mt-3 text-center text-[0.72rem] leading-relaxed text-muted">
+      <p className="text-muted mt-3 text-center text-[0.72rem] leading-relaxed">
         By submitting, you agree that MMG may contact you about your request. Goes straight to{" "}
         {site.email}.
       </p>

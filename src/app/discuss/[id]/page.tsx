@@ -33,7 +33,7 @@ export default async function ThreadPage({ params }: { params: Promise<{ id: str
 
       <main className="pb-tabbar">
         <article className="px-4 pt-4">
-          <span className="rounded-full bg-sand-light px-2.5 py-[0.2rem] text-[0.65rem] font-bold tracking-[0.08em] text-muted uppercase">
+          <span className="bg-sand-light text-muted rounded-full px-2.5 py-[0.2rem] text-[0.65rem] font-bold tracking-[0.08em] uppercase">
             {thread.topic}
           </span>
 
@@ -45,16 +45,16 @@ export default async function ThreadPage({ params }: { params: Promise<{ id: str
             <Avatar name={thread.author} size="md" />
             <div className="min-w-0 flex-1">
               <p className="text-[0.86rem] font-semibold">{thread.author}</p>
-              <p className="truncate text-[0.75rem] text-muted">
+              <p className="text-muted truncate text-[0.75rem]">
                 {roleLabel(thread.role)} · {thread.company}
               </p>
             </div>
-            <span className="shrink-0 text-[0.72rem] text-muted">
+            <span className="text-muted shrink-0 text-[0.72rem]">
               {relativeTime(thread.createdAt)}
             </span>
           </div>
 
-          <p className="mt-4 text-[0.92rem] leading-relaxed whitespace-pre-line text-pretty">
+          <p className="mt-4 text-[0.92rem] leading-relaxed text-pretty whitespace-pre-line">
             {thread.body}
           </p>
         </article>

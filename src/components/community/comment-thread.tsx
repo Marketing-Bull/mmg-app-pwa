@@ -33,13 +33,14 @@ export function CommentThread({
   const [showIdentity, setShowIdentity] = useState(false);
   const bodyRef = useRef<HTMLTextAreaElement>(null);
 
-  const posted = comments[storageKey] ?? [];
+  // Read the posted list inside the memo — `?? []` would otherwise mint a new
+  // array on every render and defeat the memo entirely.
   const all = useMemo(
     () =>
-      [...seeded, ...posted].sort(
+      [...seeded, ...(comments[storageKey] ?? [])].sort(
         (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
       ),
-    [seeded, posted],
+    [seeded, comments, storageKey],
   );
 
   const identity = profile
@@ -91,17 +92,15 @@ export function CommentThread({
   return (
     <section aria-label="Discussion">
       <header className="mb-3.5 flex items-center gap-2">
-        <MessageSquare className="size-4 text-red" />
-        <h2 className="font-serif text-[1.15rem] font-semibold tracking-[-0.03em]">
-          Discussion
-        </h2>
-        <span className="rounded-full bg-sand-light px-2 py-0.5 text-[0.7rem] font-semibold text-muted">
+        <MessageSquare className="text-red size-4" />
+        <h2 className="font-serif text-[1.15rem] font-semibold tracking-[-0.03em]">Discussion</h2>
+        <span className="bg-sand-light text-muted rounded-full px-2 py-0.5 text-[0.7rem] font-semibold">
           {all.length}
         </span>
       </header>
 
       {all.length === 0 ? (
-        <p className="rounded-2xl border border-dashed border-[var(--line-strong)] px-4 py-6 text-center text-[0.82rem] text-muted">
+        <p className="text-muted rounded-2xl border border-dashed border-[var(--line-strong)] px-4 py-6 text-center text-[0.82rem]">
           {emptyLabel}
         </p>
       ) : (
@@ -112,7 +111,7 @@ export function CommentThread({
         </ul>
       )}
 
-      <div className="mt-4 rounded-card border border-[var(--line)] bg-paper p-3.5 shadow-card">
+      <div className="rounded-card bg-paper shadow-card mt-4 border border-[var(--line)] p-3.5">
         {showIdentity && !identity ? (
           <div className="mb-3 space-y-2.5 border-b border-[var(--line)] pb-3">
             <p className="text-[0.75rem] font-semibold">Who should we credit this to?</p>
@@ -122,13 +121,13 @@ export function CommentThread({
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Your name"
                 autoFocus
-                className="rounded-xl border border-[var(--line-strong)] bg-cream px-3 py-2 text-[0.85rem] placeholder:text-muted/60 focus:border-red focus:outline-none"
+                className="bg-cream placeholder:text-muted/60 focus:border-red rounded-xl border border-[var(--line-strong)] px-3 py-2 text-[0.85rem] focus:outline-none"
               />
               <input
                 value={company}
                 onChange={(e) => setCompany(e.target.value)}
                 placeholder="Firm or practice"
-                className="rounded-xl border border-[var(--line-strong)] bg-cream px-3 py-2 text-[0.85rem] placeholder:text-muted/60 focus:border-red focus:outline-none"
+                className="bg-cream placeholder:text-muted/60 focus:border-red rounded-xl border border-[var(--line-strong)] px-3 py-2 text-[0.85rem] focus:outline-none"
               />
             </div>
             <div className="flex gap-1.5">
@@ -168,7 +167,7 @@ export function CommentThread({
             rows={1}
             placeholder={placeholder}
             aria-label="Write a comment"
-            className="min-h-[2.5rem] flex-1 resize-none rounded-2xl border border-[var(--line-strong)] bg-cream px-3.5 py-2.5 text-[0.87rem] leading-snug placeholder:text-muted/60 focus:border-red focus:outline-none"
+            className="bg-cream placeholder:text-muted/60 focus:border-red min-h-[2.5rem] flex-1 resize-none rounded-2xl border border-[var(--line-strong)] px-3.5 py-2.5 text-[0.87rem] leading-snug focus:outline-none"
           />
           <Button
             size="icon"
@@ -181,7 +180,7 @@ export function CommentThread({
         </div>
 
         {hydrated && identity ? (
-          <p className="mt-2 pl-[2.75rem] text-[0.7rem] text-muted">
+          <p className="text-muted mt-2 pl-[2.75rem] text-[0.7rem]">
             Posting as {identity.name}
             {identity.company ? ` · ${identity.company}` : ""}
           </p>
@@ -203,8 +202,9 @@ export function CommentRow({ comment }: { comment: Comment }) {
   return (
     <li
       className={cn(
-        "flex gap-3 rounded-card border border-[var(--line)] bg-paper p-3.5",
-        comment.isYou && "border-red/35 bg-red/[0.035] animate-[mmg-fade-up_0.3s_var(--ease-out-soft)]",
+        "rounded-card bg-paper flex gap-3 border border-[var(--line)] p-3.5",
+        comment.isYou &&
+          "border-red/35 bg-red/[0.035] animate-[mmg-fade-up_0.3s_var(--ease-out-soft)]",
       )}
     >
       <Avatar name={comment.author} size="md" />
@@ -220,18 +220,16 @@ export function CommentRow({ comment }: { comment: Comment }) {
             {label}
           </span>
           {comment.isYou ? (
-            <span className="rounded-full bg-espresso px-1.5 py-[0.1rem] text-[0.62rem] font-bold tracking-[0.05em] text-gold uppercase">
+            <span className="bg-espresso text-gold rounded-full px-1.5 py-[0.1rem] text-[0.62rem] font-bold tracking-[0.05em] uppercase">
               You
             </span>
           ) : null}
-          <span className="ml-auto shrink-0 text-[0.7rem] text-muted">
+          <span className="text-muted ml-auto shrink-0 text-[0.7rem]">
             {relativeTime(comment.createdAt)}
           </span>
         </div>
-        {comment.company ? (
-          <p className="text-[0.73rem] text-muted">{comment.company}</p>
-        ) : null}
-        <p className="mt-1.5 text-[0.87rem] leading-relaxed whitespace-pre-line text-pretty">
+        {comment.company ? <p className="text-muted text-[0.73rem]">{comment.company}</p> : null}
+        <p className="mt-1.5 text-[0.87rem] leading-relaxed text-pretty whitespace-pre-line">
           {comment.body}
         </p>
       </div>

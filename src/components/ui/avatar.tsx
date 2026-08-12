@@ -26,7 +26,7 @@ export function Avatar({
         "grid shrink-0 place-items-center rounded-full font-bold tracking-[0.03em] select-none",
         SIZES[size],
         avatarTone(name),
-        ring && "ring-2 ring-paper",
+        ring && "ring-paper ring-2",
         className,
       )}
     >

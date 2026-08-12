@@ -42,7 +42,7 @@ export function AttendeeList({ event }: { event: MMGEvent }) {
   return (
     <section aria-label="Who's coming">
       <header className="mb-3.5 flex items-center gap-2">
-        <Users className="size-4 text-red" />
+        <Users className="text-red size-4" />
         <h2 className="font-serif text-[1.15rem] font-semibold tracking-[-0.03em]">
           Who&rsquo;s coming
         </h2>
@@ -61,7 +61,7 @@ export function AttendeeList({ event }: { event: MMGEvent }) {
           <li
             key={`${attendee.name}-${index}`}
             className={cn(
-              "flex items-center gap-3 rounded-2xl border border-[var(--line)] bg-paper px-3.5 py-2.5",
+              "bg-paper flex items-center gap-3 rounded-2xl border border-[var(--line)] px-3.5 py-2.5",
               attendee.isYou &&
                 "border-teal/40 bg-teal/[0.06] animate-[mmg-fade-up_0.35s_var(--ease-out-soft)]",
             )}
@@ -71,12 +71,12 @@ export function AttendeeList({ event }: { event: MMGEvent }) {
               <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
                 <span className="text-[0.86rem] font-semibold">{attendee.name}</span>
                 {attendee.isYou ? (
-                  <span className="rounded-full bg-teal px-1.5 py-[0.1rem] text-[0.62rem] font-bold tracking-[0.05em] text-cream uppercase">
+                  <span className="bg-teal text-cream rounded-full px-1.5 py-[0.1rem] text-[0.62rem] font-bold tracking-[0.05em] uppercase">
                     You
                   </span>
                 ) : null}
               </div>
-              <p className="truncate text-[0.75rem] text-muted">{attendee.company}</p>
+              <p className="text-muted truncate text-[0.75rem]">{attendee.company}</p>
             </div>
             <span
               className={cn(
@@ -91,7 +91,7 @@ export function AttendeeList({ event }: { event: MMGEvent }) {
       </ul>
 
       {guests > 0 ? (
-        <p className="mt-2 text-[0.75rem] text-muted">
+        <p className="text-muted mt-2 text-[0.75rem]">
           Plus {guests} {guests === 1 ? "guest" : "guests"} from your team.
         </p>
       ) : null}
@@ -100,7 +100,7 @@ export function AttendeeList({ event }: { event: MMGEvent }) {
         <button
           type="button"
           onClick={() => setExpanded((prev) => !prev)}
-          className="mmg-press mt-2.5 w-full rounded-2xl border border-[var(--line)] bg-sand-light px-4 py-2.5 text-[0.8rem] font-semibold text-espresso"
+          className="mmg-press bg-sand-light text-espresso mt-2.5 w-full rounded-2xl border border-[var(--line)] px-4 py-2.5 text-[0.8rem] font-semibold"
         >
           {expanded
             ? "Show fewer"
@@ -109,7 +109,7 @@ export function AttendeeList({ event }: { event: MMGEvent }) {
       ) : null}
 
       {unlisted > 0 ? (
-        <p className="mt-2.5 text-center text-[0.75rem] text-muted">
+        <p className="text-muted mt-2.5 text-center text-[0.75rem]">
           + {unlisted} more attending who chose not to be listed publicly.
         </p>
       ) : null}

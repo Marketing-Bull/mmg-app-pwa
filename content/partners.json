@@ -9,7 +9,10 @@
     "id": "better-wellness-clinic",
     "name": "Better Wellness Clinic",
     "category": "provider",
-    "logo": { "src": "/assets/partners/better-wellness-clinic.webp", "alt": "Better Wellness Clinic" }
+    "logo": {
+      "src": "/assets/partners/better-wellness-clinic.webp",
+      "alt": "Better Wellness Clinic"
+    }
   },
   {
     "id": "ceda-orthopedic-group",
@@ -68,7 +71,10 @@
     "id": "in-check",
     "name": "In-Check Health, Wellness & Beauty Centre",
     "category": "provider",
-    "logo": { "src": "/assets/partners/in-check.webp", "alt": "In-Check Health, Wellness and Beauty Centre" }
+    "logo": {
+      "src": "/assets/partners/in-check.webp",
+      "alt": "In-Check Health, Wellness and Beauty Centre"
+    }
   },
   {
     "id": "mlaw",

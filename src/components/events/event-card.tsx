@@ -23,10 +23,10 @@ export function EventCard({ event }: { event: MMGEvent }) {
   return (
     <Link
       href={`/events/${event.slug}`}
-      className="mmg-press group flex gap-3.5 rounded-card border border-[var(--line)] bg-paper p-3.5 shadow-card transition-shadow hover:shadow-lift"
+      className="mmg-press group rounded-card bg-paper shadow-card hover:shadow-lift flex gap-3.5 border border-[var(--line)] p-3.5 transition-shadow"
     >
-      <div className="flex w-[3.4rem] shrink-0 flex-col items-center justify-center rounded-2xl bg-sand-light py-2.5 text-espresso">
-        <span className="text-[0.62rem] font-bold tracking-[0.14em] text-red">
+      <div className="bg-sand-light text-espresso flex w-[3.4rem] shrink-0 flex-col items-center justify-center rounded-2xl py-2.5">
+        <span className="text-red text-[0.62rem] font-bold tracking-[0.14em]">
           {formatMonthAbbr(event.date)}
         </span>
         <span className="mmg-display text-[1.75rem] leading-none">
@@ -39,11 +39,11 @@ export function EventCard({ event }: { event: MMGEvent }) {
         <h3 className="mt-1.5 line-clamp-2 font-serif text-[1.06rem] leading-[1.15] font-semibold tracking-[-0.03em]">
           {event.title}
         </h3>
-        <p className="mt-1.5 flex items-center gap-1.5 text-[0.78rem] text-muted">
+        <p className="text-muted mt-1.5 flex items-center gap-1.5 text-[0.78rem]">
           <Clock className="size-3.5 shrink-0" />
           {formatTimeRange(event.startTime, event.endTime)}
         </p>
-        <p className="mt-1 flex items-center gap-1.5 text-[0.78rem] text-muted">
+        <p className="text-muted mt-1 flex items-center gap-1.5 text-[0.78rem]">
           <MapPin className="size-3.5 shrink-0" />
           <span className="truncate">
             {event.venue.name} · {venueLine(event.venue)}
@@ -52,7 +52,7 @@ export function EventCard({ event }: { event: MMGEvent }) {
 
         <div className="mt-2.5 flex items-center gap-2">
           <AvatarStack names={attendees} max={4} />
-          <span className="text-[0.75rem] font-medium text-muted">
+          <span className="text-muted text-[0.75rem] font-medium">
             {event.attendingCount} going
           </span>
         </div>
@@ -62,20 +62,14 @@ export function EventCard({ event }: { event: MMGEvent }) {
 }
 
 /** Hero treatment for the next event up. */
-export function FeaturedEventCard({
-  event,
-  priority,
-}: {
-  event: MMGEvent;
-  priority?: boolean;
-}) {
+export function FeaturedEventCard({ event, priority }: { event: MMGEvent; priority?: boolean }) {
   const series = getSeries(event.seriesId);
   const spotsLeft = Math.max(0, event.capacity - event.attendingCount);
 
   return (
     <Link
       href={`/events/${event.slug}`}
-      className="mmg-press group block overflow-hidden rounded-card border border-[var(--line)] bg-paper shadow-lift"
+      className="mmg-press group rounded-card bg-paper shadow-lift block overflow-hidden border border-[var(--line)]"
     >
       <div className="relative">
         <EventArt
@@ -87,14 +81,14 @@ export function FeaturedEventCard({
         />
         <div
           aria-hidden
-          className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-espresso/80 to-transparent"
+          className="from-espresso/80 absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t to-transparent"
         />
         <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-3.5">
-          <span className="rounded-full bg-paper/95 px-2.5 py-1 text-[0.66rem] font-bold tracking-[0.1em] text-red uppercase backdrop-blur">
+          <span className="bg-paper/95 text-red rounded-full px-2.5 py-1 text-[0.66rem] font-bold tracking-[0.1em] uppercase backdrop-blur">
             {relativeToToday(event.date)}
           </span>
           {spotsLeft <= 30 && spotsLeft > 0 ? (
-            <span className="rounded-full bg-gold px-2.5 py-1 text-[0.66rem] font-bold tracking-[0.06em] text-espresso uppercase">
+            <span className="bg-gold text-espresso rounded-full px-2.5 py-1 text-[0.66rem] font-bold tracking-[0.06em] uppercase">
               {spotsLeft} spots left
             </span>
           ) : null}
@@ -106,25 +100,25 @@ export function FeaturedEventCard({
         <h3 className="mt-2 font-serif text-[1.45rem] leading-[1.08] font-semibold tracking-[-0.035em] text-balance">
           {event.title}
         </h3>
-        <p className="mt-2.5 line-clamp-2 text-[0.85rem] leading-relaxed text-muted text-pretty">
+        <p className="text-muted mt-2.5 line-clamp-2 text-[0.85rem] leading-relaxed text-pretty">
           {event.summary}
         </p>
 
         <dl className="mt-3.5 grid gap-1.5 text-[0.8rem]">
           <div className="flex items-center gap-2">
-            <CalendarDays className="size-4 shrink-0 text-red" />
+            <CalendarDays className="text-red size-4 shrink-0" />
             <dd className="font-medium">
               {formatShortDate(event.date)} · {formatTimeRange(event.startTime, event.endTime)}
             </dd>
           </div>
           <div className="flex items-center gap-2">
-            <MapPin className="size-4 shrink-0 text-red" />
+            <MapPin className="text-red size-4 shrink-0" />
             <dd className="truncate">
               {event.venue.name}, {venueLine(event.venue)}
             </dd>
           </div>
           <div className="flex items-center gap-2">
-            <Users className="size-4 shrink-0 text-red" />
+            <Users className="text-red size-4 shrink-0" />
             <dd>{event.attendingCount} going</dd>
           </div>
         </dl>
@@ -141,24 +135,19 @@ export function EventRailCard({ event, className }: { event: MMGEvent; className
     <Link
       href={`/events/${event.slug}`}
       className={cn(
-        "mmg-press w-[15.5rem] overflow-hidden rounded-card border border-[var(--line)] bg-paper shadow-card transition-shadow hover:shadow-lift",
+        "mmg-press rounded-card bg-paper shadow-card hover:shadow-lift w-[15.5rem] overflow-hidden border border-[var(--line)] transition-shadow",
         className,
       )}
     >
-      <EventArt
-        event={event}
-        series={series}
-        className="aspect-[4/3] w-full"
-        sizes="15.5rem"
-      />
+      <EventArt event={event} series={series} className="aspect-[4/3] w-full" sizes="15.5rem" />
       <div className="p-3.5">
-        <p className="text-[0.68rem] font-bold tracking-[0.1em] text-red uppercase">
+        <p className="text-red text-[0.68rem] font-bold tracking-[0.1em] uppercase">
           {formatShortDate(event.date)}
         </p>
         <h3 className="mt-1 line-clamp-2 font-serif text-[1rem] leading-[1.15] font-semibold tracking-[-0.025em]">
           {event.title}
         </h3>
-        <p className="mt-1.5 truncate text-[0.75rem] text-muted">
+        <p className="text-muted mt-1.5 truncate text-[0.75rem]">
           {event.venue.city}, {event.venue.state}
         </p>
       </div>

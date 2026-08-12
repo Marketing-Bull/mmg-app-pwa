@@ -36,9 +36,9 @@ export default function DiscussPage() {
           <h1 className="mt-1.5 font-serif text-[2rem] leading-[0.98] font-semibold tracking-[-0.045em] text-balance">
             The conversation keeps going between events.
           </h1>
-          <p className="mt-3 text-[0.88rem] leading-relaxed text-muted text-pretty">
-            Ask a question, share what worked, or introduce yourself before you walk into a room.
-            No account needed — just post.
+          <p className="text-muted mt-3 text-[0.88rem] leading-relaxed text-pretty">
+            Ask a question, share what worked, or introduce yourself before you walk into a room. No
+            account needed — just post.
           </p>
         </div>
 
@@ -50,13 +50,13 @@ export default function DiscussPage() {
                 <li key={thread.id}>
                   <Link
                     href={`/discuss/${thread.id}`}
-                    className="mmg-press block rounded-card border border-[var(--line)] bg-paper p-4 shadow-card transition-shadow hover:shadow-lift"
+                    className="mmg-press rounded-card bg-paper shadow-card hover:shadow-lift block border border-[var(--line)] p-4 transition-shadow"
                   >
                     <div className="flex items-center gap-2">
-                      <span className="rounded-full bg-sand-light px-2.5 py-[0.2rem] text-[0.65rem] font-bold tracking-[0.08em] text-muted uppercase">
+                      <span className="bg-sand-light text-muted rounded-full px-2.5 py-[0.2rem] text-[0.65rem] font-bold tracking-[0.08em] uppercase">
                         {thread.topic}
                       </span>
-                      <span className="ml-auto shrink-0 text-[0.7rem] text-muted">
+                      <span className="text-muted ml-auto shrink-0 text-[0.7rem]">
                         {relativeTime(last?.createdAt ?? thread.createdAt)}
                       </span>
                     </div>
@@ -64,7 +64,7 @@ export default function DiscussPage() {
                     <h2 className="mt-2 font-serif text-[1.2rem] leading-[1.1] font-semibold tracking-[-0.03em] text-balance">
                       {thread.title}
                     </h2>
-                    <p className="mt-1.5 line-clamp-2 text-[0.83rem] leading-relaxed text-muted text-pretty">
+                    <p className="text-muted mt-1.5 line-clamp-2 text-[0.83rem] leading-relaxed text-pretty">
                       {thread.body}
                     </p>
 
@@ -73,7 +73,7 @@ export default function DiscussPage() {
                         names={[thread.author, ...thread.comments.map((c) => c.author)]}
                         max={4}
                       />
-                      <span className="inline-flex items-center gap-1.5 text-[0.75rem] font-medium text-muted">
+                      <span className="text-muted inline-flex items-center gap-1.5 text-[0.75rem] font-medium">
                         <MessageSquare className="size-3.5" />
                         {thread.comments.length}{" "}
                         {thread.comments.length === 1 ? "reply" : "replies"}
@@ -92,13 +92,13 @@ export default function DiscussPage() {
               <li key={event.slug}>
                 <Link
                   href={`/events/${event.slug}#discussion`}
-                  className="mmg-press block rounded-card border border-[var(--line)] bg-paper p-4 shadow-card transition-shadow hover:shadow-lift"
+                  className="mmg-press rounded-card bg-paper shadow-card hover:shadow-lift block border border-[var(--line)] p-4 transition-shadow"
                 >
                   <div className="flex items-center gap-2">
-                    <span className="rounded-full bg-red/10 px-2.5 py-[0.2rem] text-[0.65rem] font-bold tracking-[0.08em] text-red uppercase">
+                    <span className="bg-red/10 text-red rounded-full px-2.5 py-[0.2rem] text-[0.65rem] font-bold tracking-[0.08em] uppercase">
                       Event
                     </span>
-                    <span className="ml-auto shrink-0 text-[0.7rem] text-muted">
+                    <span className="text-muted ml-auto shrink-0 text-[0.7rem]">
                       {relativeTime(lastAt)}
                     </span>
                   </div>
@@ -106,19 +106,18 @@ export default function DiscussPage() {
                   <h2 className="mt-2 font-serif text-[1.1rem] leading-[1.12] font-semibold tracking-[-0.03em] text-balance">
                     {event.title}
                   </h2>
-                  <p className="mt-1 text-[0.75rem] text-muted">
+                  <p className="text-muted mt-1 text-[0.75rem]">
                     {event.venue.city}, {event.venue.state}
                   </p>
-                  <p className="mt-2 line-clamp-2 text-[0.83rem] leading-relaxed text-muted text-pretty">
+                  <p className="text-muted mt-2 line-clamp-2 text-[0.83rem] leading-relaxed text-pretty">
                     &ldquo;{event.comments[event.comments.length - 1].body}&rdquo;
                   </p>
 
                   <div className="mt-3 flex items-center gap-2.5">
                     <AvatarStack names={event.comments.map((c) => c.author)} max={4} />
-                    <span className="inline-flex items-center gap-1.5 text-[0.75rem] font-medium text-muted">
+                    <span className="text-muted inline-flex items-center gap-1.5 text-[0.75rem] font-medium">
                       <MessageSquare className="size-3.5" />
-                      {event.comments.length}{" "}
-                      {event.comments.length === 1 ? "comment" : "comments"}
+                      {event.comments.length} {event.comments.length === 1 ? "comment" : "comments"}
                     </span>
                   </div>
                 </Link>

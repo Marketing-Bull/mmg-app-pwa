@@ -10,7 +10,7 @@ export function PartnerTile({ partner, className }: { partner: Partner; classNam
   return (
     <div
       className={cn(
-        "grid h-[4.5rem] place-items-center rounded-2xl border border-[var(--line)] bg-paper px-3 py-2",
+        "bg-paper grid h-[4.5rem] place-items-center rounded-2xl border border-[var(--line)] px-3 py-2",
         className,
       )}
     >
@@ -24,7 +24,7 @@ export function PartnerTile({ partner, className }: { partner: Partner; classNam
           className="max-h-11 w-auto object-contain"
         />
       ) : (
-        <span className="text-center text-[0.7rem] leading-tight font-bold tracking-[0.02em] text-espresso/75 uppercase">
+        <span className="text-espresso/75 text-center text-[0.7rem] leading-tight font-bold tracking-[0.02em] uppercase">
           {partner.name}
         </span>
       )}

@@ -50,7 +50,7 @@ export function EventArt({
 
   if (image) {
     return (
-      <div className={cn("relative overflow-hidden bg-sand-light", className)}>
+      <div className={cn("bg-sand-light relative overflow-hidden", className)}>
         <Image
           src={image.src}
           alt={image.alt}
@@ -68,7 +68,7 @@ export function EventArt({
       <div aria-hidden className={cn("absolute inset-0", accent.glow)} />
       <div
         aria-hidden
-        className="absolute inset-0 opacity-[0.16] [background-image:repeating-linear-gradient(58deg,transparent_0_13px,currentColor_13px_14px)]"
+        className="absolute inset-0 [background-image:repeating-linear-gradient(58deg,transparent_0_13px,currentColor_13px_14px)] opacity-[0.16]"
       />
       <div className="relative flex h-full flex-col justify-between p-4">
         <div className="flex items-start justify-between gap-3">
@@ -87,7 +87,12 @@ export function EventArt({
           the middle of the plate, clear of the chrome the caller paints along
           the bottom edge.
         */}
-        <div className={cn("flex gap-3", overlay ? "flex-1 items-center" : "items-end justify-between")}>
+        <div
+          className={cn(
+            "flex gap-3",
+            overlay ? "flex-1 items-center" : "items-end justify-between",
+          )}
+        >
           <div className="leading-none">
             <div className="text-[0.7rem] font-bold tracking-[0.2em] opacity-80">
               {formatMonthAbbr(event.date)}

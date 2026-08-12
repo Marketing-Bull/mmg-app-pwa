@@ -46,9 +46,9 @@ export default function SponsorPage() {
           <h1 className="mt-1.5 font-serif text-[2rem] leading-[0.98] font-semibold tracking-[-0.045em] text-balance">
             An environment where professionals connect organically.
           </h1>
-          <p className="mt-3 text-[0.88rem] leading-relaxed text-muted text-pretty">
-            Support the personal injury community while building recognition through event
-            presence, promotional visibility, and meaningful conversations with attendees.
+          <p className="text-muted mt-3 text-[0.88rem] leading-relaxed text-pretty">
+            Support the personal injury community while building recognition through event presence,
+            promotional visibility, and meaningful conversations with attendees.
           </p>
         </div>
 
@@ -61,10 +61,10 @@ export default function SponsorPage() {
             ].map((stat) => (
               <li
                 key={stat.label}
-                className="rounded-2xl border border-[var(--line)] bg-paper px-2 py-3.5 text-center shadow-card"
+                className="bg-paper shadow-card rounded-2xl border border-[var(--line)] px-2 py-3.5 text-center"
               >
-                <p className="mmg-display text-[1.5rem] text-red">{stat.value}</p>
-                <p className="mt-1 text-[0.68rem] leading-tight font-semibold text-muted">
+                <p className="mmg-display text-red text-[1.5rem]">{stat.value}</p>
+                <p className="text-muted mt-1 text-[0.68rem] leading-tight font-semibold">
                   {stat.label}
                 </p>
               </li>
@@ -74,7 +74,7 @@ export default function SponsorPage() {
 
         <Section eyebrow="Choose your level" title="Three ways to be in the room." className="pt-1">
           <TierList tiers={sponsorTiers} />
-          <p className="mt-3.5 text-center text-[0.75rem] leading-relaxed text-muted">
+          <p className="text-muted mt-3.5 text-center text-[0.75rem] leading-relaxed">
             Every tier is a conversation, not a checkout. Andrew follows up personally to make sure
             the fit is right before anything is invoiced.
           </p>
@@ -97,10 +97,10 @@ export default function SponsorPage() {
             {FAQ.map((item) => (
               <li
                 key={item.q}
-                className="rounded-card border border-[var(--line)] bg-paper p-4 shadow-card"
+                className="rounded-card bg-paper shadow-card border border-[var(--line)] p-4"
               >
                 <h3 className="text-[0.92rem] leading-snug font-semibold">{item.q}</h3>
-                <p className="mt-1.5 text-[0.83rem] leading-relaxed text-muted text-pretty">
+                <p className="text-muted mt-1.5 text-[0.83rem] leading-relaxed text-pretty">
                   {item.a}
                 </p>
               </li>
@@ -109,12 +109,12 @@ export default function SponsorPage() {
         </Section>
 
         <Section className="pt-0 pb-4">
-          <div className="rounded-card bg-espresso p-5 text-cream shadow-mmg">
+          <div className="rounded-card bg-espresso text-cream shadow-mmg p-5">
             <p className="mmg-eyebrow text-gold">Rather just talk?</p>
             <h2 className="mt-2 font-serif text-[1.5rem] leading-[1.05] font-semibold tracking-[-0.04em] text-balance">
               Call Andrew directly.
             </h2>
-            <p className="mt-2.5 text-[0.86rem] leading-relaxed text-cream/70 text-pretty">
+            <p className="text-cream/70 mt-2.5 text-[0.86rem] leading-relaxed text-pretty">
               He&rsquo;ll tell you honestly which tier fits what you&rsquo;re trying to do — and
               which one doesn&rsquo;t.
             </p>

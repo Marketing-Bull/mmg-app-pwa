@@ -68,7 +68,7 @@ export default function ContactPage() {
           <h1 className="mt-1.5 font-serif text-[2rem] leading-[0.98] font-semibold tracking-[-0.045em] text-balance">
             Who do you want to meet?
           </h1>
-          <p className="mt-3 text-[0.88rem] leading-relaxed text-muted text-pretty">
+          <p className="text-muted mt-3 text-[0.88rem] leading-relaxed text-pretty">
             Tell Andrew about your business, the relationships you want to build, and the
             opportunities you are exploring. He will follow up to schedule a conversation and
             recommend the right next step.
@@ -83,16 +83,16 @@ export default function ContactPage() {
                   href={channel.href}
                   target={channel.external ? "_blank" : undefined}
                   rel={channel.external ? "noreferrer" : undefined}
-                  className="mmg-press flex h-full flex-col gap-1.5 rounded-card border border-[var(--line)] bg-paper p-3.5 shadow-card"
+                  className="mmg-press rounded-card bg-paper shadow-card flex h-full flex-col gap-1.5 border border-[var(--line)] p-3.5"
                 >
-                  <channel.icon className="size-[1.15rem] text-red" />
+                  <channel.icon className="text-red size-[1.15rem]" />
                   <span className="text-[0.84rem] leading-snug font-semibold">
                     {channel.label}
                     {channel.external ? (
-                      <ExternalLink className="ml-1 inline size-3 align-baseline text-muted" />
+                      <ExternalLink className="text-muted ml-1 inline size-3 align-baseline" />
                     ) : null}
                   </span>
-                  <span className="text-[0.72rem] leading-snug break-words text-muted">
+                  <span className="text-muted text-[0.72rem] leading-snug break-words">
                     {channel.sub}
                   </span>
                 </a>
@@ -114,10 +114,10 @@ export default function ContactPage() {
         </Section>
 
         <footer className="px-4 pb-6 text-center">
-          <p className="text-[0.7rem] leading-relaxed text-muted/80 text-pretty">
+          <p className="text-muted/80 text-[0.7rem] leading-relaxed text-pretty">
             {site.disclaimer}
           </p>
-          <p className="mt-2 text-[0.7rem] text-muted/70">
+          <p className="text-muted/70 mt-2 text-[0.7rem]">
             © {new Date().getFullYear()} {site.name}
           </p>
         </footer>

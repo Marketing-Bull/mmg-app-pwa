@@ -32,7 +32,7 @@ export function Section({
           {action ? (
             <Link
               href={action.href}
-              className="mmg-press shrink-0 pb-1 text-[0.78rem] font-semibold text-red hover:text-red-dark"
+              className="mmg-press text-red hover:text-red-dark shrink-0 pb-1 text-[0.78rem] font-semibold"
             >
               {action.label}
             </Link>

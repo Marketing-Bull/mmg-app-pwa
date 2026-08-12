@@ -22,7 +22,13 @@
     "alt": "Personal Injury Professionals Networking Mixer flyer, February 26 2026, Coral Gables"
   },
   "hostId": "andrew-miller",
-  "sponsorIds": ["the-mri-guys", "mario-lopez", "align-the-spine", "in-check", "realign-chiropractic"],
+  "sponsorIds": [
+    "the-mri-guys",
+    "mario-lopez",
+    "align-the-spine",
+    "in-check",
+    "realign-chiropractic"
+  ],
   "capacity": 120,
   "attendingCount": 97,
   "tags": ["Mixer", "Evening", "Coral Gables"],

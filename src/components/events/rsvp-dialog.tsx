@@ -1,7 +1,7 @@
 "use client";
 
 import { CalendarPlus, Check, Loader2, Minus, Plus, Share2 } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { TextField } from "@/components/ui/field";
 import { Sheet } from "@/components/ui/sheet";
@@ -35,41 +35,25 @@ export function RsvpDialog({
   const { profile, addRsvp } = useStore();
   const { toast } = useToast();
 
-  const [role, setRole] = useState<RoleId>("attorney");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [company, setCompany] = useState("");
+  /*
+   * State seeds straight from the saved profile — no reset effect, because the
+   * caller remounts this on open (see EventActions). That prefills a returning
+   * member and, more importantly, means confirming an RSVP can't write the
+   * profile back and re-trigger a reset that wipes the confirmation screen.
+   */
+  const [role, setRole] = useState<RoleId>(profile?.role ?? "attorney");
+  const [name, setName] = useState(profile?.name ?? "");
+  const [email, setEmail] = useState(profile?.email ?? "");
+  const [phone, setPhone] = useState(profile?.phone ?? "");
+  const [company, setCompany] = useState(profile?.company ?? "");
   const [guests, setGuests] = useState(0);
   const [errors, setErrors] = useState<Errors>({});
   const [submitting, setSubmitting] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
   const [delivery, setDelivery] = useState<DeliveryStatus | null>(null);
 
-  // Read the profile without depending on it: confirming an RSVP writes the
-  // profile back to the store, and depending on it here would re-run this
-  // effect and immediately reset the confirmation screen.
-  const profileRef = useRef(profile);
-  profileRef.current = profile;
-
-  // Prefill from the last RSVP so a returning member is two taps from done.
-  useEffect(() => {
-    if (!open) return;
-    setConfirmed(false);
-    setDelivery(null);
-    setErrors({});
-    setGuests(0);
-    const saved = profileRef.current;
-    if (saved) {
-      setRole(saved.role);
-      setName(saved.name);
-      setEmail(saved.email);
-      setPhone(saved.phone);
-      setCompany(saved.company);
-    }
-  }, [open]);
-
-  const returning = Boolean(profile);
+  // Captured on mount so it reflects who they were before this RSVP.
+  const [returning] = useState(() => Boolean(profile));
 
   const validate = (): boolean => {
     const next: Errors = {};

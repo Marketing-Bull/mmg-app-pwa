@@ -1,15 +1,17 @@
-import { FlatCompat } from "@eslint/eslintrc";
-import { dirname } from "node:path";
-import { fileURLToPath } from "node:url";
+import nextCoreWebVitals from "eslint-config-next/core-web-vitals";
+import nextTypescript from "eslint-config-next/typescript";
 
-const compat = new FlatCompat({ baseDirectory: dirname(fileURLToPath(import.meta.url)) });
-
+/*
+ * eslint-config-next 16 ships native flat configs, so this imports them
+ * directly. The previous FlatCompat bridge (via @eslint/eslintrc) is gone —
+ * it crashed under ESLint 10 with "Converting circular structure to JSON".
+ */
 const config = [
   {
     ignores: [".next/**", "node_modules/**", "out/**", "next-env.d.ts"],
   },
-  // eslint-config-next still ships as eslintrc, so bridge it into flat config.
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  ...nextCoreWebVitals,
+  ...nextTypescript,
   {
     rules: {
       // Unused args are fine when prefixed with _ (event handlers, catch params).

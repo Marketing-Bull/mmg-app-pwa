@@ -92,6 +92,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const hydratedRef = useRef(false);
 
   useEffect(() => {
+    // localStorage has no server equivalent, so reading it during render would
+    // either crash on the server or produce a hydration mismatch. This one-time
+    // read has to land in state on mount — the rule's usual advice doesn't apply.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setState(readStorage());
     hydratedRef.current = true;
     setHydrated(true);

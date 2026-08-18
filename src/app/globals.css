@@ -92,6 +92,20 @@
 }
 
 @layer components {
+  .mmg-shell {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 42rem;
+    padding-inline: 1rem;
+  }
+
+  @media (min-width: 64rem) {
+    .mmg-shell {
+      max-width: 72rem;
+      padding-inline: 2rem;
+    }
+  }
+
   .mmg-eyebrow {
     display: inline-flex;
     align-items: center;
@@ -152,6 +166,12 @@
   /* Reserve room for the fixed bottom tab bar on every scrollable page. */
   .pb-tabbar {
     padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px) + 1.5rem);
+  }
+
+  @media (min-width: 64rem) {
+    .pb-tabbar {
+      padding-bottom: 0;
+    }
   }
 
   .text-balance {

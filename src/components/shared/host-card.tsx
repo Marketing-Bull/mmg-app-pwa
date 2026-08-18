@@ -33,40 +33,56 @@ export function HostCard({ host, compact }: { host: Host; compact?: boolean }) {
   }
 
   return (
-    <div className="rounded-card bg-paper shadow-card overflow-hidden border border-[var(--line)]">
-      <div className="flex gap-4 p-4">
+    // Stacked on phones; a portrait column beside the bio from lg up.
+    <div className="rounded-card bg-paper shadow-card overflow-hidden border border-[var(--line)] lg:grid lg:grid-cols-[20rem_1fr]">
+      <div className="relative hidden lg:block">
         <Image
           src={host.portrait.src}
           alt={host.portrait.alt}
-          width={96}
-          height={96}
-          sizes="96px"
-          className="size-24 shrink-0 rounded-2xl object-cover"
+          fill
+          sizes="20rem"
+          className="object-cover"
         />
-        <div className="min-w-0 flex-1">
-          <p className="mmg-eyebrow">Meet your host</p>
-          <h3 className="mt-1 font-serif text-[1.35rem] leading-tight font-semibold tracking-[-0.035em]">
-            {host.name}
-          </h3>
-          <p className="text-muted mt-0.5 text-[0.78rem]">{host.title}</p>
+      </div>
+
+      <div className="lg:p-8">
+        <div className="flex gap-4 p-4 lg:p-0">
+          <Image
+            src={host.portrait.src}
+            alt={host.portrait.alt}
+            width={96}
+            height={96}
+            sizes="96px"
+            className="size-24 shrink-0 rounded-2xl object-cover lg:hidden"
+          />
+          <div className="min-w-0 flex-1">
+            <p className="mmg-eyebrow">Meet your host</p>
+            <h3 className="mt-1 font-serif text-[1.35rem] leading-tight font-semibold tracking-[-0.035em] lg:text-[2rem]">
+              {host.name}
+            </h3>
+            <p className="text-muted mt-0.5 text-[0.78rem] lg:text-[0.95rem]">{host.title}</p>
+          </div>
         </div>
+
+        <div className="space-y-2.5 px-4 pb-1 lg:mt-5 lg:space-y-4 lg:px-0 lg:pb-0">
+          {host.bio.map((paragraph) => (
+            <p
+              key={paragraph}
+              className="text-muted text-[0.86rem] leading-relaxed text-pretty lg:text-[1rem]"
+            >
+              {paragraph}
+            </p>
+          ))}
+        </div>
+
+        {host.quote ? (
+          <blockquote className="border-red text-espresso mx-4 my-4 border-l-2 pl-3.5 font-serif text-[1.05rem] leading-snug tracking-[-0.02em] lg:mx-0 lg:my-6 lg:pl-5 lg:text-[1.35rem]">
+            &ldquo;{host.quote}&rdquo;
+          </blockquote>
+        ) : null}
       </div>
 
-      <div className="space-y-2.5 px-4 pb-1">
-        {host.bio.map((paragraph) => (
-          <p key={paragraph} className="text-muted text-[0.86rem] leading-relaxed text-pretty">
-            {paragraph}
-          </p>
-        ))}
-      </div>
-
-      {host.quote ? (
-        <blockquote className="border-red text-espresso mx-4 my-4 border-l-2 pl-3.5 font-serif text-[1.05rem] leading-snug tracking-[-0.02em]">
-          &ldquo;{host.quote}&rdquo;
-        </blockquote>
-      ) : null}
-
-      <div className="bg-cream/60 flex flex-wrap gap-2 border-t border-[var(--line)] p-3.5">
+      <div className="bg-cream/60 flex flex-wrap gap-2 border-t border-[var(--line)] p-3.5 lg:col-span-2 lg:px-8">
         {host.phone ? (
           <a
             href={`tel:${host.phone.replace(/\D/g, "")}`}

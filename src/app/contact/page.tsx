@@ -2,7 +2,7 @@ import { ExternalLink, Instagram, Mail, MapPin, Phone, Ticket } from "lucide-rea
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/contact/contact-form";
 import { HostCard } from "@/components/shared/host-card";
-import { Section } from "@/components/shared/section";
+import { PageIntro, Section } from "@/components/shared/section";
 import { AppBar } from "@/components/shell/app-bar";
 import { getHost, hosts, site } from "@/lib/content";
 import { DemoTools } from "@/components/shell/demo-tools";
@@ -63,20 +63,14 @@ export default function ContactPage() {
       <AppBar title="Contact" />
 
       <main className="pb-tabbar">
-        <div className="px-4 pt-4">
-          <p className="mmg-eyebrow">Start with a conversation</p>
-          <h1 className="mt-1.5 font-serif text-[2rem] leading-[0.98] font-semibold tracking-[-0.045em] text-balance">
-            Who do you want to meet?
-          </h1>
-          <p className="text-muted mt-3 text-[0.88rem] leading-relaxed text-pretty">
-            Tell Andrew about your business, the relationships you want to build, and the
-            opportunities you are exploring. He will follow up to schedule a conversation and
-            recommend the right next step.
-          </p>
-        </div>
+        <PageIntro eyebrow="Start with a conversation" title="Who do you want to meet?">
+          Tell Andrew about your business, the relationships you want to build, and the
+          opportunities you are exploring. He will follow up to schedule a conversation and
+          recommend the right next step.
+        </PageIntro>
 
         <Section className="pt-5">
-          <ul className="grid grid-cols-2 gap-2.5">
+          <ul className="grid grid-cols-2 gap-2.5 lg:grid-cols-3 lg:gap-4">
             {channels.map((channel) => (
               <li key={`${channel.label}-${channel.sub}`}>
                 <a
@@ -112,15 +106,6 @@ export default function ContactPage() {
         <Section eyebrow="Demo controls" title="Testing the app?">
           <DemoTools />
         </Section>
-
-        <footer className="px-4 pb-6 text-center">
-          <p className="text-muted/80 text-[0.7rem] leading-relaxed text-pretty">
-            {site.disclaimer}
-          </p>
-          <p className="text-muted/70 mt-2 text-[0.7rem]">
-            © {new Date().getFullYear()} {site.name}
-          </p>
-        </footer>
       </main>
     </>
   );

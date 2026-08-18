@@ -61,15 +61,30 @@ export function EventCard({ event }: { event: MMGEvent }) {
   );
 }
 
-/** Hero treatment for the next event up. */
-export function FeaturedEventCard({ event, priority }: { event: MMGEvent; priority?: boolean }) {
+/**
+ * Hero treatment for the next event up. `split` lays art and details side by
+ * side — use it when the card spans the full page width, otherwise a tall
+ * artwork plate leaves a lot of dead space on desktop.
+ */
+export function FeaturedEventCard({
+  event,
+  priority,
+  split,
+}: {
+  event: MMGEvent;
+  priority?: boolean;
+  split?: boolean;
+}) {
   const series = getSeries(event.seriesId);
   const spotsLeft = Math.max(0, event.capacity - event.attendingCount);
 
   return (
     <Link
       href={`/events/${event.slug}`}
-      className="mmg-press group rounded-card bg-paper shadow-lift block overflow-hidden border border-[var(--line)]"
+      className={cn(
+        "mmg-press group rounded-card bg-paper shadow-lift block overflow-hidden border border-[var(--line)]",
+        split && "lg:grid lg:grid-cols-[1.05fr_1fr] lg:items-stretch",
+      )}
     >
       <div className="relative">
         <EventArt
@@ -77,7 +92,7 @@ export function FeaturedEventCard({ event, priority }: { event: MMGEvent; priori
           series={series}
           priority={priority}
           overlay
-          className="aspect-[16/10] w-full"
+          className={cn("aspect-[16/10] w-full", split && "lg:aspect-auto lg:h-full")}
         />
         <div
           aria-hidden
@@ -95,12 +110,22 @@ export function FeaturedEventCard({ event, priority }: { event: MMGEvent; priori
         </div>
       </div>
 
-      <div className="p-4">
+      <div className={cn("p-4", split && "lg:flex lg:flex-col lg:justify-center lg:p-9")}>
         {series ? <SeriesPill series={series} /> : null}
-        <h3 className="mt-2 font-serif text-[1.45rem] leading-[1.08] font-semibold tracking-[-0.035em] text-balance">
+        <h3
+          className={cn(
+            "mt-2 font-serif text-[1.45rem] leading-[1.08] font-semibold tracking-[-0.035em] text-balance",
+            split && "lg:text-[2.1rem]",
+          )}
+        >
           {event.title}
         </h3>
-        <p className="text-muted mt-2.5 line-clamp-2 text-[0.85rem] leading-relaxed text-pretty">
+        <p
+          className={cn(
+            "text-muted mt-2.5 line-clamp-2 text-[0.85rem] leading-relaxed text-pretty",
+            split && "lg:line-clamp-none lg:text-[1rem]",
+          )}
+        >
           {event.summary}
         </p>
 
@@ -135,7 +160,7 @@ export function EventRailCard({ event, className }: { event: MMGEvent; className
     <Link
       href={`/events/${event.slug}`}
       className={cn(
-        "mmg-press rounded-card bg-paper shadow-card hover:shadow-lift w-[15.5rem] overflow-hidden border border-[var(--line)] transition-shadow",
+        "mmg-press rounded-card bg-paper shadow-card hover:shadow-lift w-[15.5rem] overflow-hidden border border-[var(--line)] transition-shadow lg:w-auto",
         className,
       )}
     >

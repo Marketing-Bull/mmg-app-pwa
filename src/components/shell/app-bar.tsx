@@ -24,7 +24,7 @@ export function AppBar({
   return (
     <header
       className={cn(
-        "pt-safe sticky top-0 z-30 transition-colors",
+        "pt-safe sticky top-0 z-30 transition-colors lg:hidden",
         transparent
           ? "bg-transparent"
           : "bg-cream/88 border-b border-[var(--line)] backdrop-blur-xl",

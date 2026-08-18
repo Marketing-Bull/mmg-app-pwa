@@ -76,7 +76,7 @@ export function InstallPrompt() {
 
   return (
     <div
-      className="fixed inset-x-0 z-50 px-4"
+      className="fixed inset-x-0 z-50 px-4 lg:hidden"
       style={{ bottom: "calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px) + 0.75rem)" }}
     >
       <div className="bg-paper shadow-mmg mx-auto flex max-w-[26rem] items-center gap-3 rounded-2xl border border-[var(--line)] px-3.5 py-3">

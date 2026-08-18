@@ -41,7 +41,7 @@ export function TierList({ tiers }: { tiers: SponsorTier[] }) {
 
   return (
     <>
-      <ul className="space-y-3.5">
+      <ul className="grid gap-3.5 lg:grid-cols-3 lg:items-start lg:gap-5">
         {tiers.map((tier) => {
           const accent = ACCENT[tier.accent];
           const already = requested.has(tier.id);

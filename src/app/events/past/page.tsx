@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { EventArt } from "@/components/events/event-art";
 import { SeriesPill } from "@/components/events/series-pill";
-import { Section } from "@/components/shared/section";
+import { PageIntro, Section } from "@/components/shared/section";
 import { AppBar } from "@/components/shell/app-bar";
 import { getSeries, pastEvents } from "@/lib/content";
 import { formatFullDate, venueLine } from "@/lib/format";
@@ -21,19 +21,16 @@ export default function PastEventsPage() {
       <AppBar title="Past events" back="/events" />
 
       <main className="pb-tabbar">
-        <div className="px-4 pt-4">
-          <p className="mmg-eyebrow">Past events</p>
-          <h1 className="mt-1.5 font-serif text-[2rem] leading-[0.98] font-semibold tracking-[-0.045em] text-balance">
-            The flyer starts the invitation. The recap shows the connection.
-          </h1>
-          <p className="text-muted mt-3 text-[0.88rem] leading-relaxed text-pretty">
-            Every past event keeps its original flyer and brings the gathering back to life through
-            photos, sponsor recognition, and a short recap of what happened in the room.
-          </p>
-        </div>
+        <PageIntro
+          eyebrow="Past events"
+          title="The flyer starts the invitation. The recap shows the connection."
+        >
+          Every past event keeps its original flyer and brings the gathering back to life through
+          photos, sponsor recognition, and a short recap of what happened in the room.
+        </PageIntro>
 
         <Section className="pt-6">
-          <ul className="space-y-4">
+          <ul className="grid gap-4 lg:grid-cols-2 lg:gap-6">
             {pastEvents.map((event) => {
               const series = getSeries(event.seriesId);
               const photos = event.recap?.photos ?? [];

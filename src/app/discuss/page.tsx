@@ -2,7 +2,7 @@ import { MessageSquare } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AvatarStack } from "@/components/ui/avatar";
-import { Section } from "@/components/shared/section";
+import { PageIntro, Section } from "@/components/shared/section";
 import { AppBar } from "@/components/shell/app-bar";
 import { allEvents, discussionThreads } from "@/lib/content";
 import { relativeTime } from "@/lib/format";
@@ -31,19 +31,13 @@ export default function DiscussPage() {
       <AppBar title="Discuss" />
 
       <main className="pb-tabbar">
-        <div className="px-4 pt-4">
-          <p className="mmg-eyebrow">Community</p>
-          <h1 className="mt-1.5 font-serif text-[2rem] leading-[0.98] font-semibold tracking-[-0.045em] text-balance">
-            The conversation keeps going between events.
-          </h1>
-          <p className="text-muted mt-3 text-[0.88rem] leading-relaxed text-pretty">
-            Ask a question, share what worked, or introduce yourself before you walk into a room. No
-            account needed — just post.
-          </p>
-        </div>
+        <PageIntro eyebrow="Community" title="The conversation keeps going between events.">
+          Ask a question, share what worked, or introduce yourself before you walk into a room. No
+          account needed — just post.
+        </PageIntro>
 
         <Section eyebrow="Community threads" title="Open discussions" className="pt-6">
-          <ul className="space-y-2.5">
+          <ul className="grid gap-2.5 lg:grid-cols-2 lg:gap-4">
             {discussionThreads.map((thread) => {
               const last = thread.comments[thread.comments.length - 1];
               return (
@@ -87,7 +81,7 @@ export default function DiscussPage() {
         </Section>
 
         <Section eyebrow="Event threads" title="Talking about specific events">
-          <ul className="space-y-2.5">
+          <ul className="grid gap-2.5 lg:grid-cols-2 lg:gap-4">
             {eventThreads.map(({ event, lastAt }) => (
               <li key={event.slug}>
                 <Link

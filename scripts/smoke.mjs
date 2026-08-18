@@ -44,6 +44,11 @@ const ROUTES = [
       "Talk with Andrew",
       "Send a message",
       "A connector by nature.",
+      // Desktop site chrome — the nav and footer render server-side on every route.
+      "Sponsorship",
+      "Explore",
+      "Get in touch",
+      "All rights reserved",
     ],
   },
   {

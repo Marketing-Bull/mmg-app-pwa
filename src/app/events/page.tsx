@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { EventCard, FeaturedEventCard } from "@/components/events/event-card";
 import { SeriesPill } from "@/components/events/series-pill";
-import { Section } from "@/components/shared/section";
+import { PageIntro, Section } from "@/components/shared/section";
 import { AppBar } from "@/components/shell/app-bar";
 import { Button } from "@/components/ui/button";
 import { pastEvents, seriesList, site, upcomingEvents } from "@/lib/content";
@@ -22,26 +22,20 @@ export default function EventsPage() {
       <AppBar title="Events" />
 
       <main className="pb-tabbar">
-        <div className="px-4 pt-4">
-          <p className="mmg-eyebrow">Upcoming events</p>
-          <h1 className="mt-1.5 font-serif text-[2rem] leading-[0.98] font-semibold tracking-[-0.045em] text-balance">
-            Come meet the personal injury community.
-          </h1>
-          <p className="text-muted mt-3 text-[0.88rem] leading-relaxed text-pretty">
-            MMG events are designed to make professional networking feel natural. Expect a welcoming
-            room, real conversation, and an experience people enjoy returning to.
-          </p>
-        </div>
+        <PageIntro eyebrow="Upcoming events" title="Come meet the personal injury community.">
+          MMG events are designed to make professional networking feel natural. Expect a welcoming
+          room, real conversation, and an experience people enjoy returning to.
+        </PageIntro>
 
         {featured ? (
           <Section eyebrow="Next up" className="pt-6">
-            <FeaturedEventCard event={featured} priority />
+            <FeaturedEventCard event={featured} priority split />
           </Section>
         ) : null}
 
         {rest.length > 0 ? (
           <Section title="Everything else on the calendar" className="pt-0">
-            <ul className="space-y-2.5">
+            <ul className="grid gap-2.5 lg:grid-cols-2 lg:gap-4">
               {rest.map((event) => (
                 <li key={event.slug}>
                   <EventCard event={event} />
@@ -52,7 +46,7 @@ export default function EventsPage() {
         ) : null}
 
         <Section eyebrow="The rhythm" title="Two series, every month.">
-          <ul className="grid gap-2.5">
+          <ul className="grid gap-2.5 lg:grid-cols-3 lg:gap-4">
             {seriesList.map((series) => (
               <li
                 key={series.id}

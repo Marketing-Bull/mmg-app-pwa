@@ -19,7 +19,7 @@ export function TabBar() {
   return (
     <nav
       aria-label="Primary"
-      className="bg-paper/92 pb-safe fixed inset-x-0 bottom-0 z-40 border-t border-[var(--line)] backdrop-blur-xl"
+      className="bg-paper/92 pb-safe fixed inset-x-0 bottom-0 z-40 border-t border-[var(--line)] backdrop-blur-xl lg:hidden"
     >
       <ul className="mx-auto flex max-w-2xl items-stretch">
         {TABS.map(({ href, label, icon: Icon }) => {

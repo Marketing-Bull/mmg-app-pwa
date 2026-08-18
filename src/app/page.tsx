@@ -39,30 +39,30 @@ export default function HomePage() {
 
       <main className="pb-tabbar">
         {/* Hero */}
-        <section className="relative overflow-hidden px-4 pt-4 pb-2">
+        <section className="mmg-shell relative pt-4 pb-2 lg:pt-8 lg:pb-4">
           <div className="rounded-card bg-espresso text-cream shadow-mmg relative overflow-hidden">
             <Image
               src="/assets/brand/networking-hero.webp"
               alt=""
               fill
               priority
-              sizes="(min-width: 640px) 42rem, 100vw"
+              sizes="(min-width: 1024px) 72rem, (min-width: 640px) 42rem, 100vw"
               className="object-cover opacity-30"
             />
             <div
               aria-hidden
-              className="absolute inset-0 bg-[linear-gradient(165deg,rgba(38,29,25,0.72),rgba(38,29,25,0.94))]"
+              className="absolute inset-0 bg-[linear-gradient(165deg,rgba(38,29,25,0.72),rgba(38,29,25,0.94))] lg:bg-[linear-gradient(100deg,rgba(38,29,25,0.95)_38%,rgba(38,29,25,0.55)_100%)]"
             />
-            <div className="relative px-5 py-8">
+            <div className="relative px-5 py-8 lg:max-w-3xl lg:px-14 lg:py-24">
               <p className="bg-cream/12 text-gold inline-flex items-center gap-2 rounded-full px-3 py-1 text-[0.68rem] font-bold tracking-[0.12em] uppercase">
                 Florida&rsquo;s PI community
               </p>
-              <h1 className="mt-4 font-serif text-[2.6rem] leading-[0.94] font-semibold tracking-[-0.05em] text-balance">
+              <h1 className="mt-4 font-serif text-[2.6rem] leading-[0.94] font-semibold tracking-[-0.05em] text-balance lg:mt-6 lg:text-[4.6rem]">
                 The right room
                 <br />
                 <span className="text-gold">changes everything.</span>
               </h1>
-              <p className="text-cream/75 mt-3.5 max-w-[26rem] text-[0.9rem] leading-relaxed text-pretty">
+              <p className="text-cream/75 mt-3.5 max-w-[26rem] text-[0.9rem] leading-relaxed text-pretty lg:mt-6 lg:max-w-[34rem] lg:text-[1.15rem]">
                 MMG brings personal injury attorneys, medical providers, and trusted industry
                 partners together through curated events across Florida.
               </p>
@@ -71,7 +71,7 @@ export default function HomePage() {
                 links sit inside a server component and don't need a client
                 boundary just to carry button styling.
               */}
-              <div className="mt-5 flex flex-wrap gap-2.5">
+              <div className="mt-5 flex flex-wrap gap-2.5 lg:mt-9">
                 <Link href="/events" className={buttonVariants({ variant: "gold", size: "lg" })}>
                   Find your next event
                   <ArrowRight />
@@ -97,28 +97,26 @@ export default function HomePage() {
             title="Come meet the personal injury community."
             action={{ href: "/events", label: "All events" }}
           >
-            <FeaturedEventCard event={featuredEvent} priority />
+            <div className="grid gap-4 lg:grid-cols-[1.5fr_1fr] lg:items-start">
+              <FeaturedEventCard event={featuredEvent} priority />
+              <ul className="grid gap-2.5">
+                {site.valueProps.map((prop) => (
+                  <li
+                    key={prop.title}
+                    className="rounded-card bg-paper shadow-card border border-[var(--line)] p-4 lg:p-5"
+                  >
+                    <h3 className="font-serif text-[1.1rem] leading-tight font-semibold tracking-[-0.03em] lg:text-[1.25rem]">
+                      {prop.title}
+                    </h3>
+                    <p className="text-muted mt-1.5 text-[0.84rem] leading-relaxed text-pretty">
+                      {prop.body}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </Section>
         ) : null}
-
-        {/* Value props */}
-        <Section className="pt-0">
-          <ul className="grid gap-2.5">
-            {site.valueProps.map((prop) => (
-              <li
-                key={prop.title}
-                className="rounded-card bg-paper shadow-card border border-[var(--line)] p-4"
-              >
-                <h3 className="font-serif text-[1.1rem] leading-tight font-semibold tracking-[-0.03em]">
-                  {prop.title}
-                </h3>
-                <p className="text-muted mt-1.5 text-[0.84rem] leading-relaxed text-pretty">
-                  {prop.body}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </Section>
 
         {/* Upcoming rail */}
         {nextUp.length > 0 ? (
@@ -127,7 +125,7 @@ export default function HomePage() {
             title="Also coming up"
             action={{ href: "/events", label: "See all" }}
           >
-            <div className="mmg-rail -mx-4 px-4">
+            <div className="mmg-rail -mx-4 px-4 lg:mx-0 lg:grid lg:grid-cols-4 lg:gap-4 lg:overflow-visible lg:px-0">
               {nextUp.map((event) => (
                 <EventRailCard key={event.slug} event={event} />
               ))}
@@ -137,7 +135,7 @@ export default function HomePage() {
 
         {/* Series */}
         <Section eyebrow="How it works" title="Two series, every month.">
-          <ul className="grid gap-2.5">
+          <ul className="grid gap-2.5 lg:grid-cols-3 lg:gap-4">
             {seriesList.map((series) => (
               <li
                 key={series.id}
@@ -162,7 +160,7 @@ export default function HomePage() {
             title="The recap shows the connection."
             action={{ href: "/events/past", label: "Archive" }}
           >
-            <div className="mmg-rail -mx-4 px-4">
+            <div className="mmg-rail -mx-4 px-4 lg:mx-0 lg:grid lg:grid-cols-4 lg:gap-4 lg:overflow-visible lg:px-0">
               {recaps.map((event) => (
                 <EventRailCard key={event.slug} event={event} />
               ))}
@@ -172,7 +170,7 @@ export default function HomePage() {
 
         {/* Quick links */}
         <Section className="pt-0">
-          <div className="grid grid-cols-3 gap-2.5">
+          <div className="grid grid-cols-3 gap-2.5 lg:gap-4">
             {[
               {
                 href: "/events",
@@ -237,15 +235,6 @@ export default function HomePage() {
             ) : null}
           </div>
         </Section>
-
-        <footer className="px-4 pb-6 text-center">
-          <p className="text-muted/80 text-[0.7rem] leading-relaxed text-pretty">
-            {site.disclaimer}
-          </p>
-          <p className="text-muted/70 mt-2 text-[0.7rem]">
-            © {new Date().getFullYear()} {site.name}
-          </p>
-        </footer>
       </main>
     </>
   );

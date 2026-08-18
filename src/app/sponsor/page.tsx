@@ -2,7 +2,7 @@ import { Mail, Phone } from "lucide-react";
 import type { Metadata } from "next";
 import { EventRailCard } from "@/components/events/event-card";
 import { PartnerWall } from "@/components/shared/partner-wall";
-import { Section } from "@/components/shared/section";
+import { PageIntro, Section } from "@/components/shared/section";
 import { AppBar } from "@/components/shell/app-bar";
 import { TierList } from "@/components/sponsor/tier-list";
 import { Button } from "@/components/ui/button";
@@ -41,19 +41,16 @@ export default function SponsorPage() {
       <AppBar title="Sponsorship" />
 
       <main className="pb-tabbar">
-        <div className="px-4 pt-4">
-          <p className="mmg-eyebrow">Sponsorship opportunities</p>
-          <h1 className="mt-1.5 font-serif text-[2rem] leading-[0.98] font-semibold tracking-[-0.045em] text-balance">
-            An environment where professionals connect organically.
-          </h1>
-          <p className="text-muted mt-3 text-[0.88rem] leading-relaxed text-pretty">
-            Support the personal injury community while building recognition through event presence,
-            promotional visibility, and meaningful conversations with attendees.
-          </p>
-        </div>
+        <PageIntro
+          eyebrow="Sponsorship opportunities"
+          title="An environment where professionals connect organically."
+        >
+          Support the personal injury community while building recognition through event presence,
+          promotional visibility, and meaningful conversations with attendees.
+        </PageIntro>
 
         <Section className="pt-6">
-          <ul className="grid grid-cols-3 gap-2.5">
+          <ul className="grid grid-cols-3 gap-2.5 lg:gap-6">
             {[
               { value: "60–130", label: "Attendees per event" },
               { value: "18+", label: "Events a year" },
@@ -81,7 +78,7 @@ export default function SponsorPage() {
         </Section>
 
         <Section eyebrow="Where your brand shows up" title="Recent and upcoming rooms.">
-          <div className="mmg-rail -mx-4 px-4">
+          <div className="mmg-rail -mx-4 px-4 lg:mx-0 lg:grid lg:grid-cols-4 lg:gap-4 lg:overflow-visible lg:px-0">
             {showcase.map((event) => (
               <EventRailCard key={event.slug} event={event} />
             ))}
@@ -93,7 +90,7 @@ export default function SponsorPage() {
         </Section>
 
         <Section eyebrow="Questions" title="Before you ask Andrew.">
-          <ul className="space-y-2.5">
+          <ul className="grid gap-2.5 lg:grid-cols-2 lg:gap-4">
             {FAQ.map((item) => (
               <li
                 key={item.q}

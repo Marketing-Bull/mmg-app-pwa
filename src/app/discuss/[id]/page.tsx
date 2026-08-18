@@ -32,7 +32,7 @@ export default async function ThreadPage({ params }: { params: Promise<{ id: str
       <AppBar title={thread.title} back="/discuss" />
 
       <main className="pb-tabbar">
-        <article className="px-4 pt-4">
+        <article className="mmg-shell max-w-3xl pt-4 lg:pt-12">
           <span className="bg-sand-light text-muted rounded-full px-2.5 py-[0.2rem] text-[0.65rem] font-bold tracking-[0.08em] uppercase">
             {thread.topic}
           </span>
@@ -59,7 +59,7 @@ export default async function ThreadPage({ params }: { params: Promise<{ id: str
           </p>
         </article>
 
-        <div className="mt-7 px-4">
+        <div className="mmg-shell mt-7 max-w-3xl">
           <CommentThread
             storageKey={threadCommentKey(thread.id)}
             seeded={thread.comments}

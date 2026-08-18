@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import type { ReactNode } from "react";
 import { InstallPrompt } from "@/components/shell/install-prompt";
 import { ServiceWorkerRegistrar } from "@/components/shell/service-worker";
+import { SiteFooter } from "@/components/shell/site-footer";
+import { SiteHeader } from "@/components/shell/site-header";
 import { TabBar } from "@/components/shell/tab-bar";
 import { ToastProvider } from "@/components/ui/toast";
 import { site } from "@/lib/content";
@@ -79,9 +81,17 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className="font-sans antialiased">
         <StoreProvider>
           <ToastProvider>
-            <div className="bg-cream mx-auto min-h-dvh max-w-2xl shadow-[0_0_60px_rgba(75,38,27,0.06)]">
+            {/*
+              Two shells in one. Phones get the app treatment — a narrow column
+              with the AppBar on top and the TabBar fixed at the bottom. From lg
+              up it becomes an ordinary website: full-bleed background, a real
+              top nav, and a site footer.
+            */}
+            <SiteHeader />
+            <div className="bg-cream mx-auto min-h-dvh max-w-2xl shadow-[0_0_60px_rgba(75,38,27,0.06)] lg:max-w-none lg:shadow-none">
               {children}
             </div>
+            <SiteFooter />
             <TabBar />
             <InstallPrompt />
             <ServiceWorkerRegistrar />

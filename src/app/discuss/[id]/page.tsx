@@ -29,19 +29,19 @@ export default async function ThreadPage({ params }: { params: Promise<{ id: str
 
   return (
     <>
-      <AppBar title={thread.title} back="/discuss" />
+      <AppBar title={thread.title} subtitle={thread.topic} back="/discuss" />
 
       <main className="pb-tabbar">
-        <article className="mmg-shell max-w-3xl pt-4 lg:pt-12">
+        <article className="mmg-shell max-w-3xl pt-3 lg:pt-12">
           <span className="bg-sand-light text-muted rounded-full px-2.5 py-[0.2rem] text-[0.65rem] font-bold tracking-[0.08em] uppercase">
             {thread.topic}
           </span>
 
-          <h1 className="mt-2.5 font-serif text-[1.85rem] leading-[1.02] font-semibold tracking-[-0.045em] text-balance">
+          <h1 className="mt-2 font-serif text-[1.5rem] leading-[1.04] font-semibold tracking-[-0.04em] text-balance lg:text-[2.2rem]">
             {thread.title}
           </h1>
 
-          <div className="mt-4 flex items-center gap-3">
+          <div className="mt-3 flex items-center gap-3">
             <Avatar name={thread.author} size="md" />
             <div className="min-w-0 flex-1">
               <p className="text-[0.86rem] font-semibold">{thread.author}</p>
@@ -54,12 +54,12 @@ export default async function ThreadPage({ params }: { params: Promise<{ id: str
             </span>
           </div>
 
-          <p className="mt-4 text-[0.92rem] leading-relaxed text-pretty whitespace-pre-line">
+          <p className="mt-3 text-[0.89rem] leading-relaxed text-pretty whitespace-pre-line">
             {thread.body}
           </p>
         </article>
 
-        <div className="mmg-shell mt-7 max-w-3xl">
+        <div className="mmg-shell mt-5 max-w-3xl">
           <CommentThread
             storageKey={threadCommentKey(thread.id)}
             seeded={thread.comments}

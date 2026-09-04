@@ -39,16 +39,20 @@ export function EventCard({ event }: { event: MMGEvent }) {
         <h3 className="mt-1.5 line-clamp-2 font-serif text-[1.06rem] leading-[1.15] font-semibold tracking-[-0.03em]">
           {event.title}
         </h3>
-        <p className="text-muted mt-1.5 flex items-center gap-1.5 text-[0.78rem]">
-          <Clock className="size-3.5 shrink-0" />
-          {formatTimeRange(event.startTime, event.endTime)}
-        </p>
-        <p className="text-muted mt-1 flex items-center gap-1.5 text-[0.78rem]">
-          <MapPin className="size-3.5 shrink-0" />
-          <span className="truncate">
-            {event.venue.name} · {venueLine(event.venue)}
-          </span>
-        </p>
+        {formatTimeRange(event.startTime, event.endTime) ? (
+          <p className="text-muted mt-1.5 flex items-center gap-1.5 text-[0.78rem]">
+            <Clock className="size-3.5 shrink-0" />
+            {formatTimeRange(event.startTime, event.endTime)}
+          </p>
+        ) : null}
+        {event.venue.name || venueLine(event.venue) ? (
+          <p className="text-muted mt-1 flex items-center gap-1.5 text-[0.78rem]">
+            <MapPin className="size-3.5 shrink-0" />
+            <span className="truncate">
+              {[event.venue.name, venueLine(event.venue)].filter(Boolean).join(" · ")}
+            </span>
+          </p>
+        ) : null}
 
         <div className="mt-2.5 flex items-center gap-2">
           <AvatarStack names={attendees} max={4} />
@@ -133,7 +137,9 @@ export function FeaturedEventCard({
           <div className="flex items-center gap-2">
             <CalendarDays className="text-red size-4 shrink-0" />
             <dd className="font-medium">
-              {formatShortDate(event.date)} · {formatTimeRange(event.startTime, event.endTime)}
+              {[formatShortDate(event.date), formatTimeRange(event.startTime, event.endTime)]
+                .filter(Boolean)
+                .join(" · ")}
             </dd>
           </div>
           <div className="flex items-center gap-2">

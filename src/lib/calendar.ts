@@ -33,6 +33,36 @@ function utcStamp(date: Date): string {
   return `${date.toISOString().replace(/[-:]/g, "").split(".")[0]}Z`;
 }
 
+const TIME_24H = /^\d{1,2}:\d{2}$/;
+
+/** Day after `isoDate`, as a bare `YYYYMMDD` — an all-day DTEND is exclusive. */
+function nextDayStamp(isoDate: string): string {
+  const next = new Date(`${isoDate}T12:00:00Z`);
+  next.setUTCDate(next.getUTCDate() + 1);
+  return next.toISOString().slice(0, 10).replace(/-/g, "");
+}
+
+/**
+ * DTSTART/DTEND for the event.
+ *
+ * Most events in the marketing site's feed publish a date but no time. Writing
+ * those as midnight-to-midnight would drop a spurious 12:00 AM appointment into
+ * someone's calendar, so they become a proper all-day entry instead.
+ */
+function timing(event: MMGEvent): string[] {
+  const timed = TIME_24H.test(event.startTime) && TIME_24H.test(event.endTime);
+  if (!timed) {
+    return [
+      `DTSTART;VALUE=DATE:${event.date.replace(/-/g, "")}`,
+      `DTEND;VALUE=DATE:${nextDayStamp(event.date)}`,
+    ];
+  }
+  return [
+    `DTSTART;TZID=America/New_York:${localStamp(event.date, event.startTime)}`,
+    `DTEND;TZID=America/New_York:${localStamp(event.date, event.endTime)}`,
+  ];
+}
+
 /**
  * Embedding VTIMEZONE (rather than a UTC conversion) means the invite lands at
  * 6:00 PM Eastern in the attendee's calendar even if they're travelling.
@@ -59,7 +89,17 @@ const VTIMEZONE = [
 
 export function buildIcs(event: MMGEvent, organizerEmail: string): string {
   const { venue } = event;
-  const location = `${venue.name}, ${venue.address}, ${venue.city}, ${venue.state} ${venue.zip}`;
+  // Feed events know a venue name and city but no street address, so join only
+  // the parts that exist — otherwise the gap shows up as ", ," in the calendar entry.
+  const location = [
+    venue.name,
+    venue.address,
+    venue.city,
+    [venue.state, venue.zip].filter(Boolean).join(" "),
+  ]
+    .map((part) => part.trim())
+    .filter(Boolean)
+    .join(", ");
   const url = `https://millersmarketingconnects.com/events/${event.slug}`;
   const description = [event.summary, "", `Hosted by Miller's Marketing Group`, url].join("\n");
 
@@ -73,8 +113,7 @@ export function buildIcs(event: MMGEvent, organizerEmail: string): string {
     "BEGIN:VEVENT",
     `UID:${event.slug}@millersmarketinggroup.com`,
     `DTSTAMP:${utcStamp(new Date())}`,
-    `DTSTART;TZID=America/New_York:${localStamp(event.date, event.startTime)}`,
-    `DTEND;TZID=America/New_York:${localStamp(event.date, event.endTime)}`,
+    ...timing(event),
     `SUMMARY:${escapeText(event.title)}`,
     `DESCRIPTION:${escapeText(description)}`,
     `LOCATION:${escapeText(location)}`,
@@ -82,10 +121,16 @@ export function buildIcs(event: MMGEvent, organizerEmail: string): string {
     `ORGANIZER;CN=Miller's Marketing Group:mailto:${organizerEmail}`,
     "STATUS:CONFIRMED",
     "TRANSP:OPAQUE",
+    // A "starts in 2 hours" reminder only makes sense when there is a start
+    // time; all-day entries get a day-before nudge instead.
     "BEGIN:VALARM",
-    "TRIGGER:-PT2H",
-    "ACTION:DISPLAY",
-    `DESCRIPTION:${escapeText(event.title)} starts in 2 hours`,
+    ...(TIME_24H.test(event.startTime) && TIME_24H.test(event.endTime)
+      ? [
+          "TRIGGER:-PT2H",
+          "ACTION:DISPLAY",
+          `DESCRIPTION:${escapeText(event.title)} starts in 2 hours`,
+        ]
+      : ["TRIGGER:-P1D", "ACTION:DISPLAY", `DESCRIPTION:${escapeText(event.title)} is tomorrow`]),
     "END:VALARM",
     "END:VEVENT",
     "END:VCALENDAR",

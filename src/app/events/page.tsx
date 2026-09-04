@@ -6,7 +6,8 @@ import { SeriesPill } from "@/components/events/series-pill";
 import { PageIntro, Section } from "@/components/shared/section";
 import { AppBar } from "@/components/shell/app-bar";
 import { Button } from "@/components/ui/button";
-import { pastEvents, seriesList, site, upcomingEvents } from "@/lib/content";
+import { seriesList, site } from "@/lib/content";
+import { getEventFeed } from "@/lib/feed";
 
 export const metadata: Metadata = {
   title: "Upcoming events",
@@ -14,8 +15,9 @@ export const metadata: Metadata = {
     "Monthly PI networking mixers, Lunch & Learns, and signature experiences across South Florida.",
 };
 
-export default function EventsPage() {
-  const [featured, ...rest] = upcomingEvents;
+export default async function EventsPage() {
+  const { upcoming, past } = await getEventFeed();
+  const [featured, ...rest] = upcoming;
 
   return (
     <>
@@ -31,7 +33,18 @@ export default function EventsPage() {
           <Section eyebrow="Next up" className="pt-6">
             <FeaturedEventCard event={featured} priority split />
           </Section>
-        ) : null}
+        ) : (
+          <Section className="pt-6">
+            <div className="rounded-card bg-paper shadow-card border border-[var(--line)] p-5 text-center">
+              <p className="font-serif text-[1.2rem] leading-tight font-semibold tracking-[-0.03em]">
+                New event dates are coming soon.
+              </p>
+              <p className="text-muted mt-2 text-[0.85rem] leading-relaxed text-pretty">
+                Follow MMG on Eventbrite to be the first to see the next gathering.
+              </p>
+            </div>
+          </Section>
+        )}
 
         {rest.length > 0 ? (
           <Section title="Everything else on the calendar" className="pt-0">
@@ -75,7 +88,7 @@ export default function EventsPage() {
                 Photo recaps &amp; video highlights
               </p>
               <p className="text-muted mt-1 text-[0.78rem]">
-                {pastEvents.length} gatherings in the archive
+                {past.length} gatherings in the archive
               </p>
             </div>
             <ArrowRight className="text-red size-5 shrink-0" />

@@ -6,7 +6,8 @@ import { PageIntro, Section } from "@/components/shared/section";
 import { AppBar } from "@/components/shell/app-bar";
 import { TierList } from "@/components/sponsor/tier-list";
 import { Button } from "@/components/ui/button";
-import { partners, pastEvents, site, sponsorTiers, upcomingEvents } from "@/lib/content";
+import { site, sponsorTiers } from "@/lib/content";
+import { getEventFeed, getPartnerFeed } from "@/lib/feed";
 
 export const metadata: Metadata = {
   title: "Sponsorship",
@@ -33,8 +34,12 @@ const FAQ = [
   },
 ];
 
-export default function SponsorPage() {
-  const showcase = [...upcomingEvents.slice(0, 2), ...pastEvents.slice(0, 2)];
+export default async function SponsorPage() {
+  const [{ upcoming, past }, { list: partners }] = await Promise.all([
+    getEventFeed(),
+    getPartnerFeed(),
+  ]);
+  const showcase = [...upcoming.slice(0, 2), ...past.slice(0, 2)];
 
   return (
     <>
@@ -54,7 +59,7 @@ export default function SponsorPage() {
             {[
               { value: "60–130", label: "Attendees per event" },
               { value: "18+", label: "Events a year" },
-              { value: "19", label: "Current partners" },
+              { value: `${partners.length}`, label: "Current partners" },
             ].map((stat) => (
               <li
                 key={stat.label}

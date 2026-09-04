@@ -18,13 +18,13 @@ export function Section({
   id?: string;
 }) {
   return (
-    <section id={id} className={cn("mmg-shell py-7 lg:py-12", className)}>
+    <section id={id} className={cn("mmg-shell py-5 lg:py-12", className)}>
       {eyebrow || title || action ? (
-        <header className="mb-4 flex items-end justify-between gap-3 lg:mb-7">
+        <header className="mb-3 flex items-end justify-between gap-3 lg:mb-7">
           <div className="min-w-0">
             {eyebrow ? <p className="mmg-eyebrow">{eyebrow}</p> : null}
             {title ? (
-              <h2 className="mt-1.5 max-w-3xl font-serif text-[1.55rem] leading-[1.05] font-semibold tracking-[-0.04em] text-balance lg:text-[2.4rem]">
+              <h2 className="mt-1 max-w-3xl font-serif text-[1.3rem] leading-[1.05] font-semibold tracking-[-0.04em] text-balance lg:mt-1.5 lg:text-[2.4rem]">
                 {title}
               </h2>
             ) : null}
@@ -46,7 +46,10 @@ export function Section({
 
 /**
  * Page intro block — the eyebrow + h1 + standfirst that opens most routes.
- * Constrains the prose so long lines don't run the full desktop width.
+ *
+ * Kept short on phones: the AppBar already names the screen, so a full-height
+ * magazine headline here would just push the actual content below the fold.
+ * Desktop, where there is room, still gets the display treatment.
  */
 export function PageIntro({
   eyebrow,
@@ -60,13 +63,13 @@ export function PageIntro({
   className?: string;
 }) {
   return (
-    <div className={cn("mmg-shell pt-4 lg:pt-14", className)}>
+    <div className={cn("mmg-shell pt-3 lg:pt-14", className)}>
       <p className="mmg-eyebrow">{eyebrow}</p>
-      <h1 className="mt-1.5 max-w-4xl font-serif text-[2rem] leading-[0.98] font-semibold tracking-[-0.045em] text-balance lg:text-[3.4rem]">
+      <h1 className="mt-1 max-w-4xl font-serif text-[1.55rem] leading-[1.02] font-semibold tracking-[-0.04em] text-balance lg:mt-1.5 lg:text-[3.4rem]">
         {title}
       </h1>
       {children ? (
-        <div className="text-muted mt-3 max-w-2xl text-[0.88rem] leading-relaxed text-pretty lg:mt-5 lg:text-[1.05rem]">
+        <div className="text-muted mt-2 max-w-2xl text-[0.83rem] leading-snug text-pretty lg:mt-5 lg:text-[1.05rem] lg:leading-relaxed">
           {children}
         </div>
       ) : null}

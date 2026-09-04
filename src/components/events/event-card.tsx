@@ -1,69 +1,11 @@
-import { CalendarDays, Clock, MapPin, Users } from "lucide-react";
+import { CalendarDays, ChevronRight, MapPin, Users } from "lucide-react";
 import Link from "next/link";
-import { AvatarStack } from "@/components/ui/avatar";
 import { getSeries } from "@/lib/content";
-import {
-  formatDayNumber,
-  formatMonthAbbr,
-  formatShortDate,
-  formatTimeRange,
-  relativeToToday,
-  venueLine,
-} from "@/lib/format";
+import { formatShortDate, formatTimeRange, relativeToToday, venueLine } from "@/lib/format";
 import type { MMGEvent } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { EventArt } from "./event-art";
 import { SeriesPill } from "./series-pill";
-
-/** Compact row used in lists — date chip on the left, details on the right. */
-export function EventCard({ event }: { event: MMGEvent }) {
-  const series = getSeries(event.seriesId);
-  const attendees = event.attendees.map((a) => a.name);
-
-  return (
-    <Link
-      href={`/events/${event.slug}`}
-      className="mmg-press group rounded-card bg-paper shadow-card hover:shadow-lift flex gap-3.5 border border-[var(--line)] p-3.5 transition-shadow"
-    >
-      <div className="bg-sand-light text-espresso flex w-[3.4rem] shrink-0 flex-col items-center justify-center rounded-2xl py-2.5">
-        <span className="text-red text-[0.62rem] font-bold tracking-[0.14em]">
-          {formatMonthAbbr(event.date)}
-        </span>
-        <span className="mmg-display text-[1.75rem] leading-none">
-          {formatDayNumber(event.date)}
-        </span>
-      </div>
-
-      <div className="min-w-0 flex-1">
-        {series ? <SeriesPill series={series} /> : null}
-        <h3 className="mt-1.5 line-clamp-2 font-serif text-[1.06rem] leading-[1.15] font-semibold tracking-[-0.03em]">
-          {event.title}
-        </h3>
-        {formatTimeRange(event.startTime, event.endTime) ? (
-          <p className="text-muted mt-1.5 flex items-center gap-1.5 text-[0.78rem]">
-            <Clock className="size-3.5 shrink-0" />
-            {formatTimeRange(event.startTime, event.endTime)}
-          </p>
-        ) : null}
-        {event.venue.name || venueLine(event.venue) ? (
-          <p className="text-muted mt-1 flex items-center gap-1.5 text-[0.78rem]">
-            <MapPin className="size-3.5 shrink-0" />
-            <span className="truncate">
-              {[event.venue.name, venueLine(event.venue)].filter(Boolean).join(" · ")}
-            </span>
-          </p>
-        ) : null}
-
-        <div className="mt-2.5 flex items-center gap-2">
-          <AvatarStack names={attendees} max={4} />
-          <span className="text-muted text-[0.75rem] font-medium">
-            {event.attendingCount} going
-          </span>
-        </div>
-      </div>
-    </Link>
-  );
-}
 
 /**
  * Hero treatment for the next event up. `split` lays art and details side by
@@ -96,7 +38,7 @@ export function FeaturedEventCard({
           series={series}
           priority={priority}
           overlay
-          className={cn("aspect-[16/10] w-full", split && "lg:aspect-auto lg:h-full")}
+          className={cn("aspect-[16/9] w-full", split && "lg:aspect-auto lg:h-full")}
         />
         <div
           aria-hidden
@@ -114,11 +56,11 @@ export function FeaturedEventCard({
         </div>
       </div>
 
-      <div className={cn("p-4", split && "lg:flex lg:flex-col lg:justify-center lg:p-9")}>
+      <div className={cn("p-3.5 lg:p-4", split && "lg:flex lg:flex-col lg:justify-center lg:p-9")}>
         {series ? <SeriesPill series={series} /> : null}
         <h3
           className={cn(
-            "mt-2 font-serif text-[1.45rem] leading-[1.08] font-semibold tracking-[-0.035em] text-balance",
+            "mt-1.5 font-serif text-[1.3rem] leading-[1.08] font-semibold tracking-[-0.035em] text-balance lg:text-[1.45rem]",
             split && "lg:text-[2.1rem]",
           )}
         >
@@ -126,33 +68,45 @@ export function FeaturedEventCard({
         </h3>
         <p
           className={cn(
-            "text-muted mt-2.5 line-clamp-2 text-[0.85rem] leading-relaxed text-pretty",
-            split && "lg:line-clamp-none lg:text-[1rem]",
+            "text-muted mt-1.5 line-clamp-2 text-[0.83rem] leading-snug text-pretty",
+            split && "lg:line-clamp-none lg:text-[1rem] lg:leading-relaxed",
           )}
         >
           {event.summary}
         </p>
 
-        <dl className="mt-3.5 grid gap-1.5 text-[0.8rem]">
+        <dl className="mt-2.5 grid gap-1 text-[0.78rem]">
           <div className="flex items-center gap-2">
-            <CalendarDays className="text-red size-4 shrink-0" />
-            <dd className="font-medium">
+            <CalendarDays className="text-red size-[0.95rem] shrink-0" />
+            <dd className="truncate font-medium">
               {[formatShortDate(event.date), formatTimeRange(event.startTime, event.endTime)]
                 .filter(Boolean)
                 .join(" · ")}
             </dd>
           </div>
           <div className="flex items-center gap-2">
-            <MapPin className="text-red size-4 shrink-0" />
+            <MapPin className="text-red size-[0.95rem] shrink-0" />
             <dd className="truncate">
-              {event.venue.name}, {venueLine(event.venue)}
+              {[event.venue.name, venueLine(event.venue)].filter(Boolean).join(", ")}
             </dd>
           </div>
-          <div className="flex items-center gap-2">
-            <Users className="text-red size-4 shrink-0" />
-            <dd>{event.attendingCount} going</dd>
-          </div>
         </dl>
+
+        {/* A card that leads somewhere should say so — no guessing at the tap. */}
+        <div className="mt-3 flex items-center justify-between gap-3 border-t border-[var(--line)] pt-3">
+          {event.attendingCount ? (
+            <span className="text-muted inline-flex items-center gap-1.5 text-[0.78rem] font-medium">
+              <Users className="text-red size-[0.95rem]" />
+              {event.attendingCount} going
+            </span>
+          ) : (
+            <span />
+          )}
+          <span className="text-red inline-flex items-center gap-1 text-[0.8rem] font-semibold">
+            View &amp; RSVP
+            <ChevronRight className="size-4" />
+          </span>
+        </div>
       </div>
     </Link>
   );

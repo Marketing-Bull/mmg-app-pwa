@@ -57,31 +57,21 @@ const ROUTES = [
       "Come meet the personal injury community.",
       "Follow MMG on Eventbrite",
       "Photo recaps",
+      // Proves the marketing-site feed reached the page, not just that it rendered.
+      "Fall Personal Injury Professionals Mixer",
     ],
   },
+  { path: "/events/past", expect: ["The flyer starts the invitation."] },
+  // Slugs come from the marketing site's feed. These two are asserted by name
+  // so a feed change that silently empties the calendar fails the build rather
+  // than shipping an app with no events in it.
   {
-    path: "/events/past",
-    expect: ["The flyer starts the invitation.", "Flyer archive", "Video recap"],
+    path: "/events/fall-personal-injury-professionals-mixer",
+    expect: ["RSVP", "Add to calendar", "Open in Maps", "Who&#x27;s coming", "JOEY Aventura"],
   },
   {
-    path: "/events/pi-networking-mixer-august-2026",
-    expect: [
-      "RSVP",
-      "Add to calendar",
-      "Open in Maps",
-      "How the evening runs",
-      "Who&#x27;s coming",
-      "See the next gathering",
-    ],
-  },
-  {
-    path: "/events/pi-bowling-mixer-june-2026",
-    expect: [
-      "Share this recap",
-      "Photo gallery",
-      "Watch the recap on Instagram",
-      "Sponsor a future event",
-    ],
+    path: "/events/seed-bowling-mixer",
+    expect: ["Lucky Strike", "Sponsor a future event"],
   },
   {
     path: "/sponsor",
@@ -90,6 +80,8 @@ const ROUTES = [
       "Select Featured Sponsor",
       "Select Presenting Partner",
       "561-888-9450",
+      // A real sponsor from the live feed.
+      "The MRI Guys",
     ],
   },
   { path: "/discuss", expect: ["Open discussions", "Talking about specific events"] },

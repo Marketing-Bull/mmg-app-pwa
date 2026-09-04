@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/toast";
 import { downloadIcs } from "@/lib/calendar";
-import { site } from "@/lib/site";
+import { site } from "@/lib/content";
 import { formatFullDate } from "@/lib/format";
 import { useStore } from "@/lib/store";
 import type { MMGEvent } from "@/lib/types";

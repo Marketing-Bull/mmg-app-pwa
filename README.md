@@ -43,17 +43,17 @@ CI (`.github/workflows/ci.yml`) runs the same sequence on every PR.
 
 ## Routes
 
-| Route            | What it is                                                              |
-| ---------------- | ----------------------------------------------------------------------- |
-| `/`              | Home — hero, shortcut grid, next event, upcoming/recaps/series switcher |
-| `/events`        | Upcoming / Past / Series in one screen, filterable by series            |
-| `/events/[slug]` | Event detail — facts up top, then About / Agenda / People / Talk tabs   |
-| `/events/past`   | Archive of past events with photo recaps and video highlights           |
-| `/sponsor`       | Tiers, the rooms, and questions — three tabs over one set of stats      |
-| `/discuss`       | Community hub — threads and event conversation, one tab each            |
-| `/discuss/[id]`  | A single thread with replies                                            |
-| `/contact`       | Call/text buttons, then Message / Channels / About Andrew tabs          |
-| `/offline`       | Shown by the service worker when a page isn't cached                    |
+| Route            | What it is                                                                                             |
+| ---------------- | ------------------------------------------------------------------------------------------------------ |
+| `/`              | Home — hero, shortcut grid, next event, upcoming/recaps/series switcher                                |
+| `/events`        | Upcoming / Past / Series in one screen, filterable by series                                           |
+| `/events/[slug]` | Event detail — facts up top, then About / People / Talk tabs (+ Recap, Agenda where the event has one) |
+| `/events/past`   | Archive of past events with photo recaps and video highlights                                          |
+| `/sponsor`       | Tiers, the rooms, and questions — three tabs over one set of stats                                     |
+| `/discuss`       | Community hub — threads and event conversation, one tab each                                           |
+| `/discuss/[id]`  | A single thread with replies                                                                           |
+| `/contact`       | Call/text buttons, then Message / Channels / About Andrew tabs                                         |
+| `/offline`       | Shown by the service worker when a page isn't cached                                                   |
 
 Bottom tab bar: **Home · Events · Discuss · Sponsor · Contact**.
 
@@ -66,14 +66,14 @@ website in a browser: short screens, information you can find without scrolling
 for it, and the primary action always within thumb reach. From `lg` up it
 becomes an ordinary website again — top nav, full footer, wider layouts.
 
-| Piece                       | What it does                                                                             |
-| --------------------------- | ---------------------------------------------------------------------------------------- |
-| `ui/segmented.tsx`          | The in-page tab switcher. Sticks under the AppBar so switching never means scrolling up. |
-| `ui/list.tsx`               | Grouped inset list rows — the dense, tappable pattern every phone OS uses for detail.    |
-| `ui/disclosure.tsx`         | `<details>` for supporting content that shouldn't cost scroll height (FAQ, run of show). |
-| `events/event-row.tsx`      | One event per line: when, where, how full. A month of events fits on a screen.           |
-| `events/event-browser.tsx`  | Series filter chips over that list, filtering in place with no page load.                |
-| `EventActions layout="bar"` | The RSVP row pinned above the tab bar on event pages.                                    |
+| Piece                       | What it does                                                                                                 |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `ui/segmented.tsx`          | The in-page tab switcher. Sticks under the AppBar so switching never means scrolling up.                     |
+| `ui/list.tsx`               | Grouped inset list rows — the dense, tappable pattern every phone OS uses for detail.                        |
+| `ui/disclosure.tsx`         | `<details>` for supporting content that shouldn't cost scroll height (FAQ, run of show).                     |
+| `events/event-row.tsx`      | One event per line: when, where, how full. A month of events fits on a screen.                               |
+| `events/event-browser.tsx`  | Filter chips over that list — by series, or by the feed's event type — filtering in place with no page load. |
+| `EventActions layout="bar"` | The RSVP row pinned above the tab bar on event pages.                                                        |
 
 **Every tab panel ships in the HTML.** `Segmented` force-mounts all of its
 panels and hides the inactive ones with CSS, so the switcher only decides which
@@ -81,14 +81,13 @@ panel owns the screen — the content is still server-rendered, indexable,
 searchable in-page, and visible to the smoke test. Tabs that unmount their
 panels would quietly delete content from the page source; these don't.
 
-Measured on a 390 x 844 viewport, this cut roughly 55–75% of the scroll height
-from every screen — home from 7.0 screens to 3.1, event detail from 5.9 to 2.3,
-discuss from 5.7 to 1.5.
+Measured on a 390 x 844 viewport against the same content, this cut roughly
+55–75% of the scroll height from every screen — home from 7.0 screens to 3.1,
+event detail from 5.9 to 2.3, discuss from 5.7 to 1.5.
 
-`site.json` and the role vocabulary live in `src/lib/site.ts`, and the pinned
-demo date in `src/lib/today.ts`, so a client component can read either without
-dragging every event JSON into the browser bundle (`/events` cold-loads about a
-third less JavaScript than it did).
+Rows are built on the server from `src/lib/rows.ts`, so the filterable client
+list never receives whole events — descriptions, agendas and comment threads
+stay out of the browser bundle.
 
 ---
 
@@ -120,7 +119,7 @@ Events with no `flyer`/`hero`/recap photo render a branded artwork plate keyed t
 
 ### The demo date
 
-`DEMO_TODAY` in `src/lib/today.ts` (re-exported from `content.ts`) is pinned to **11 Aug 2026** so the seeded calendar keeps its intended upcoming/past split whenever a stakeholder opens the link. Change it to `new Date()` once the calendar is being maintained for real.
+`DEMO_TODAY` in `src/lib/content.ts` is pinned to **11 Aug 2026** so the seeded calendar keeps its intended upcoming/past split whenever a stakeholder opens the link. Change it to `new Date()` once the calendar is being maintained for real.
 
 ---
 

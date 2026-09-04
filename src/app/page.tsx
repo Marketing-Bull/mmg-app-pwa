@@ -11,18 +11,9 @@ import { AppBar } from "@/components/shell/app-bar";
 import { Button } from "@/components/ui/button";
 import { buttonVariants } from "@/components/ui/button-variants";
 import { List } from "@/components/ui/list";
-import { Segmented } from "@/components/ui/segmented";
-import {
-  featuredEvent,
-  getHost,
-  getSeries,
-  hosts,
-  partners,
-  pastEvents,
-  seriesList,
-  site,
-  upcomingEvents,
-} from "@/lib/content";
+import { Segmented, type Segment } from "@/components/ui/segmented";
+import { getHost, getSeries, hosts, seriesList, site } from "@/lib/content";
+import { getEventFeed, getPartnerFeed } from "@/lib/feed";
 import { formatShortDate } from "@/lib/format";
 import { toEventRow } from "@/lib/rows";
 import { cn } from "@/lib/utils";
@@ -34,14 +25,92 @@ const QUICK_LINKS = [
   { href: "/contact", icon: Phone, label: "Contact" },
 ] as const;
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [{ upcoming: upcomingEvents, past: pastEvents }, { list: partners }] = await Promise.all([
+    getEventFeed(),
+    getPartnerFeed(),
+  ]);
+  const featuredEvent = upcomingEvents[0];
   const host = getHost("andrew-miller") ?? hosts[0];
-  const nextUp = upcomingEvents
-    .slice(1, 6)
-    .map((event) => toEventRow(event, getSeries(event.seriesId)));
-  const recaps = pastEvents
-    .slice(0, 5)
-    .map((event) => toEventRow(event, getSeries(event.seriesId)));
+  const toRow = (event: Parameters<typeof toEventRow>[0]) =>
+    toEventRow(event, getSeries(event.seriesId));
+  const nextUp = upcomingEvents.slice(1, 6).map(toRow);
+  const recaps = pastEvents.slice(0, 5).map(toRow);
+
+  /* Three former page-length sections, stacked into one switcher. Every panel
+     ships in the HTML; only one takes up the screen. */
+  const segments: Segment[] = [
+    ...(nextUp.length
+      ? [
+          {
+            value: "upcoming",
+            label: "Upcoming",
+            count: nextUp.length,
+            content: (
+              <>
+                <List>
+                  {nextUp.map((event) => (
+                    <EventRow key={event.slug} event={event} />
+                  ))}
+                </List>
+                <Link
+                  href="/events"
+                  className="text-red mt-3 block text-center text-[0.8rem] font-semibold"
+                >
+                  See the full calendar
+                </Link>
+              </>
+            ),
+          },
+        ]
+      : []),
+    ...(recaps.length
+      ? [
+          {
+            value: "recaps",
+            label: "Recaps",
+            count: recaps.length,
+            content: (
+              <>
+                <List>
+                  {recaps.map((event) => (
+                    <EventRow key={event.slug} event={event} />
+                  ))}
+                </List>
+                <Link
+                  href="/events/past"
+                  className="text-red mt-3 block text-center text-[0.8rem] font-semibold"
+                >
+                  Open the archive
+                </Link>
+              </>
+            ),
+          },
+        ]
+      : []),
+    {
+      value: "series",
+      label: "Series",
+      content: (
+        <ul className="grid gap-2 lg:grid-cols-3 lg:gap-4">
+          {seriesList.map((series) => (
+            <li
+              key={series.id}
+              className="rounded-card bg-paper shadow-card border border-[var(--line)] p-3.5"
+            >
+              <div className="flex items-center justify-between gap-3">
+                <SeriesPill series={series} />
+                <span className="text-muted text-[0.7rem] font-semibold">{series.cadence}</span>
+              </div>
+              <p className="text-muted mt-2 text-[0.82rem] leading-snug text-pretty">
+                {series.description}
+              </p>
+            </li>
+          ))}
+        </ul>
+      ),
+    },
+  ];
 
   return (
     <>
@@ -109,9 +178,10 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Everything the app does, one tap from the top of the screen. */}
+        {/* Everything the app does, one tap from the top of the screen. The
+            desktop header already carries this nav. */}
         <nav aria-label="Shortcuts" className="mmg-shell pt-3 lg:hidden">
-          <ul className="grid grid-cols-4 gap-2 lg:gap-4">
+          <ul className="grid grid-cols-4 gap-2">
             {QUICK_LINKS.map(({ href, icon: Icon, label }) => (
               <li key={href}>
                 <Link
@@ -135,82 +205,20 @@ export default function HomePage() {
           >
             <FeaturedEventCard event={featuredEvent} priority split />
           </Section>
-        ) : null}
+        ) : (
+          <Section eyebrow="Next up" className="py-4 lg:py-10">
+            <div className="rounded-card bg-paper shadow-card border border-[var(--line)] p-5 text-center">
+              <p className="font-serif text-[1.2rem] leading-tight font-semibold tracking-[-0.03em]">
+                New event dates are coming soon.
+              </p>
+              <p className="text-muted mt-2 text-[0.85rem] leading-relaxed text-pretty">
+                Follow MMG on Eventbrite to be the first to see the next gathering.
+              </p>
+            </div>
+          </Section>
+        )}
 
-        {/*
-          Three former page-length sections, stacked into one switcher. Every
-          panel ships in the HTML; only one takes up the screen.
-        */}
-        <Segmented
-          sticky={false}
-          panelClassName="mmg-shell pt-1 pb-2"
-          segments={[
-            {
-              value: "upcoming",
-              label: "Upcoming",
-              count: nextUp.length,
-              content: (
-                <>
-                  <List>
-                    {nextUp.map((event) => (
-                      <EventRow key={event.slug} event={event} />
-                    ))}
-                  </List>
-                  <Link
-                    href="/events"
-                    className="text-red mt-3 block text-center text-[0.8rem] font-semibold"
-                  >
-                    See the full calendar
-                  </Link>
-                </>
-              ),
-            },
-            {
-              value: "recaps",
-              label: "Recaps",
-              count: recaps.length,
-              content: (
-                <>
-                  <List>
-                    {recaps.map((event) => (
-                      <EventRow key={event.slug} event={event} />
-                    ))}
-                  </List>
-                  <Link
-                    href="/events/past"
-                    className="text-red mt-3 block text-center text-[0.8rem] font-semibold"
-                  >
-                    Open the archive
-                  </Link>
-                </>
-              ),
-            },
-            {
-              value: "series",
-              label: "Series",
-              content: (
-                <ul className="grid gap-2 lg:grid-cols-3 lg:gap-4">
-                  {seriesList.map((series) => (
-                    <li
-                      key={series.id}
-                      className="rounded-card bg-paper shadow-card border border-[var(--line)] p-3.5"
-                    >
-                      <div className="flex items-center justify-between gap-3">
-                        <SeriesPill series={series} />
-                        <span className="text-muted text-[0.7rem] font-semibold">
-                          {series.cadence}
-                        </span>
-                      </div>
-                      <p className="text-muted mt-2 text-[0.82rem] leading-snug text-pretty">
-                        {series.description}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              ),
-            },
-          ]}
-        />
+        <Segmented sticky={false} panelClassName="mmg-shell pt-1 pb-2" segments={segments} />
 
         {/* Why people come — a rail, so three cards cost one card of height. */}
         <Section eyebrow="Why people come" className="py-4 lg:py-10">
@@ -299,7 +307,8 @@ export default function HomePage() {
             </Button>
             {featuredEvent ? (
               <p className="text-cream/55 mt-2.5 text-center text-[0.73rem] lg:text-left">
-                Or just come to {formatShortDate(featuredEvent.date)} in {featuredEvent.venue.city}.
+                Or just come to {formatShortDate(featuredEvent.date)}
+                {featuredEvent.venue.city ? ` in ${featuredEvent.venue.city}` : ""}.
               </p>
             ) : null}
           </div>

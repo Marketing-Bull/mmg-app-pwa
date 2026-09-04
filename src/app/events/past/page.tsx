@@ -5,7 +5,8 @@ import { EventArt } from "@/components/events/event-art";
 import { SeriesPill } from "@/components/events/series-pill";
 import { PageIntro, Section } from "@/components/shared/section";
 import { AppBar } from "@/components/shell/app-bar";
-import { getSeries, pastEvents } from "@/lib/content";
+import { getSeries } from "@/lib/content";
+import { getEventFeed } from "@/lib/feed";
 import { formatFullDate, venueLine } from "@/lib/format";
 
 export const metadata: Metadata = {
@@ -14,7 +15,9 @@ export const metadata: Metadata = {
     "Photo recaps, video highlights, and sponsor recognition from MMG's past gatherings across Florida.",
 };
 
-export default function PastEventsPage() {
+export default async function PastEventsPage() {
+  const { past: pastEvents } = await getEventFeed();
+
   return (
     <>
       <AppBar title="Past events" subtitle={`${pastEvents.length} gatherings`} back="/events" />
@@ -77,9 +80,11 @@ export default function PastEventsPage() {
                       <h2 className="mt-1.5 line-clamp-3 font-serif text-[0.95rem] leading-[1.15] font-semibold tracking-[-0.03em]">
                         {event.title}
                       </h2>
-                      <p className="text-muted mt-1 truncate text-[0.72rem]">
-                        {event.venue.name} · {venueLine(event.venue)}
-                      </p>
+                      {event.venue.name || venueLine(event.venue) ? (
+                        <p className="text-muted mt-1 truncate text-[0.72rem]">
+                          {[event.venue.name, venueLine(event.venue)].filter(Boolean).join(" · ")}
+                        </p>
+                      ) : null}
 
                       {event.recap ? (
                         <p className="text-espresso mt-1.5 line-clamp-2 font-serif text-[0.9rem] leading-snug tracking-[-0.02em]">
@@ -87,19 +92,25 @@ export default function PastEventsPage() {
                         </p>
                       ) : null}
 
-                      <div className="text-muted mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.7rem]">
-                        <span className="inline-flex items-center gap-1">
-                          <Users className="size-3" />
-                          {event.attendingCount}
-                        </span>
-                        {photos.length ? (
-                          <span className="inline-flex items-center gap-1">
-                            <Camera className="size-3" />
-                            {photos.length}
-                          </span>
-                        ) : null}
-                        <span>{event.sponsorIds.length} sponsors recognized</span>
-                      </div>
+                      {event.attendingCount || photos.length || event.sponsorIds.length ? (
+                        <div className="text-muted mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.7rem]">
+                          {event.attendingCount ? (
+                            <span className="inline-flex items-center gap-1">
+                              <Users className="size-3" />
+                              {event.attendingCount}
+                            </span>
+                          ) : null}
+                          {photos.length ? (
+                            <span className="inline-flex items-center gap-1">
+                              <Camera className="size-3" />
+                              {photos.length}
+                            </span>
+                          ) : null}
+                          {event.sponsorIds.length ? (
+                            <span>{event.sponsorIds.length} sponsors recognized</span>
+                          ) : null}
+                        </div>
+                      ) : null}
                     </div>
                   </Link>
                 </li>

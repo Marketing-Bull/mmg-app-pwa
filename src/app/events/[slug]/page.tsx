@@ -15,16 +15,8 @@ import { Button } from "@/components/ui/button";
 import { Disclosure } from "@/components/ui/disclosure";
 import { List, ListRow } from "@/components/ui/list";
 import { Segmented, type Segment } from "@/components/ui/segmented";
-import {
-  allEvents,
-  getEvent,
-  getHost,
-  getPartners,
-  getSeries,
-  isUpcoming,
-  site,
-  upcomingEvents,
-} from "@/lib/content";
+import { getHost, getPartners, getSeries, site } from "@/lib/content";
+import { getEventFeed, getPartnerFeed } from "@/lib/feed";
 import {
   formatFullDate,
   formatShortDate,
@@ -36,9 +28,16 @@ import {
 import { eventCommentKey } from "@/lib/keys";
 import type { AgendaItem } from "@/lib/types";
 
-export function generateStaticParams() {
-  return allEvents.map((event) => ({ slug: event.slug }));
+export async function generateStaticParams() {
+  const { all } = await getEventFeed();
+  return all.map((event) => ({ slug: event.slug }));
 }
+
+/**
+ * The feed can gain an event between builds, so a slug that wasn't prerendered
+ * still has to render on demand rather than 404.
+ */
+export const dynamicParams = true;
 
 export async function generateMetadata({
   params,
@@ -46,7 +45,8 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const event = getEvent(slug);
+  const { all } = await getEventFeed();
+  const event = all.find((candidate) => candidate.slug === slug);
   if (!event) return { title: "Event not found" };
   return {
     title: event.title,
@@ -84,20 +84,28 @@ function Agenda({ agenda }: { agenda: AgendaItem[] }) {
 
 export default async function EventPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const event = getEvent(slug);
+  const { all, upcoming: upcomingEvents } = await getEventFeed();
+  const event = all.find((candidate) => candidate.slug === slug);
   if (!event) notFound();
 
   const series = getSeries(event.seriesId);
   const host = getHost(event.hostId);
-  const sponsors = getPartners(event.sponsorIds);
-  const upcoming = isUpcoming(event);
+  const upcoming = upcomingEvents.some((candidate) => candidate.slug === event.slug);
   const nextEvent = upcomingEvents.find((candidate) => candidate.slug !== event.slug);
+  const timeRange = formatTimeRange(event.startTime, event.endTime);
   const spotsLeft = Math.max(0, event.capacity - event.attendingCount);
+  // Feed events carry no per-event sponsor list, so fall back to the community
+  // partner wall rather than claiming a specific roster backed this evening.
+  const named = getPartners(event.sponsorIds);
+  const sponsors = named.length ? named : (await getPartnerFeed()).list;
+  const sponsorsAreNamed = named.length > 0;
+  // The feed's description is the summary, which already sits above the tabs.
+  const description = event.description.filter((paragraph) => paragraph !== event.summary);
 
   const about = (
     <div className="space-y-4">
-      <div className="space-y-2.5">
-        {event.description.map((paragraph) => (
+      <div className="space-y-2.5 empty:hidden">
+        {description.map((paragraph) => (
           <p
             key={paragraph}
             className="text-muted max-w-2xl text-[0.87rem] leading-relaxed text-pretty lg:text-[1rem]"
@@ -131,12 +139,18 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
       {sponsors.length ? (
         <div>
           <h2 className="font-serif text-[1.1rem] font-semibold tracking-[-0.03em]">
-            {upcoming ? "Sponsored by" : "Sponsor recognition"}
+            {!sponsorsAreNamed
+              ? "Community partners"
+              : upcoming
+                ? "Sponsored by"
+                : "Sponsor recognition"}
           </h2>
           <p className="text-muted mt-0.5 mb-2.5 text-[0.79rem]">
-            {upcoming
-              ? "These partners make the evening possible."
-              : "Partners whose support made this gathering possible."}
+            {!sponsorsAreNamed
+              ? "The partners who support MMG events across Florida."
+              : upcoming
+                ? "These partners make the evening possible."
+                : "Partners whose support made this gathering possible."}
           </p>
           <PartnerWall partners={sponsors} columns={4} />
           <Button asChild variant="outline" block className="mt-2.5 lg:w-auto">
@@ -262,13 +276,13 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
     {
       value: "people",
       label: "People",
-      count: event.attendingCount,
+      count: event.attendingCount || undefined,
       content: <AttendeeList event={event} />,
     },
     {
       value: "talk",
       label: "Talk",
-      count: event.comments.length,
+      count: event.comments.length || undefined,
       content: (
         <div id="discussion">
           <CommentThread
@@ -292,7 +306,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
     <>
       <AppBar
         title={event.title}
-        subtitle={`${formatShortDate(event.date)} · ${event.venue.city}`}
+        subtitle={[formatShortDate(event.date), event.venue.city].filter(Boolean).join(" · ")}
         back="/events"
       />
 
@@ -352,7 +366,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
                 <ListRow
                   icon={CalendarDays}
                   label={formatFullDate(event.date)}
-                  sub={formatTimeRange(event.startTime, event.endTime)}
+                  sub={timeRange}
                   chevron={false}
                 />
                 <ListRow
@@ -360,7 +374,9 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
                   href={mapsUrl(event.venue)}
                   external
                   label={event.venue.name}
-                  sub={`${event.venue.address}, ${venueLine(event.venue)} ${event.venue.zip}`}
+                  sub={[event.venue.address, venueLine(event.venue), event.venue.zip]
+                    .filter(Boolean)
+                    .join(", ")}
                   trailing={
                     <span className="text-red inline-flex shrink-0 items-center gap-1 text-[0.74rem] font-semibold">
                       Open in Maps
@@ -369,18 +385,23 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
                   }
                   chevron={false}
                 />
-                <ListRow
-                  icon={Users}
-                  label={`${event.attendingCount} going`}
-                  sub={
-                    upcoming
-                      ? spotsLeft > 0
-                        ? `${spotsLeft} of ${event.capacity} spots left`
-                        : "At capacity — join the waitlist by calling"
-                      : `Capacity ${event.capacity}`
-                  }
-                  chevron={false}
-                />
+                {/* Feed events start with no roster. Rather than print "0
+                    going" or invent a claim about the room, the line is left
+                    out — the People tab covers it either way. */}
+                {event.attendingCount ? (
+                  <ListRow
+                    icon={Users}
+                    label={`${event.attendingCount} going`}
+                    sub={
+                      event.capacity
+                        ? spotsLeft > 0
+                          ? `${spotsLeft} of ${event.capacity} spots left`
+                          : "At capacity — join the waitlist by calling"
+                        : undefined
+                    }
+                    chevron={false}
+                  />
+                ) : null}
               </List>
 
               {/* Phones get these in the bar pinned above the tab bar instead. */}

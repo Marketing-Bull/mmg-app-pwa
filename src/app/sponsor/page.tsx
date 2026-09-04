@@ -8,7 +8,8 @@ import { TierList } from "@/components/sponsor/tier-list";
 import { Button } from "@/components/ui/button";
 import { Disclosure } from "@/components/ui/disclosure";
 import { Segmented } from "@/components/ui/segmented";
-import { partners, pastEvents, site, sponsorTiers, upcomingEvents } from "@/lib/content";
+import { site, sponsorTiers } from "@/lib/content";
+import { getEventFeed, getPartnerFeed } from "@/lib/feed";
 
 export const metadata: Metadata = {
   title: "Sponsorship",
@@ -35,14 +36,12 @@ const FAQ = [
   },
 ];
 
-const STATS = [
-  { value: "60–130", label: "Attendees per event" },
-  { value: "18+", label: "Events a year" },
-  { value: "19", label: "Current partners" },
-];
-
-export default function SponsorPage() {
-  const showcase = [...upcomingEvents.slice(0, 2), ...pastEvents.slice(0, 2)];
+export default async function SponsorPage() {
+  const [{ upcoming, past }, { list: partners }] = await Promise.all([
+    getEventFeed(),
+    getPartnerFeed(),
+  ]);
+  const showcase = [...upcoming.slice(0, 2), ...past.slice(0, 2)];
 
   return (
     <>
@@ -57,7 +56,11 @@ export default function SponsorPage() {
         {/* The numbers a sponsor asks for first, above everything else. */}
         <div className="mmg-shell pt-3">
           <ul className="grid grid-cols-3 gap-2">
-            {STATS.map((stat) => (
+            {[
+              { value: "60–130", label: "Attendees per event" },
+              { value: "18+", label: "Events a year" },
+              { value: `${partners.length}`, label: "Current partners" },
+            ].map((stat) => (
               <li
                 key={stat.label}
                 className="bg-paper shadow-card rounded-2xl border border-[var(--line)] px-2 py-3 text-center"

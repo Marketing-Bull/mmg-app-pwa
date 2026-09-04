@@ -6,8 +6,9 @@ import { AppBar } from "@/components/shell/app-bar";
 import { AvatarStack } from "@/components/ui/avatar";
 import { List } from "@/components/ui/list";
 import { Segmented } from "@/components/ui/segmented";
-import { allEvents, discussionThreads } from "@/lib/content";
-import { relativeTime } from "@/lib/format";
+import { discussionThreads } from "@/lib/content";
+import { getEventFeed } from "@/lib/feed";
+import { formatShortDate, relativeTime } from "@/lib/format";
 
 export const metadata: Metadata = {
   title: "Discuss",
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
     "Community threads and event conversations across Florida's personal injury professional network.",
 };
 
-/** One conversation, at a glance: who, how busy, how recent, what about. */
+/** One conversation, at a glance: what about, how busy, how recent. */
 function ThreadRow({
   href,
   chip,
@@ -26,16 +27,18 @@ function ThreadRow({
   names,
   replies,
   time,
+  cta,
 }: {
   href: string;
   chip: string;
   chipClass: string;
   title: string;
-  snippet: string;
+  snippet?: string;
   meta?: string;
-  names: string[];
-  replies: number;
+  names?: string[];
+  replies?: number;
   time: string;
+  cta?: string;
 }) {
   return (
     <Link href={href} className="mmg-row mmg-press items-start">
@@ -53,13 +56,15 @@ function ThreadRow({
           {title}
         </span>
         {meta ? <span className="text-muted mt-0.5 block text-[0.72rem]">{meta}</span> : null}
-        <span className="text-muted mt-1 line-clamp-1 text-[0.8rem] leading-snug">{snippet}</span>
+        {snippet ? (
+          <span className="text-muted mt-1 line-clamp-1 text-[0.8rem] leading-snug">{snippet}</span>
+        ) : null}
 
-        <span className="mt-2 flex items-center gap-2">
-          <AvatarStack names={names} max={4} />
-          <span className="text-muted inline-flex items-center gap-1.5 text-[0.73rem] font-medium">
+        <span className="text-muted mt-2 flex items-center gap-2 text-[0.73rem] font-medium">
+          {names?.length ? <AvatarStack names={names} max={4} /> : null}
+          <span className="inline-flex items-center gap-1.5">
             <MessageSquare className="size-3.5" />
-            {replies}
+            {cta ?? replies}
           </span>
         </span>
       </span>
@@ -69,18 +74,12 @@ function ThreadRow({
   );
 }
 
-export default function DiscussPage() {
-  // Events with the liveliest threads, newest activity first.
-  const eventThreads = allEvents
-    .filter((event) => event.comments.length > 0)
-    .map((event) => ({
-      event,
-      lastAt: event.comments.reduce(
-        (latest, comment) => (comment.createdAt > latest ? comment.createdAt : latest),
-        event.comments[0].createdAt,
-      ),
-    }))
-    .sort((a, b) => b.lastAt.localeCompare(a.lastAt));
+export default async function DiscussPage() {
+  // Events from the live feed carry no seeded comments — every thread here is
+  // started by whoever posts first — so these are entry points to the
+  // conversation, ordered soonest-first, rather than a ranking by activity.
+  const { upcoming, past } = await getEventFeed();
+  const eventThreads = [...upcoming, ...past.slice(0, 4)];
 
   return (
     <>
@@ -134,18 +133,17 @@ export default function DiscussPage() {
                 <>
                   <h2 className="mmg-eyebrow mb-2">Talking about specific events</h2>
                   <List>
-                    {eventThreads.map(({ event, lastAt }) => (
+                    {eventThreads.map((event) => (
                       <ThreadRow
                         key={event.slug}
                         href={`/events/${event.slug}#discussion`}
                         chip="Event"
                         chipClass="bg-red/10 text-red"
                         title={event.title}
-                        meta={`${event.venue.city}, ${event.venue.state}`}
-                        snippet={`“${event.comments[event.comments.length - 1].body}”`}
-                        names={event.comments.map((c) => c.author)}
-                        replies={event.comments.length}
-                        time={relativeTime(lastAt)}
+                        meta={[event.venue.city, event.venue.state].filter(Boolean).join(", ")}
+                        snippet={event.summary}
+                        time={formatShortDate(event.date)}
+                        cta="Start the conversation"
                       />
                     ))}
                   </List>

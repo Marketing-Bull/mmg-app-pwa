@@ -3,7 +3,7 @@
 import { Users } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Avatar } from "@/components/ui/avatar";
-import { roles } from "@/lib/site";
+import { roles } from "@/lib/content";
 import { useStore } from "@/lib/store";
 import type { Attendee, MMGEvent, RoleId } from "@/lib/types";
 import { cn } from "@/lib/utils";

@@ -79,23 +79,29 @@ export function FeaturedEventCard({
           <div className="flex items-center gap-2">
             <CalendarDays className="text-red size-[0.95rem] shrink-0" />
             <dd className="truncate font-medium">
-              {formatShortDate(event.date)} · {formatTimeRange(event.startTime, event.endTime)}
+              {[formatShortDate(event.date), formatTimeRange(event.startTime, event.endTime)]
+                .filter(Boolean)
+                .join(" · ")}
             </dd>
           </div>
           <div className="flex items-center gap-2">
             <MapPin className="text-red size-[0.95rem] shrink-0" />
             <dd className="truncate">
-              {event.venue.name}, {venueLine(event.venue)}
+              {[event.venue.name, venueLine(event.venue)].filter(Boolean).join(", ")}
             </dd>
           </div>
         </dl>
 
         {/* A card that leads somewhere should say so — no guessing at the tap. */}
         <div className="mt-3 flex items-center justify-between gap-3 border-t border-[var(--line)] pt-3">
-          <span className="text-muted inline-flex items-center gap-1.5 text-[0.78rem] font-medium">
-            <Users className="text-red size-[0.95rem]" />
-            {event.attendingCount} going
-          </span>
+          {event.attendingCount ? (
+            <span className="text-muted inline-flex items-center gap-1.5 text-[0.78rem] font-medium">
+              <Users className="text-red size-[0.95rem]" />
+              {event.attendingCount} going
+            </span>
+          ) : (
+            <span />
+          )}
           <span className="text-red inline-flex items-center gap-1 text-[0.8rem] font-semibold">
             View &amp; RSVP
             <ChevronRight className="size-4" />

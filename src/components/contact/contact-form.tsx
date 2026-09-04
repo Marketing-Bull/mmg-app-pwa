@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { TextAreaField, TextField } from "@/components/ui/field";
 import { useToast } from "@/components/ui/toast";
-import { site } from "@/lib/site";
+import { site } from "@/lib/content";
 import { submitForm, type DeliveryStatus } from "@/lib/forms";
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";

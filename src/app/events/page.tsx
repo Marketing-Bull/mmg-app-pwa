@@ -1,14 +1,15 @@
 import { ArrowRight, Camera } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { EventBrowser, type SeriesFilter } from "@/components/events/event-browser";
+import { EventBrowser } from "@/components/events/event-browser";
 import { FeaturedEventCard } from "@/components/events/event-card";
 import { SeriesPill } from "@/components/events/series-pill";
 import { PageIntro } from "@/components/shared/section";
 import { AppBar } from "@/components/shell/app-bar";
 import { Button } from "@/components/ui/button";
 import { Segmented } from "@/components/ui/segmented";
-import { getSeries, pastEvents, seriesList, site, upcomingEvents } from "@/lib/content";
+import { getSeries, seriesList, site } from "@/lib/content";
+import { getEventFeed } from "@/lib/feed";
 import { toEventRow } from "@/lib/rows";
 
 export const metadata: Metadata = {
@@ -17,20 +18,19 @@ export const metadata: Metadata = {
     "Monthly PI networking mixers, Lunch & Learns, and signature experiences across South Florida.",
 };
 
-export default function EventsPage() {
-  const [featured, ...rest] = upcomingEvents;
-  const upcomingRows = rest.map((event) => toEventRow(event, getSeries(event.seriesId)));
-  const pastRows = pastEvents.map((event) => toEventRow(event, getSeries(event.seriesId)));
-
-  /** Only offer a chip for a series that actually has events in that list. */
-  const filtersFor = (slugs: (string | null)[]): SeriesFilter[] =>
-    seriesList
-      .filter((series) => slugs.includes(series.id))
-      .map((series) => ({ id: series.id, label: series.name }));
+export default async function EventsPage() {
+  const { upcoming, past } = await getEventFeed();
+  const [featured, ...rest] = upcoming;
+  const toRow = (event: (typeof upcoming)[number]) => toEventRow(event, getSeries(event.seriesId));
+  const upcomingRows = rest.map(toRow);
+  const pastRows = past.map(toRow);
 
   return (
     <>
-      <AppBar title="Events" subtitle={`${upcomingEvents.length} upcoming`} />
+      <AppBar
+        title="Events"
+        subtitle={upcoming.length ? `${upcoming.length} upcoming` : "Dates coming soon"}
+      />
 
       <main className="pb-tabbar">
         <PageIntro eyebrow="Upcoming events" title="Come meet the personal injury community.">
@@ -47,34 +47,33 @@ export default function EventsPage() {
             {
               value: "upcoming",
               label: "Upcoming",
-              count: upcomingEvents.length,
-              content: (
+              count: upcoming.length,
+              content: featured ? (
                 <>
-                  {featured ? (
-                    <div className="mb-3">
-                      <p className="mmg-eyebrow mb-2">Next up</p>
-                      <FeaturedEventCard event={featured} priority split />
-                    </div>
-                  ) : null}
-                  <EventBrowser
-                    events={upcomingRows}
-                    filters={filtersFor(upcomingRows.map((row) => row.seriesId))}
-                    emptyLabel="No events in that series right now."
-                  />
+                  <div className="mb-3">
+                    <p className="mmg-eyebrow mb-2">Next up</p>
+                    <FeaturedEventCard event={featured} priority split />
+                  </div>
+                  {upcomingRows.length ? <EventBrowser events={upcomingRows} /> : null}
                 </>
+              ) : (
+                <div className="rounded-card bg-paper shadow-card border border-[var(--line)] p-5 text-center">
+                  <p className="font-serif text-[1.2rem] leading-tight font-semibold tracking-[-0.03em]">
+                    New event dates are coming soon.
+                  </p>
+                  <p className="text-muted mt-2 text-[0.85rem] leading-relaxed text-pretty">
+                    Follow MMG on Eventbrite to be the first to see the next gathering.
+                  </p>
+                </div>
               ),
             },
             {
               value: "past",
               label: "Past",
-              count: pastEvents.length,
+              count: past.length,
               content: (
                 <>
-                  <EventBrowser
-                    events={pastRows}
-                    filters={filtersFor(pastRows.map((row) => row.seriesId))}
-                    emptyLabel="Nothing archived in that series yet."
-                  />
+                  <EventBrowser events={pastRows} emptyLabel="Nothing archived of that kind yet." />
                   <Link
                     href="/events/past"
                     className="mmg-press rounded-card bg-paper shadow-card mt-3 flex items-center gap-3 border border-[var(--line)] p-4"
@@ -85,7 +84,7 @@ export default function EventsPage() {
                         Photo recaps &amp; video highlights
                       </span>
                       <span className="text-muted block text-[0.76rem]">
-                        {pastEvents.length} gatherings in the archive
+                        {past.length} gatherings in the archive
                       </span>
                     </span>
                     <ArrowRight className="text-red size-4 shrink-0" />

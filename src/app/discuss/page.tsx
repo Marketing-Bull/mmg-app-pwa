@@ -4,8 +4,9 @@ import Link from "next/link";
 import { AvatarStack } from "@/components/ui/avatar";
 import { PageIntro, Section } from "@/components/shared/section";
 import { AppBar } from "@/components/shell/app-bar";
-import { allEvents, discussionThreads } from "@/lib/content";
-import { relativeTime } from "@/lib/format";
+import { discussionThreads } from "@/lib/content";
+import { getEventFeed } from "@/lib/feed";
+import { formatShortDate, relativeTime } from "@/lib/format";
 
 export const metadata: Metadata = {
   title: "Discuss",
@@ -13,18 +14,12 @@ export const metadata: Metadata = {
     "Community threads and event conversations across Florida's personal injury professional network.",
 };
 
-export default function DiscussPage() {
-  // Events with the liveliest threads, newest activity first.
-  const eventThreads = allEvents
-    .filter((event) => event.comments.length > 0)
-    .map((event) => ({
-      event,
-      lastAt: event.comments.reduce(
-        (latest, comment) => (comment.createdAt > latest ? comment.createdAt : latest),
-        event.comments[0].createdAt,
-      ),
-    }))
-    .sort((a, b) => b.lastAt.localeCompare(a.lastAt));
+export default async function DiscussPage() {
+  // Events from the live feed carry no seeded comments — every thread here is
+  // started by whoever posts first — so these are entry points to the
+  // conversation, ordered soonest-first, rather than a ranking by activity.
+  const { upcoming, past } = await getEventFeed();
+  const eventThreads = [...upcoming, ...past.slice(0, 4)];
 
   return (
     <>
@@ -82,7 +77,7 @@ export default function DiscussPage() {
 
         <Section eyebrow="Event threads" title="Talking about specific events">
           <ul className="grid gap-2.5 lg:grid-cols-2 lg:gap-4">
-            {eventThreads.map(({ event, lastAt }) => (
+            {eventThreads.map((event) => (
               <li key={event.slug}>
                 <Link
                   href={`/events/${event.slug}#discussion`}
@@ -93,27 +88,28 @@ export default function DiscussPage() {
                       Event
                     </span>
                     <span className="text-muted ml-auto shrink-0 text-[0.7rem]">
-                      {relativeTime(lastAt)}
+                      {formatShortDate(event.date)}
                     </span>
                   </div>
 
                   <h2 className="mt-2 font-serif text-[1.1rem] leading-[1.12] font-semibold tracking-[-0.03em] text-balance">
                     {event.title}
                   </h2>
-                  <p className="text-muted mt-1 text-[0.75rem]">
-                    {event.venue.city}, {event.venue.state}
-                  </p>
-                  <p className="text-muted mt-2 line-clamp-2 text-[0.83rem] leading-relaxed text-pretty">
-                    &ldquo;{event.comments[event.comments.length - 1].body}&rdquo;
-                  </p>
+                  {event.venue.city ? (
+                    <p className="text-muted mt-1 text-[0.75rem]">
+                      {[event.venue.city, event.venue.state].filter(Boolean).join(", ")}
+                    </p>
+                  ) : null}
+                  {event.summary ? (
+                    <p className="text-muted mt-2 line-clamp-2 text-[0.83rem] leading-relaxed text-pretty">
+                      {event.summary}
+                    </p>
+                  ) : null}
 
-                  <div className="mt-3 flex items-center gap-2.5">
-                    <AvatarStack names={event.comments.map((c) => c.author)} max={4} />
-                    <span className="text-muted inline-flex items-center gap-1.5 text-[0.75rem] font-medium">
-                      <MessageSquare className="size-3.5" />
-                      {event.comments.length} {event.comments.length === 1 ? "comment" : "comments"}
-                    </span>
-                  </div>
+                  <span className="text-muted mt-3 inline-flex items-center gap-1.5 text-[0.75rem] font-medium">
+                    <MessageSquare className="size-3.5" />
+                    Start the conversation
+                  </span>
                 </Link>
               </li>
             ))}

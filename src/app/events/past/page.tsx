@@ -6,7 +6,8 @@ import { EventArt } from "@/components/events/event-art";
 import { SeriesPill } from "@/components/events/series-pill";
 import { PageIntro, Section } from "@/components/shared/section";
 import { AppBar } from "@/components/shell/app-bar";
-import { getSeries, pastEvents } from "@/lib/content";
+import { getSeries } from "@/lib/content";
+import { getEventFeed } from "@/lib/feed";
 import { formatFullDate, venueLine } from "@/lib/format";
 
 export const metadata: Metadata = {
@@ -15,7 +16,9 @@ export const metadata: Metadata = {
     "Photo recaps, video highlights, and sponsor recognition from MMG's past gatherings across Florida.",
 };
 
-export default function PastEventsPage() {
+export default async function PastEventsPage() {
+  const { past: pastEvents } = await getEventFeed();
+
   return (
     <>
       <AppBar title="Past events" back="/events" />

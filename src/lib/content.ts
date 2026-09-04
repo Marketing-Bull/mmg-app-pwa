@@ -1,13 +1,4 @@
-import type {
-  DiscussionThread,
-  Host,
-  MMGEvent,
-  Partner,
-  Role,
-  RoleId,
-  Series,
-  SponsorTier,
-} from "./types";
+import type { DiscussionThread, Host, Partner, Role, RoleId, Series, SponsorTier } from "./types";
 
 import siteJson from "../../content/site.json";
 import hostsJson from "../../content/hosts.json";
@@ -15,22 +6,6 @@ import seriesJson from "../../content/series.json";
 import partnersJson from "../../content/partners.json";
 import sponsorshipJson from "../../content/sponsorship.json";
 import discussionsJson from "../../content/discussions.json";
-
-// One import per file under content/events. Explicit rather than globbed so the
-// bundler can see every event at build time and TypeScript can check the shape.
-import lunchAndLearnAugust2026 from "../../content/events/lunch-and-learn-august-2026.json";
-import piNetworkingMixerAugust2026 from "../../content/events/pi-networking-mixer-august-2026.json";
-import lunchAndLearnSeptember2026 from "../../content/events/lunch-and-learn-september-2026.json";
-import piNetworkingMixerSeptember2026 from "../../content/events/pi-networking-mixer-september-2026.json";
-import lunchAndLearnOctober2026 from "../../content/events/lunch-and-learn-october-2026.json";
-import piNetworkingMixerOctober2026 from "../../content/events/pi-networking-mixer-october-2026.json";
-import piNetworkingMixerNovember2026 from "../../content/events/pi-networking-mixer-november-2026.json";
-import holidaySocialDecember2026 from "../../content/events/holiday-social-december-2026.json";
-import piNetworkingMixerJuly2026 from "../../content/events/pi-networking-mixer-july-2026.json";
-import piBowlingMixerJune2026 from "../../content/events/pi-bowling-mixer-june-2026.json";
-import piLunchAndLearnMay2026 from "../../content/events/pi-lunch-and-learn-may-2026.json";
-import piMixerApril2026 from "../../content/events/pi-mixer-april-2026.json";
-import piNetworkingMixerFebruary2026 from "../../content/events/pi-networking-mixer-february-2026.json";
 
 export interface SiteContent {
   name: string;
@@ -77,51 +52,23 @@ export const roles: Role[] = [
   },
 ];
 
-export const allEvents: MMGEvent[] = [
-  lunchAndLearnAugust2026,
-  piNetworkingMixerAugust2026,
-  lunchAndLearnSeptember2026,
-  piNetworkingMixerSeptember2026,
-  lunchAndLearnOctober2026,
-  piNetworkingMixerOctober2026,
-  piNetworkingMixerNovember2026,
-  holidaySocialDecember2026,
-  piNetworkingMixerJuly2026,
-  piBowlingMixerJune2026,
-  piLunchAndLearnMay2026,
-  piMixerApril2026,
-  piNetworkingMixerFebruary2026,
-] as MMGEvent[];
+/**
+ * Events and sponsors are no longer served from this module — they come from the
+ * marketing site's live feed via `src/lib/feed.ts`, so publishing an event there
+ * shows it here without a redeploy.
+ *
+ * The sample event files under `content/events/` are left in place but are no
+ * longer imported: they were written before the feed existed and are kept only
+ * as a reference for the richer per-event detail (agenda, attendee roster,
+ * seeded comments) that the feed does not carry.
+ */
 
 /**
- * The demo is pinned to a fixed "today" so the seeded content keeps its
- * intended upcoming/past split no matter when a stakeholder opens the link.
- * Point this at `new Date()` once the calendar is maintained for real.
+ * Reference date for the seeded discussion timestamps in `discussions.json`,
+ * which were authored against this point in the calendar. Event countdowns use
+ * the real clock instead — see `relativeToToday`.
  */
 export const DEMO_TODAY = new Date("2026-08-11T09:00:00-04:00");
-
-function endOfEventDay(event: MMGEvent): number {
-  // Compare against end-of-day so an event stays "upcoming" all day long.
-  return new Date(`${event.date}T23:59:59-04:00`).getTime();
-}
-
-export function isUpcoming(event: MMGEvent): boolean {
-  return endOfEventDay(event) >= DEMO_TODAY.getTime();
-}
-
-export const upcomingEvents: MMGEvent[] = allEvents
-  .filter(isUpcoming)
-  .sort((a, b) => a.date.localeCompare(b.date));
-
-export const pastEvents: MMGEvent[] = allEvents
-  .filter((event) => !isUpcoming(event))
-  .sort((a, b) => b.date.localeCompare(a.date));
-
-export const featuredEvent: MMGEvent | undefined = upcomingEvents[0];
-
-export function getEvent(slug: string): MMGEvent | undefined {
-  return allEvents.find((event) => event.slug === slug);
-}
 
 export function getSeries(id: string | null): Series | undefined {
   if (!id) return undefined;

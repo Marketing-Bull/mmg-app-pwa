@@ -2,6 +2,16 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  images: {
+    // Flyers, recap stills and sponsor logos come from the marketing site's feed.
+    // Editor uploads there land on Vercel Blob, so both hosts have to be allowed
+    // or next/image refuses to optimize them and the artwork silently vanishes.
+    remotePatterns: [
+      { protocol: "https", hostname: "www.millersmarketinggroup.com" },
+      { protocol: "https", hostname: "millersmarketinggroup.com" },
+      { protocol: "https", hostname: "*.public.blob.vercel-storage.com" },
+    ],
+  },
   async headers() {
     return [
       {

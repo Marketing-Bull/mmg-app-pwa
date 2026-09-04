@@ -9,20 +9,17 @@ import { Section } from "@/components/shared/section";
 import { AppBar } from "@/components/shell/app-bar";
 import { Button } from "@/components/ui/button";
 import { buttonVariants } from "@/components/ui/button-variants";
-import {
-  featuredEvent,
-  getHost,
-  hosts,
-  partners,
-  pastEvents,
-  seriesList,
-  site,
-  upcomingEvents,
-} from "@/lib/content";
+import { getHost, hosts, seriesList, site } from "@/lib/content";
+import { getEventFeed, getPartnerFeed } from "@/lib/feed";
 import { formatShortDate } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [{ upcoming: upcomingEvents, past: pastEvents }, { list: partners }] = await Promise.all([
+    getEventFeed(),
+    getPartnerFeed(),
+  ]);
+  const featuredEvent = upcomingEvents[0];
   const host = getHost("andrew-miller") ?? hosts[0];
   const nextUp = upcomingEvents.slice(1, 5);
   const recaps = pastEvents.slice(0, 4);

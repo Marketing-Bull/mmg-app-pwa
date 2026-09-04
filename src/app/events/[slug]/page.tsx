@@ -12,22 +12,21 @@ import { HostCard } from "@/components/shared/host-card";
 import { PartnerWall } from "@/components/shared/partner-wall";
 import { AppBar } from "@/components/shell/app-bar";
 import { Button } from "@/components/ui/button";
-import {
-  allEvents,
-  getEvent,
-  getHost,
-  getPartners,
-  getSeries,
-  isUpcoming,
-  site,
-  upcomingEvents,
-} from "@/lib/content";
+import { getHost, getPartners, getSeries, site } from "@/lib/content";
+import { getEventFeed, getPartnerFeed } from "@/lib/feed";
 import { formatFullDate, formatTimeRange, mapsUrl, relativeToToday, venueLine } from "@/lib/format";
 import { eventCommentKey } from "@/lib/keys";
 
-export function generateStaticParams() {
-  return allEvents.map((event) => ({ slug: event.slug }));
+export async function generateStaticParams() {
+  const { all } = await getEventFeed();
+  return all.map((event) => ({ slug: event.slug }));
 }
+
+/**
+ * The feed can gain an event between builds, so a slug that wasn't prerendered
+ * still has to render on demand rather than 404.
+ */
+export const dynamicParams = true;
 
 export async function generateMetadata({
   params,
@@ -35,7 +34,8 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const event = getEvent(slug);
+  const { all } = await getEventFeed();
+  const event = all.find((candidate) => candidate.slug === slug);
   if (!event) return { title: "Event not found" };
   return {
     title: event.title,
@@ -50,14 +50,20 @@ export async function generateMetadata({
 
 export default async function EventPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const event = getEvent(slug);
+  const { all, upcoming: upcomingEvents } = await getEventFeed();
+  const event = all.find((candidate) => candidate.slug === slug);
   if (!event) notFound();
 
   const series = getSeries(event.seriesId);
   const host = getHost(event.hostId);
-  const sponsors = getPartners(event.sponsorIds);
-  const upcoming = isUpcoming(event);
+  const upcoming = upcomingEvents.some((candidate) => candidate.slug === event.slug);
   const nextEvent = upcomingEvents.find((candidate) => candidate.slug !== event.slug);
+  // Feed events carry no per-event sponsor list, so fall back to the community
+  // partner wall rather than claiming a specific roster backed this evening.
+  const timeRange = formatTimeRange(event.startTime, event.endTime);
+  const named = getPartners(event.sponsorIds);
+  const sponsors = named.length ? named : (await getPartnerFeed()).list;
+  const sponsorsAreNamed = named.length > 0;
 
   return (
     <>
@@ -110,17 +116,17 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
                   <dd className="text-[0.9rem] font-semibold">{formatFullDate(event.date)}</dd>
                 </div>
               </div>
-              <div className="flex items-start gap-3 p-3.5">
-                <Clock className="text-red mt-0.5 size-[1.15rem] shrink-0" />
-                <div>
-                  <dt className="text-muted text-[0.7rem] font-bold tracking-[0.08em] uppercase">
-                    Time
-                  </dt>
-                  <dd className="text-[0.9rem] font-semibold">
-                    {formatTimeRange(event.startTime, event.endTime)}
-                  </dd>
+              {timeRange ? (
+                <div className="flex items-start gap-3 p-3.5">
+                  <Clock className="text-red mt-0.5 size-[1.15rem] shrink-0" />
+                  <div>
+                    <dt className="text-muted text-[0.7rem] font-bold tracking-[0.08em] uppercase">
+                      Time
+                    </dt>
+                    <dd className="text-[0.9rem] font-semibold">{timeRange}</dd>
+                  </div>
                 </div>
-              </div>
+              ) : null}
               <a
                 href={mapsUrl(event.venue)}
                 target="_blank"
@@ -281,12 +287,18 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
             {sponsors.length ? (
               <section className="pt-7">
                 <h2 className="mb-1 font-serif text-[1.15rem] font-semibold tracking-[-0.03em] lg:text-[1.6rem]">
-                  {upcoming ? "Sponsored by" : "Sponsor recognition"}
+                  {!sponsorsAreNamed
+                    ? "Community partners"
+                    : upcoming
+                      ? "Sponsored by"
+                      : "Sponsor recognition"}
                 </h2>
                 <p className="text-muted mb-3.5 text-[0.8rem]">
-                  {upcoming
-                    ? "These partners make the evening possible."
-                    : "Partners whose support made this gathering possible."}
+                  {!sponsorsAreNamed
+                    ? "The partners who support MMG events across Florida."
+                    : upcoming
+                      ? "These partners make the evening possible."
+                      : "Partners whose support made this gathering possible."}
                 </p>
                 <PartnerWall partners={sponsors} columns={4} />
                 <Button asChild variant="outline" block className="mt-3 lg:w-auto">

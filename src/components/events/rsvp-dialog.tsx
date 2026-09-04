@@ -412,8 +412,8 @@ function DeliveryNote({ delivery }: { delivery: DeliveryStatus | null }) {
       </p>
     );
   }
-  // "pending" and "failed" both mean: your spot is held, the email is not our
-  // guest's problem. Don't undermine a confirmation they've already been given.
+  // A failed relay is not our guest's problem — their spot is held either way.
+  // Don't undermine a confirmation they've already been given.
   return (
     <p className="text-muted mt-4 text-[0.72rem]">
       Your spot is held. If you don&rsquo;t hear from MMG, reach Andrew at {site.phone}.

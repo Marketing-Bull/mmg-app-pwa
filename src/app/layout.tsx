@@ -34,6 +34,18 @@ const fraunces = localFont({
   fallback: ["Georgia", "Times New Roman", "serif"],
 });
 
+/*
+ * The link preview: an iPhone with a real screenshot of the home screen inside
+ * it, so a shared link shows the app rather than a logo on a colour. Generated
+ * by `npm run social-card` — see the script's header before editing it.
+ */
+const socialCard = {
+  url: "/assets/brand/social-card.jpg",
+  width: 1200,
+  height: 630,
+  alt: `The ${site.shortName} app open on an iPhone, showing the home screen and the next event.`,
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://millersmarketingconnects.com"),
   title: {
@@ -60,6 +72,13 @@ export const metadata: Metadata = {
     siteName: site.name,
     title: `${site.name} — ${site.tagline}`,
     description: site.description,
+    images: [socialCard],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${site.name} — ${site.tagline}`,
+    description: site.description,
+    images: [socialCard],
   },
   formatDetection: { telephone: true },
 };

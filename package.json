@@ -12,6 +12,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "smoke": "node scripts/smoke.mjs",
+    "social-card": "node scripts/social-card.mjs",
     "verify": "npm run format:check && npm run lint && npm run typecheck && npm run build && npm run smoke"
   },
   "dependencies": {

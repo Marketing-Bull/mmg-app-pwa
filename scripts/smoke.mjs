@@ -49,6 +49,9 @@ const ROUTES = [
       "Explore",
       "Get in touch",
       "All rights reserved",
+      // Link previews: the card image and the large-image Twitter card.
+      "/assets/brand/social-card.jpg",
+      "summary_large_image",
     ],
   },
   {
@@ -102,6 +105,7 @@ const ASSETS = [
   "/icons/icon-maskable-512.png",
   "/icons/apple-touch-icon.png",
   "/assets/brand/mmg-official-logo.webp",
+  "/assets/brand/social-card.jpg",
 ];
 
 const failures = [];

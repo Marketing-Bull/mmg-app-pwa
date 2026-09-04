@@ -39,6 +39,9 @@ a stale server.
 
 CI (`.github/workflows/ci.yml`) runs the same sequence on every PR.
 
+`npm run social-card` is deliberately outside that sequence — see
+[Link previews](#link-previews).
+
 ---
 
 ## Routes
@@ -159,6 +162,40 @@ Verify a change to the worker with **DevTools → Application → Service Worker
 
 ---
 
+## Link previews
+
+`public/assets/brand/social-card.jpg` is what X/Twitter, iMessage, Slack and
+LinkedIn show when a link to the app is shared: an iPhone with a **real
+screenshot** of the home screen inside it, next to the brand copy. It is wired
+up in `src/app/layout.tsx` as both the Open Graph image and a
+`summary_large_image` Twitter card.
+
+The screenshot is captured, not mocked, so the preview can't quietly drift away
+from the app it advertises. `scripts/social-card.mjs` boots the production
+server, opens `/` at an iPhone 15 Pro viewport, and composes the capture into a
+phone frame (status bar, Dynamic Island, titanium rail) drawn in CSS.
+
+```bash
+npm run build && npm run social-card
+```
+
+The output is committed, so this runs neither on build nor in CI — re-run it
+when the home screen changes. It needs a Chromium, which is not a dependency of
+the app (that would put a browser download in every `npm ci` for a script that
+runs twice a year). Either install one:
+
+```bash
+npm i -D playwright && npx playwright install chromium
+```
+
+or point the script at a browser the machine already has, with
+`CHROME_PATH=/path/to/chrome`.
+
+Smoke asserts the image is served and that `/` still carries both meta tags, so
+a rename can't silently strip every preview.
+
+---
+
 ## Brand
 
 Design tokens are inherited verbatim from the MMG marketing site's `:root`, so the app and the site read as one brand.
@@ -176,7 +213,7 @@ Design tokens are inherited verbatim from the MMG marketing site's `:root`, so t
 
 Type is **Fraunces** (display) over **DM Sans** (UI) — the same pairing as the site, self-hosted as latin-subset variable fonts (~104KB total). No runtime request to Google, so the shell still renders in brand type when opened offline from the home screen.
 
-Photography, flyers, partner logos, and Andrew's portrait are the real MMG assets, re-encoded to WebP (5.7MB → 1.2MB).
+Photography, flyers, partner logos, and Andrew's portrait are the real MMG assets, re-encoded to WebP (5.7MB → 1.2MB). The one exception is the social card, which is JPEG — link-preview crawlers are the least forgiving consumers in the stack, and it is photographic anyway.
 
 ---
 

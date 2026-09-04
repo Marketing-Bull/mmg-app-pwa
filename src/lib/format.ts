@@ -1,4 +1,4 @@
-import { DEMO_TODAY } from "./content";
+import { DEMO_TODAY } from "./today";
 
 const TZ = "America/New_York";
 

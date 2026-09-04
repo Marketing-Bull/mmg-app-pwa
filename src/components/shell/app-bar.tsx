@@ -9,11 +9,14 @@ import { cn } from "@/lib/utils";
 
 export function AppBar({
   title,
+  subtitle,
   back,
   action,
   transparent,
 }: {
   title?: string;
+  /** Small second line — where a native bar puts date, venue, or count. */
+  subtitle?: string;
   /** Href to fall back to when there's no history (deep link / fresh install). */
   back?: string;
   action?: ReactNode;
@@ -27,10 +30,10 @@ export function AppBar({
         "pt-safe sticky top-0 z-30 transition-colors lg:hidden",
         transparent
           ? "bg-transparent"
-          : "bg-cream/88 border-b border-[var(--line)] backdrop-blur-xl",
+          : "bg-cream/90 border-b border-[var(--line)] backdrop-blur-xl",
       )}
     >
-      <div className="mx-auto flex h-14 max-w-2xl items-center gap-2 px-3">
+      <div className="mx-auto flex h-[var(--appbar-h)] max-w-2xl items-center gap-2 px-2.5">
         {back ? (
           <button
             type="button"
@@ -40,7 +43,7 @@ export function AppBar({
             }}
             aria-label="Go back"
             className={cn(
-              "mmg-press grid size-10 shrink-0 place-items-center rounded-full",
+              "mmg-press grid size-9 shrink-0 place-items-center rounded-full",
               transparent
                 ? "bg-espresso/55 text-cream backdrop-blur-md"
                 : "bg-sand-light text-espresso hover:bg-sand",
@@ -49,7 +52,7 @@ export function AppBar({
             <ChevronLeft className="size-5" />
           </button>
         ) : (
-          <Link href="/" className="mmg-press flex shrink-0 items-center gap-2 pl-1">
+          <Link href="/" className="mmg-press flex shrink-0 items-center gap-2 pl-0.5">
             <span className="bg-espresso grid size-9 place-items-center rounded-xl">
               <Image
                 src="/assets/brand/mmg-official-logo.webp"
@@ -64,16 +67,16 @@ export function AppBar({
         )}
 
         {title ? (
-          <h1
-            className={cn(
-              "min-w-0 flex-1 truncate text-center font-sans text-[0.95rem] font-semibold tracking-[-0.01em]",
-              transparent && "sr-only",
-            )}
-          >
-            {title}
-          </h1>
+          <div className={cn("min-w-0 flex-1 text-center", transparent && "sr-only")}>
+            <h1 className="truncate font-sans text-[0.92rem] leading-tight font-semibold tracking-[-0.015em]">
+              {title}
+            </h1>
+            {subtitle ? (
+              <p className="text-muted truncate text-[0.68rem] leading-tight">{subtitle}</p>
+            ) : null}
+          </div>
         ) : (
-          <span className="min-w-0 flex-1 truncate text-[0.95rem] font-semibold tracking-[-0.02em]">
+          <span className="min-w-0 flex-1 truncate text-[0.92rem] font-semibold tracking-[-0.02em]">
             Miller&rsquo;s Marketing Group
           </span>
         )}

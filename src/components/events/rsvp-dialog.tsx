@@ -7,7 +7,7 @@ import { TextField } from "@/components/ui/field";
 import { Sheet } from "@/components/ui/sheet";
 import { useToast } from "@/components/ui/toast";
 import { downloadIcs } from "@/lib/calendar";
-import { roles, site } from "@/lib/content";
+import { roles, site } from "@/lib/site";
 import { formatFullDate, formatTimeRange } from "@/lib/format";
 import { submitForm, type DeliveryStatus } from "@/lib/forms";
 import { useStore } from "@/lib/store";

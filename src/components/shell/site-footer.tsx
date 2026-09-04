@@ -12,14 +12,18 @@ const EXPLORE = [
 ] as const;
 
 /**
- * Full site footer. Sits above the mobile tab bar, and carries the legal
- * disclaimer that has to appear site-wide.
+ * Full site footer.
+ *
+ * On phones the app shell owns navigation, so the three marketing columns would
+ * just be a long scroll past links the tab bar already offers — they collapse
+ * from `lg` down to nothing. The legal strip stays on every screen size,
+ * because the disclaimer has to appear site-wide.
  */
 export function SiteFooter() {
   return (
-    <footer className="bg-espresso text-cream mt-14">
-      <div className="mx-auto max-w-6xl px-4 py-12 lg:px-8 lg:py-16">
-        <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1.2fr]">
+    <footer className="bg-espresso text-cream mt-8 lg:mt-14">
+      <div className="mx-auto max-w-6xl px-4 py-6 lg:px-8 lg:py-16">
+        <div className="hidden gap-10 lg:grid lg:grid-cols-[1.4fr_1fr_1.2fr]">
           <div>
             <div className="flex items-center gap-2.5">
               <span className="bg-cream/10 grid size-10 place-items-center rounded-xl">
@@ -119,7 +123,7 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="border-cream/15 mt-10 border-t pt-6">
+        <div className="border-cream/15 lg:mt-10 lg:border-t lg:pt-6">
           <p className="text-cream/45 max-w-3xl text-[0.72rem] leading-relaxed text-pretty">
             {site.disclaimer}
           </p>

@@ -1,15 +1,6 @@
-import type {
-  DiscussionThread,
-  Host,
-  MMGEvent,
-  Partner,
-  Role,
-  RoleId,
-  Series,
-  SponsorTier,
-} from "./types";
+import { DEMO_TODAY } from "./today";
+import type { DiscussionThread, Host, MMGEvent, Partner, Series, SponsorTier } from "./types";
 
-import siteJson from "../../content/site.json";
 import hostsJson from "../../content/hosts.json";
 import seriesJson from "../../content/series.json";
 import partnersJson from "../../content/partners.json";
@@ -32,50 +23,13 @@ import piLunchAndLearnMay2026 from "../../content/events/pi-lunch-and-learn-may-
 import piMixerApril2026 from "../../content/events/pi-mixer-april-2026.json";
 import piNetworkingMixerFebruary2026 from "../../content/events/pi-networking-mixer-february-2026.json";
 
-export interface SiteContent {
-  name: string;
-  shortName: string;
-  tagline: string;
-  description: string;
-  phone: string;
-  phoneAlt: string;
-  email: string;
-  address: string;
-  instagram: string;
-  eventbrite: string;
-  website: string;
-  disclaimer: string;
-  valueProps: { title: string; body: string }[];
-  audiences: { initials: string; title: string; body: string }[];
-}
+export { site, roles, roleLabel, type SiteContent } from "./site";
 
-export const site = siteJson as SiteContent;
 export const hosts = hostsJson as Host[];
 export const seriesList = seriesJson as Series[];
 export const partners = partnersJson as Partner[];
 export const sponsorTiers = sponsorshipJson as SponsorTier[];
 export const discussionThreads = discussionsJson as DiscussionThread[];
-
-export const roles: Role[] = [
-  {
-    id: "attorney",
-    label: "Attorney",
-    blurb: "Personal injury firms and trial attorneys",
-    initials: "PI",
-  },
-  {
-    id: "provider",
-    label: "Provider",
-    blurb: "Medical, imaging, chiropractic and rehab",
-    initials: "MD",
-  },
-  {
-    id: "sponsor",
-    label: "Sponsor / Vendor",
-    blurb: "Partners supporting the community",
-    initials: "VP",
-  },
-];
 
 export const allEvents: MMGEvent[] = [
   lunchAndLearnAugust2026,
@@ -92,13 +46,6 @@ export const allEvents: MMGEvent[] = [
   piMixerApril2026,
   piNetworkingMixerFebruary2026,
 ] as MMGEvent[];
-
-/**
- * The demo is pinned to a fixed "today" so the seeded content keeps its
- * intended upcoming/past split no matter when a stakeholder opens the link.
- * Point this at `new Date()` once the calendar is maintained for real.
- */
-export const DEMO_TODAY = new Date("2026-08-11T09:00:00-04:00");
 
 function endOfEventDay(event: MMGEvent): number {
   // Compare against end-of-day so an event stays "upcoming" all day long.
@@ -140,8 +87,4 @@ export function getPartners(ids: string[]): Partner[] {
 
 export function getThread(id: string): DiscussionThread | undefined {
   return discussionThreads.find((thread) => thread.id === id);
-}
-
-export function roleLabel(role: RoleId): string {
-  return roles.find((r) => r.id === role)?.label ?? role;
 }

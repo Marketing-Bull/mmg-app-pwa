@@ -5,7 +5,7 @@ import { useMemo, useRef, useState } from "react";
 import { Avatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/toast";
-import { roles } from "@/lib/content";
+import { roles } from "@/lib/site";
 import { relativeTime } from "@/lib/format";
 import { useStore } from "@/lib/store";
 import type { Comment, RoleId } from "@/lib/types";

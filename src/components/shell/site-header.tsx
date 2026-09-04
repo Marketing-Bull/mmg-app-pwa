@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { buttonVariants } from "@/components/ui/button-variants";
-import { site } from "@/lib/content";
+import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 const LINKS = [

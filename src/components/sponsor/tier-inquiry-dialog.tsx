@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { TextAreaField, TextField } from "@/components/ui/field";
 import { Sheet } from "@/components/ui/sheet";
-import { site } from "@/lib/content";
+import { site } from "@/lib/site";
 import { submitForm, type DeliveryStatus } from "@/lib/forms";
 import { useStore } from "@/lib/store";
 import type { SponsorTier } from "@/lib/types";

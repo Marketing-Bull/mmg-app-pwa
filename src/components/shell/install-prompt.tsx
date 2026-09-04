@@ -75,10 +75,9 @@ export function InstallPrompt() {
   if (!deferred && !showIosTip) return null;
 
   return (
-    <div
-      className="fixed inset-x-0 z-50 px-4"
-      style={{ bottom: "calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px) + 0.75rem)" }}
-    >
+    /* `mmg-install` positions it above the tab bar — and above a page's own
+       action bar when it has one. */
+    <div className="mmg-install fixed inset-x-0 z-50 px-4 lg:hidden">
       <div className="bg-paper shadow-mmg mx-auto flex max-w-[26rem] items-center gap-3 rounded-2xl border border-[var(--line)] px-3.5 py-3">
         <span className="bg-espresso grid size-10 shrink-0 place-items-center rounded-xl">
           {/* eslint-disable-next-line @next/next/no-img-element */}

@@ -37,7 +37,9 @@
     --line: rgba(38, 29, 25, 0.13);
     --line-strong: rgba(38, 29, 25, 0.22);
     /* Set by the shell so fixed chrome can respect iOS safe areas. */
-    --tabbar-h: 4.375rem;
+    --tabbar-h: 4.5rem;
+    /* Height of the mobile AppBar — sub-headers stick directly beneath it. */
+    --appbar-h: 3.25rem;
   }
 }
 
@@ -92,6 +94,20 @@
 }
 
 @layer components {
+  .mmg-shell {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 42rem;
+    padding-inline: 1rem;
+  }
+
+  @media (min-width: 64rem) {
+    .mmg-shell {
+      max-width: 72rem;
+      padding-inline: 2rem;
+    }
+  }
+
   .mmg-eyebrow {
     display: inline-flex;
     align-items: center;
@@ -116,8 +132,28 @@
     gap: 0.875rem;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
+    /* Full-bleed rails carry their gutter as padding; without this the first
+       snap point scrolls that gutter off the screen. */
+    scroll-padding-inline: 1rem;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
+  }
+
+  /* Same rail, no snapping — for short chip rows where snap feels sticky. */
+  .mmg-scroller {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mmg-scroller::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mmg-scroller > * {
+    flex: 0 0 auto;
   }
 
   .mmg-rail::-webkit-scrollbar {
@@ -138,6 +174,122 @@
   .mmg-press:active {
     transform: scale(0.978);
   }
+
+  /*
+    Segmented control — the in-page tab switcher that replaces a stacked scroll.
+    Track + sliding-pill styling lives here so Radix Tabs only has to supply the
+    data-state attribute.
+  */
+  .mmg-seg {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    gap: 0.2rem;
+    padding: 0.22rem;
+    border-radius: 999px;
+    background: var(--color-sand-light);
+    border: 1px solid var(--line);
+  }
+
+  .mmg-seg-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    min-height: 2.25rem;
+    padding-inline: 0.5rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--color-muted);
+    white-space: nowrap;
+    transition:
+      background-color 0.18s var(--ease-out-soft),
+      color 0.18s var(--ease-out-soft),
+      box-shadow 0.18s var(--ease-out-soft);
+  }
+
+  .mmg-seg-item[data-state="active"] {
+    background: var(--color-paper);
+    color: var(--color-espresso);
+    box-shadow:
+      0 1px 2px rgba(38, 29, 25, 0.08),
+      0 4px 12px rgba(75, 38, 27, 0.1);
+  }
+
+  .mmg-seg-count {
+    border-radius: 999px;
+    background: rgba(38, 29, 25, 0.08);
+    padding: 0 0.35rem;
+    font-size: 0.65rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .mmg-seg-item[data-state="active"] .mmg-seg-count {
+    background: var(--color-red);
+    color: var(--color-cream);
+  }
+
+  /* Filter chips — the horizontal row above a filtered list. */
+  .mmg-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    min-height: 2rem;
+    padding-inline: 0.75rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--color-paper);
+    color: var(--color-muted);
+    font-size: 0.76rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .mmg-chip[aria-pressed="true"] {
+    background: var(--color-espresso);
+    border-color: var(--color-espresso);
+    color: var(--color-cream);
+  }
+
+  /* iOS-style grouped inset list. */
+  .mmg-list {
+    overflow: hidden;
+    border-radius: var(--radius-card);
+    border: 1px solid var(--line);
+    background: var(--color-paper);
+    box-shadow: var(--shadow-card);
+  }
+
+  .mmg-list > * + * {
+    border-top: 1px solid var(--line);
+  }
+
+  .mmg-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    min-height: 3.25rem;
+    padding: 0.7rem 0.9rem;
+    text-align: left;
+  }
+
+  a.mmg-row:active,
+  button.mmg-row:active {
+    background: var(--color-sand-light);
+  }
+
+  /* The install banner floats above the tab bar, and clears a page's own
+     action bar (the event RSVP row) when one is on screen. */
+  .mmg-install {
+    bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px) + 0.75rem);
+  }
+
+  body:has([data-action-bar]) .mmg-install {
+    bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px) + 5.25rem);
+  }
 }
 
 @layer utilities {
@@ -152,6 +304,34 @@
   /* Reserve room for the fixed bottom tab bar on every scrollable page. */
   .pb-tabbar {
     padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px) + 1.5rem);
+  }
+
+  @media (min-width: 64rem) {
+    .pb-tabbar {
+      padding-bottom: 0;
+    }
+  }
+
+  /* Sticks a sub-header (segmented control) directly under the fixed AppBar. */
+  .top-appbar {
+    top: calc(var(--appbar-h) + env(safe-area-inset-top, 0px));
+  }
+
+  @media (min-width: 64rem) {
+    .top-appbar {
+      top: 4.5rem;
+    }
+  }
+
+  /* Extra room under content that sits behind a floating action bar. */
+  .pb-actionbar {
+    padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px) + 5.25rem);
+  }
+
+  @media (min-width: 64rem) {
+    .pb-actionbar {
+      padding-bottom: 0;
+    }
   }
 
   .text-balance {

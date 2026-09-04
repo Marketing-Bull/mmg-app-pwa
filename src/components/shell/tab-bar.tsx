@@ -19,7 +19,7 @@ export function TabBar() {
   return (
     <nav
       aria-label="Primary"
-      className="bg-paper/92 pb-safe fixed inset-x-0 bottom-0 z-40 border-t border-[var(--line)] backdrop-blur-xl"
+      className="bg-paper/94 pb-safe fixed inset-x-0 bottom-0 z-40 border-t border-[var(--line)] backdrop-blur-xl lg:hidden"
     >
       <ul className="mx-auto flex max-w-2xl items-stretch">
         {TABS.map(({ href, label, icon: Icon }) => {
@@ -30,14 +30,20 @@ export function TabBar() {
                 href={href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "mmg-press relative flex h-[var(--tabbar-h)] flex-col items-center justify-center gap-1 text-[0.66rem] font-semibold tracking-[0.01em] transition-colors",
+                  "mmg-press flex h-[var(--tabbar-h)] flex-col items-center justify-center gap-[0.15rem] text-[0.63rem] font-semibold tracking-[0.01em] transition-colors",
                   active ? "text-red" : "text-muted hover:text-espresso",
                 )}
               >
-                {active ? (
-                  <span aria-hidden className="bg-red absolute top-0 h-[3px] w-9 rounded-b-full" />
-                ) : null}
-                <Icon className={cn("size-[1.3rem]", active && "stroke-[2.4]")} />
+                {/* The pill behind the active icon is the whole indicator — no
+                    hairline on top of the bar, the way a native tab bar reads. */}
+                <span
+                  className={cn(
+                    "grid h-[1.85rem] w-[3.25rem] place-items-center rounded-full transition-colors",
+                    active && "bg-red/10",
+                  )}
+                >
+                  <Icon className={cn("size-[1.28rem]", active && "stroke-[2.4]")} />
+                </span>
                 {label}
               </Link>
             </li>

@@ -7,7 +7,7 @@ export default function NotFound() {
   return (
     <>
       <AppBar title="Not found" />
-      <main className="pb-tabbar flex min-h-[70dvh] flex-col items-center justify-center px-6 text-center">
+      <main className="pb-tabbar flex min-h-[60dvh] flex-col items-center justify-center px-6 py-16 text-center">
         <span className="bg-sand-light grid size-16 place-items-center rounded-full">
           <Compass className="text-muted size-7" />
         </span>

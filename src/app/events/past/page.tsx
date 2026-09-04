@@ -1,12 +1,12 @@
 import { Camera, Play, Users } from "lucide-react";
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { EventArt } from "@/components/events/event-art";
 import { SeriesPill } from "@/components/events/series-pill";
-import { Section } from "@/components/shared/section";
+import { PageIntro, Section } from "@/components/shared/section";
 import { AppBar } from "@/components/shell/app-bar";
-import { getSeries, pastEvents } from "@/lib/content";
+import { getSeries } from "@/lib/content";
+import { getEventFeed } from "@/lib/feed";
 import { formatFullDate, venueLine } from "@/lib/format";
 
 export const metadata: Metadata = {
@@ -15,25 +15,22 @@ export const metadata: Metadata = {
     "Photo recaps, video highlights, and sponsor recognition from MMG's past gatherings across Florida.",
 };
 
-export default function PastEventsPage() {
+export default async function PastEventsPage() {
+  const { past: pastEvents } = await getEventFeed();
+
   return (
     <>
-      <AppBar title="Past events" back="/events" />
+      <AppBar title="Past events" subtitle={`${pastEvents.length} gatherings`} back="/events" />
 
       <main className="pb-tabbar">
-        <div className="px-4 pt-4">
-          <p className="mmg-eyebrow">Past events</p>
-          <h1 className="mt-1.5 font-serif text-[2rem] leading-[0.98] font-semibold tracking-[-0.045em] text-balance">
-            The flyer starts the invitation. The recap shows the connection.
-          </h1>
-          <p className="text-muted mt-3 text-[0.88rem] leading-relaxed text-pretty">
-            Every past event keeps its original flyer and brings the gathering back to life through
-            photos, sponsor recognition, and a short recap of what happened in the room.
-          </p>
-        </div>
+        <PageIntro eyebrow="Past events" title="The flyer starts the invitation.">
+          Every past event keeps its original flyer and brings the gathering back to life through
+          photos, sponsor recognition, and a short recap of what happened in the room.
+        </PageIntro>
 
-        <Section className="pt-6">
-          <ul className="space-y-4">
+        <Section className="pt-3">
+          {/* Two up from the smallest tablet — an archive is for browsing. */}
+          <ul className="grid grid-cols-2 gap-2.5 lg:grid-cols-3 lg:gap-5">
             {pastEvents.map((event) => {
               const series = getSeries(event.seriesId);
               const photos = event.recap?.photos ?? [];
@@ -42,84 +39,76 @@ export default function PastEventsPage() {
                 <li key={event.slug}>
                   <Link
                     href={`/events/${event.slug}`}
-                    className="mmg-press rounded-card bg-paper shadow-card hover:shadow-lift block overflow-hidden border border-[var(--line)] transition-shadow"
+                    className="mmg-press rounded-card bg-paper shadow-card hover:shadow-lift block h-full overflow-hidden border border-[var(--line)] transition-shadow"
                   >
                     <div className="relative">
                       <EventArt
                         event={event}
                         series={series}
                         overlay
-                        className="aspect-[16/10] w-full"
+                        className="aspect-[4/3] w-full"
+                        sizes="(min-width: 1024px) 22rem, 50vw"
                       />
                       <div
                         aria-hidden
-                        className="from-espresso/85 absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t to-transparent"
+                        className="from-espresso/85 absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t to-transparent"
                       />
-                      <div className="absolute inset-x-0 bottom-0 flex flex-wrap items-center gap-1.5 p-3">
-                        <span className="bg-paper/95 text-espresso rounded-full px-2.5 py-1 text-[0.65rem] font-bold tracking-[0.08em] uppercase backdrop-blur">
+                      {/* Only the date rides over the artwork — the badges sit
+                          below it, where they don't cover the flyer. */}
+                      <div className="absolute inset-x-0 bottom-0 p-2">
+                        <span className="bg-paper/95 text-espresso rounded-full px-2 py-[0.15rem] text-[0.58rem] font-bold tracking-[0.06em] uppercase backdrop-blur">
                           {formatFullDate(event.date)}
                         </span>
+                      </div>
+                    </div>
+
+                    <div className="p-3">
+                      <div className="flex flex-wrap items-center gap-1">
+                        {series ? <SeriesPill series={series} /> : null}
                         {event.flyer ? (
-                          <span className="bg-espresso/70 text-cream rounded-full px-2.5 py-1 text-[0.65rem] font-bold tracking-[0.06em] uppercase backdrop-blur">
+                          <span className="bg-sand-light text-muted rounded-full px-2 py-[0.15rem] text-[0.58rem] font-bold tracking-[0.06em] uppercase">
                             Flyer archive
                           </span>
                         ) : null}
                         {event.recap?.videoUrl ? (
-                          <span className="bg-red text-cream inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[0.65rem] font-bold tracking-[0.06em] uppercase">
-                            <Play className="size-3 fill-current" />
+                          <span className="bg-red/10 text-red inline-flex items-center gap-1 rounded-full px-2 py-[0.15rem] text-[0.58rem] font-bold tracking-[0.06em] uppercase">
+                            <Play className="size-2.5 fill-current" />
                             Video recap
                           </span>
                         ) : null}
                       </div>
-                    </div>
-
-                    <div className="p-4">
-                      {series ? <SeriesPill series={series} /> : null}
-                      <h2 className="mt-2 font-serif text-[1.3rem] leading-[1.08] font-semibold tracking-[-0.035em] text-balance">
+                      <h2 className="mt-1.5 line-clamp-3 font-serif text-[0.95rem] leading-[1.15] font-semibold tracking-[-0.03em]">
                         {event.title}
                       </h2>
-                      <p className="text-muted mt-1 text-[0.78rem]">
-                        {event.venue.name} · {venueLine(event.venue)}
-                      </p>
+                      {event.venue.name || venueLine(event.venue) ? (
+                        <p className="text-muted mt-1 truncate text-[0.72rem]">
+                          {[event.venue.name, venueLine(event.venue)].filter(Boolean).join(" · ")}
+                        </p>
+                      ) : null}
 
                       {event.recap ? (
-                        <p className="text-espresso mt-2.5 font-serif text-[1rem] leading-snug tracking-[-0.02em]">
+                        <p className="text-espresso mt-1.5 line-clamp-2 font-serif text-[0.9rem] leading-snug tracking-[-0.02em]">
                           {event.recap.headline}
                         </p>
                       ) : null}
 
-                      <div className="text-muted mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[0.75rem]">
-                        <span className="inline-flex items-center gap-1.5">
-                          <Users className="size-3.5" />
-                          {event.attendingCount} attended
-                        </span>
-                        {photos.length ? (
-                          <span className="inline-flex items-center gap-1.5">
-                            <Camera className="size-3.5" />
-                            {photos.length} photos
-                          </span>
-                        ) : null}
-                        <span className="inline-flex items-center gap-1.5">
-                          {event.sponsorIds.length} sponsors recognized
-                        </span>
-                      </div>
-
-                      {photos.length > 1 ? (
-                        <div className="mt-3 flex gap-2">
-                          {photos.slice(0, 3).map((photo) => (
-                            <div
-                              key={photo.src}
-                              className="bg-sand-light relative aspect-square w-16 overflow-hidden rounded-xl"
-                            >
-                              <Image
-                                src={photo.src}
-                                alt={photo.alt}
-                                fill
-                                sizes="64px"
-                                className="object-cover"
-                              />
-                            </div>
-                          ))}
+                      {event.attendingCount || photos.length || event.sponsorIds.length ? (
+                        <div className="text-muted mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.7rem]">
+                          {event.attendingCount ? (
+                            <span className="inline-flex items-center gap-1">
+                              <Users className="size-3" />
+                              {event.attendingCount}
+                            </span>
+                          ) : null}
+                          {photos.length ? (
+                            <span className="inline-flex items-center gap-1">
+                              <Camera className="size-3" />
+                              {photos.length}
+                            </span>
+                          ) : null}
+                          {event.sponsorIds.length ? (
+                            <span>{event.sponsorIds.length} sponsors recognized</span>
+                          ) : null}
                         </div>
                       ) : null}
                     </div>

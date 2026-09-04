@@ -49,6 +49,9 @@ const ROUTES = [
       "Explore",
       "Get in touch",
       "All rights reserved",
+      // Link previews: the card image and the large-image Twitter card.
+      "/assets/brand/social-card.jpg",
+      "summary_large_image",
     ],
   },
   {
@@ -57,31 +60,21 @@ const ROUTES = [
       "Come meet the personal injury community.",
       "Follow MMG on Eventbrite",
       "Photo recaps",
+      // Proves the marketing-site feed reached the page, not just that it rendered.
+      "Fall Personal Injury Professionals Mixer",
     ],
   },
+  { path: "/events/past", expect: ["The flyer starts the invitation."] },
+  // Slugs come from the marketing site's feed. These two are asserted by name
+  // so a feed change that silently empties the calendar fails the build rather
+  // than shipping an app with no events in it.
   {
-    path: "/events/past",
-    expect: ["The flyer starts the invitation.", "Flyer archive", "Video recap"],
+    path: "/events/fall-personal-injury-professionals-mixer",
+    expect: ["RSVP", "Add to calendar", "Open in Maps", "Who&#x27;s coming", "JOEY Aventura"],
   },
   {
-    path: "/events/pi-networking-mixer-august-2026",
-    expect: [
-      "RSVP",
-      "Add to calendar",
-      "Open in Maps",
-      "How the evening runs",
-      "Who&#x27;s coming",
-      "See the next gathering",
-    ],
-  },
-  {
-    path: "/events/pi-bowling-mixer-june-2026",
-    expect: [
-      "Share this recap",
-      "Photo gallery",
-      "Watch the recap on Instagram",
-      "Sponsor a future event",
-    ],
+    path: "/events/seed-bowling-mixer",
+    expect: ["Lucky Strike", "Sponsor a future event"],
   },
   {
     path: "/sponsor",
@@ -90,6 +83,8 @@ const ROUTES = [
       "Select Featured Sponsor",
       "Select Presenting Partner",
       "561-888-9450",
+      // A real sponsor from the live feed.
+      "The MRI Guys",
     ],
   },
   { path: "/discuss", expect: ["Open discussions", "Talking about specific events"] },
@@ -110,6 +105,7 @@ const ASSETS = [
   "/icons/icon-maskable-512.png",
   "/icons/apple-touch-icon.png",
   "/assets/brand/mmg-official-logo.webp",
+  "/assets/brand/social-card.jpg",
 ];
 
 const failures = [];
@@ -160,6 +156,43 @@ async function checkRoute({ path, expect }) {
   }
 }
 
+/**
+ * The mail relay's contract, exercised without sending anything.
+ *
+ * Each case here resolves before the route ever reaches Resend, so it behaves
+ * identically in CI (no RESEND_API_KEY) and in production.
+ */
+async function checkContactApi() {
+  const post = (body) =>
+    fetch(`${BASE}/api/contact`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: typeof body === "string" ? body : JSON.stringify(body),
+    });
+
+  const cases = [
+    ["rejects malformed JSON", () => post("{nope"), 400],
+    ["rejects a missing subject", () => post({ fields: { Name: "A" } }), 400],
+    ["rejects missing fields", () => post({ subject: "Hi" }), 400],
+    ["rejects empty fields", () => post({ subject: "Hi", fields: {} }), 400],
+    [
+      "swallows the honeypot",
+      () => post({ subject: "Hi", fields: { Name: "Bot" }, website: "spam" }),
+      200,
+    ],
+    ["rejects GET", () => fetch(`${BASE}/api/contact`), 405],
+  ];
+
+  for (const [label, run, expected] of cases) {
+    const res = await run();
+    if (res.status !== expected) {
+      failures.push(`/api/contact ${label} -> expected ${expected}, got ${res.status}`);
+    } else {
+      console.log(`  ok  /api/contact ${label}`);
+    }
+  }
+}
+
 async function checkAsset(path) {
   const res = await fetch(BASE + path);
   if (!res.ok || Number(res.headers.get("content-length") ?? 1) === 0) {
@@ -196,12 +229,14 @@ try {
     console.log("  ok  /events/does-not-exist (404)");
   }
 
+  await checkContactApi();
+
   if (failures.length) {
     console.error(`\n${failures.length} smoke failure(s):`);
     for (const f of failures) console.error(`  FAIL ${f}`);
     exitCode = 1;
   } else {
-    console.log(`\nAll ${ROUTES.length + ASSETS.length + 1} smoke checks passed.`);
+    console.log(`\nAll ${ROUTES.length + ASSETS.length + 7} smoke checks passed.`);
   }
 } catch (error) {
   console.error("\nSmoke run errored:", error.message);

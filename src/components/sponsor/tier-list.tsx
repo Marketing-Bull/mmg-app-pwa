@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Sparkles } from "lucide-react";
+import { Check, ChevronDown, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useStore } from "@/lib/store";
@@ -31,6 +31,9 @@ const ACCENT: Record<
     button: "primary",
   },
 };
+
+/** Benefits shown before the "more included" disclosure takes over. */
+const VISIBLE_BENEFITS = 3;
 
 export function TierList({ tiers }: { tiers: SponsorTier[] }) {
   const { inquiries, hydrated } = useStore();
@@ -89,20 +92,45 @@ export function TierList({ tiers }: { tiers: SponsorTier[] }) {
                   {tier.spotsLeft} {tier.spotsLeft === 1 ? "spot" : "spots"} left
                 </span>
 
-                <ul className="mt-3.5 space-y-2 border-t border-[var(--line)] pt-3.5">
-                  {tier.benefits.map((benefit) => (
+                {/*
+                  Three tiers of full benefit lists is most of a screen each.
+                  The headline benefits stay visible; the rest is one tap away,
+                  and still in the HTML for anyone reading or searching it.
+                */}
+                <ul className="mt-3.5 space-y-1.5 border-t border-[var(--line)] pt-3.5">
+                  {tier.benefits.slice(0, VISIBLE_BENEFITS).map((benefit) => (
                     <li key={benefit} className="flex gap-2.5">
                       <Check className="text-teal mt-[0.15rem] size-4 shrink-0" />
-                      <span className="text-[0.84rem] leading-snug text-pretty">{benefit}</span>
+                      <span className="text-[0.83rem] leading-snug text-pretty">{benefit}</span>
                     </li>
                   ))}
                 </ul>
+
+                {tier.benefits.length > VISIBLE_BENEFITS ? (
+                  <details className="group mt-1.5">
+                    <summary className="text-red mmg-press flex cursor-pointer list-none items-center gap-1 py-1.5 text-[0.78rem] font-semibold [&::-webkit-details-marker]:hidden">
+                      <ChevronDown className="size-3.5 transition-transform group-open:rotate-180" />
+                      <span className="group-open:hidden">
+                        {tier.benefits.length - VISIBLE_BENEFITS} more included
+                      </span>
+                      <span className="hidden group-open:inline">Show less</span>
+                    </summary>
+                    <ul className="space-y-1.5 pb-1">
+                      {tier.benefits.slice(VISIBLE_BENEFITS).map((benefit) => (
+                        <li key={benefit} className="flex gap-2.5">
+                          <Check className="text-teal mt-[0.15rem] size-4 shrink-0" />
+                          <span className="text-[0.83rem] leading-snug text-pretty">{benefit}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                ) : null}
 
                 <Button
                   variant={already ? "outline" : accent.button}
                   size="lg"
                   block
-                  className="mt-4"
+                  className="mt-3.5"
                   onClick={() => {
                     setActive(tier);
                     setOpen(true);

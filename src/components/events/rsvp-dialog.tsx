@@ -154,7 +154,12 @@ export function RsvpDialog({
       description={
         confirmed
           ? undefined
-          : `${event.title} · ${formatFullDate(event.date)}, ${formatTimeRange(event.startTime, event.endTime)}`
+          : [
+              event.title,
+              [formatFullDate(event.date), formatTimeRange(event.startTime, event.endTime)]
+                .filter(Boolean)
+                .join(", "),
+            ].join(" · ")
       }
       footer={confirmed ? successFooter : formFooter}
     >
@@ -355,10 +360,18 @@ function SuccessPanel({
         <p className="text-red text-[0.7rem] font-bold tracking-[0.1em] uppercase">Where to go</p>
         <p className="mt-1.5 text-[0.88rem] font-semibold">{event.venue.name}</p>
         <p className="text-muted text-[0.8rem]">
-          {event.venue.address}, {event.venue.city}, {event.venue.state} {event.venue.zip}
+          {[
+            event.venue.address,
+            event.venue.city,
+            [event.venue.state, event.venue.zip].filter(Boolean).join(" "),
+          ]
+            .filter(Boolean)
+            .join(", ")}
         </p>
         <p className="text-muted mt-2 text-[0.8rem]">
-          {formatTimeRange(event.startTime, event.endTime)} · Name tags at the door
+          {[formatTimeRange(event.startTime, event.endTime), "Name tags at the door"]
+            .filter(Boolean)
+            .join(" · ")}
         </p>
       </div>
 
@@ -399,8 +412,8 @@ function DeliveryNote({ delivery }: { delivery: DeliveryStatus | null }) {
       </p>
     );
   }
-  // "pending" and "failed" both mean: your spot is held, the email is not our
-  // guest's problem. Don't undermine a confirmation they've already been given.
+  // A failed relay is not our guest's problem — their spot is held either way.
+  // Don't undermine a confirmation they've already been given.
   return (
     <p className="text-muted mt-4 text-[0.72rem]">
       Your spot is held. If you don&rsquo;t hear from MMG, reach Andrew at {site.phone}.

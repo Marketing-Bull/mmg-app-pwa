@@ -31,21 +31,41 @@ export function formatDayNumber(isoDate: string): string {
   return formatDate(isoDate, { day: "numeric" });
 }
 
-/** "6:00 PM" from a 24h "18:00". */
+/**
+ * "6:00 PM" from a 24h "18:00", or "" when there is no time.
+ *
+ * Feed events often have no start or end time at all. Returning an empty string
+ * lets callers omit the time rather than print a placeholder built from NaN.
+ */
 export function formatTime(time24: string): string {
-  const [h, m] = time24.split(":").map(Number);
+  const match = String(time24 ?? "").match(/^(\d{1,2}):(\d{2})$/);
+  if (!match) return "";
+  const h = Number(match[1]);
+  const m = Number(match[2]);
+  if (h > 23 || m > 59) return "";
   const period = h >= 12 ? "PM" : "AM";
   const hour = h % 12 === 0 ? 12 : h % 12;
   return m === 0 ? `${hour}:00 ${period}` : `${hour}:${String(m).padStart(2, "0")} ${period}`;
 }
 
+/** Empty when either end is unknown, so the caller can drop the whole line. */
 export function formatTimeRange(start: string, end: string): string {
-  return `${formatTime(start)} – ${formatTime(end)}`;
+  const from = formatTime(start);
+  const to = formatTime(end);
+  if (!from || !to) return from || to || "";
+  return `${from} – ${to}`;
 }
 
-/** "in 3 days" / "2 weeks ago" — relative to the pinned demo date. */
+/**
+ * "In 3 days" / "2 weeks ago", against the real clock.
+ *
+ * This used to measure from a pinned demo date, which was right while the events
+ * were invented samples. They now come from the marketing site's live feed, so a
+ * frozen reference would put real countdowns to real events off by however long
+ * ago the pin was set.
+ */
 export function relativeToToday(isoDate: string): string {
-  const days = Math.round((eventDate(isoDate).getTime() - DEMO_TODAY.getTime()) / 86_400_000);
+  const days = Math.round((eventDate(isoDate).getTime() - Date.now()) / 86_400_000);
   if (days === 0) return "Today";
   if (days === 1) return "Tomorrow";
   if (days === -1) return "Yesterday";
@@ -113,10 +133,20 @@ export function mapsUrl(venue: {
   state: string;
   zip: string;
 }): string {
-  const query = `${venue.name}, ${venue.address}, ${venue.city}, ${venue.state} ${venue.zip}`;
+  // Events from the feed have no street address; searching "venue, city, FL"
+  // still lands on the right place, whereas empty segments would not.
+  const query = [
+    venue.name,
+    venue.address,
+    venue.city,
+    [venue.state, venue.zip].filter(Boolean).join(" "),
+  ]
+    .map((part) => part.trim())
+    .filter(Boolean)
+    .join(", ");
   return `https://maps.google.com/?q=${encodeURIComponent(query)}`;
 }
 
 export function venueLine(venue: { city: string; state: string }): string {
-  return `${venue.city}, ${venue.state}`;
+  return [venue.city, venue.state].filter(Boolean).join(", ");
 }

@@ -12,7 +12,20 @@ import type { MMGEvent } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { RsvpDialog } from "./rsvp-dialog";
 
-export function EventActions({ event, isPast }: { event: MMGEvent; isPast: boolean }) {
+/**
+ * `panel` is the stacked block that lives in the desktop rail. `bar` is the
+ * single row that rides above the tab bar on phones, so the one thing you came
+ * to do is always within thumb reach instead of a scroll away.
+ */
+export function EventActions({
+  event,
+  isPast,
+  layout = "panel",
+}: {
+  event: MMGEvent;
+  isPast: boolean;
+  layout?: "panel" | "bar";
+}) {
   const { hasRsvp, cancelRsvp, isSaved, toggleSaved, hydrated } = useStore();
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
@@ -26,6 +39,15 @@ export function EventActions({ event, isPast }: { event: MMGEvent; isPast: boole
       tone: "calendar",
       title: "Calendar invite downloaded",
       body: `${event.title} — ${formatFullDate(event.date)}`,
+    });
+  };
+
+  const save = () => {
+    toggleSaved(event.slug);
+    toast({
+      tone: saved ? "info" : "success",
+      title: saved ? "Removed from saved" : "Saved",
+      body: saved ? undefined : "Find it again from the Events tab.",
     });
   };
 
@@ -46,6 +68,70 @@ export function EventActions({ event, isPast }: { event: MMGEvent; isPast: boole
       toast({ tone: "warning", title: "Couldn't copy the link", body: url });
     }
   };
+
+  const dialog = (
+    /* Keyed so each open remounts with fresh state seeded from the profile. */
+    <RsvpDialog key={open ? "open" : "closed"} event={event} open={open} onOpenChange={setOpen} />
+  );
+
+  if (layout === "bar") {
+    return (
+      <>
+        <div className="flex items-center gap-2">
+          {isPast ? (
+            <Button variant="outline" size="lg" block onClick={share}>
+              <Share2 />
+              Share this recap
+            </Button>
+          ) : going ? (
+            <>
+              <span className="border-teal/35 bg-teal/[0.08] text-teal-dark inline-flex h-[3.25rem] flex-1 items-center gap-2 rounded-full border px-4 text-[0.88rem] font-semibold">
+                <Check className="size-[1.15rem] stroke-[3]" />
+                You&rsquo;re going
+              </span>
+              <Button
+                variant="outline"
+                size="icon"
+                className="size-[3.25rem]"
+                onClick={addToCalendar}
+                aria-label="Add to calendar"
+              >
+                <CalendarPlus />
+              </Button>
+            </>
+          ) : (
+            <Button size="lg" block onClick={() => setOpen(true)}>
+              <Ticket />
+              RSVP — takes 30 seconds
+            </Button>
+          )}
+
+          <Button
+            variant="outline"
+            size="icon"
+            className={cn("size-[3.25rem]", saved && "border-red/40 text-red")}
+            onClick={save}
+            aria-pressed={saved}
+            aria-label={saved ? "Remove from saved" : "Save this event"}
+          >
+            <Bookmark className={cn(saved && "fill-current")} />
+          </Button>
+          {!isPast ? (
+            <Button
+              variant="outline"
+              size="icon"
+              className="size-[3.25rem]"
+              onClick={share}
+              aria-label="Share this event"
+            >
+              <Share2 />
+            </Button>
+          ) : null}
+        </div>
+        {dialog}
+      </>
+    );
+  }
 
   return (
     <>
@@ -107,14 +193,7 @@ export function EventActions({ event, isPast }: { event: MMGEvent; isPast: boole
           <Button
             variant="outline"
             block={isPast || going}
-            onClick={() => {
-              toggleSaved(event.slug);
-              toast({
-                tone: saved ? "info" : "success",
-                title: saved ? "Removed from saved" : "Saved",
-                body: saved ? undefined : "Find it again from the Events tab.",
-              });
-            }}
+            onClick={save}
             aria-pressed={saved}
             className={cn(saved && "border-red/40 text-red")}
           >
@@ -129,8 +208,7 @@ export function EventActions({ event, isPast }: { event: MMGEvent; isPast: boole
         </div>
       </div>
 
-      {/* Keyed so each open remounts with fresh state seeded from the profile. */}
-      <RsvpDialog key={open ? "open" : "closed"} event={event} open={open} onOpenChange={setOpen} />
+      {dialog}
     </>
   );
 }

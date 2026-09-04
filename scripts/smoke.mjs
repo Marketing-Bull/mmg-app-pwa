@@ -156,6 +156,43 @@ async function checkRoute({ path, expect }) {
   }
 }
 
+/**
+ * The mail relay's contract, exercised without sending anything.
+ *
+ * Each case here resolves before the route ever reaches Resend, so it behaves
+ * identically in CI (no RESEND_API_KEY) and in production.
+ */
+async function checkContactApi() {
+  const post = (body) =>
+    fetch(`${BASE}/api/contact`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: typeof body === "string" ? body : JSON.stringify(body),
+    });
+
+  const cases = [
+    ["rejects malformed JSON", () => post("{nope"), 400],
+    ["rejects a missing subject", () => post({ fields: { Name: "A" } }), 400],
+    ["rejects missing fields", () => post({ subject: "Hi" }), 400],
+    ["rejects empty fields", () => post({ subject: "Hi", fields: {} }), 400],
+    [
+      "swallows the honeypot",
+      () => post({ subject: "Hi", fields: { Name: "Bot" }, website: "spam" }),
+      200,
+    ],
+    ["rejects GET", () => fetch(`${BASE}/api/contact`), 405],
+  ];
+
+  for (const [label, run, expected] of cases) {
+    const res = await run();
+    if (res.status !== expected) {
+      failures.push(`/api/contact ${label} -> expected ${expected}, got ${res.status}`);
+    } else {
+      console.log(`  ok  /api/contact ${label}`);
+    }
+  }
+}
+
 async function checkAsset(path) {
   const res = await fetch(BASE + path);
   if (!res.ok || Number(res.headers.get("content-length") ?? 1) === 0) {
@@ -192,12 +229,14 @@ try {
     console.log("  ok  /events/does-not-exist (404)");
   }
 
+  await checkContactApi();
+
   if (failures.length) {
     console.error(`\n${failures.length} smoke failure(s):`);
     for (const f of failures) console.error(`  FAIL ${f}`);
     exitCode = 1;
   } else {
-    console.log(`\nAll ${ROUTES.length + ASSETS.length + 1} smoke checks passed.`);
+    console.log(`\nAll ${ROUTES.length + ASSETS.length + 7} smoke checks passed.`);
   }
 } catch (error) {
   console.error("\nSmoke run errored:", error.message);

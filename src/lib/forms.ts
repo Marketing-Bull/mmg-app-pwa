@@ -1,34 +1,28 @@
 /**
- * Form delivery for a zero-backend app.
+ * Form delivery.
  *
- * Submissions POST straight to FormSubmit.co's AJAX endpoint, which forwards
- * them to contact@millersmarketinggroup.com. There is no server of our own in
- * the path, which is the point.
+ * Submissions POST to this app's own `/api/contact` route, which relays them to
+ * MMG's inbox through Resend. This replaced a direct client-side POST to
+ * FormSubmit.co: that required the recipient to click an activation email
+ * before anything was delivered, and until someone did, every RSVP was quietly
+ * discarded.
+ *
+ * Going through our own route also keeps the destination address out of the
+ * client bundle — it used to be baked into the endpoint URL.
  *
  * Delivery NEVER gates the UI. The confirmation screen shows immediately and
- * the request runs alongside it — a flaky hotel wifi connection at an event
- * should not make an RSVP look like it failed.
+ * the request runs alongside it — flaky hotel wifi at an event should not make
+ * an RSVP look like it failed.
  */
 
-export type DeliveryStatus = "sent" | "pending" | "failed" | "skipped";
+export type DeliveryStatus = "sent" | "failed" | "skipped";
 
 export interface DeliveryResult {
   status: DeliveryStatus;
   message?: string;
 }
 
-const RECIPIENT = "contact@millersmarketinggroup.com";
-
-/**
- * Override with a FormSubmit alias token (recommended for production — it
- * keeps the inbox address out of the client bundle):
- *   NEXT_PUBLIC_FORMSUBMIT_ENDPOINT=https://formsubmit.co/ajax/abc123...
- * Set NEXT_PUBLIC_FORMS_DISABLED=true to run the app as a pure UI demo.
- */
-const ENDPOINT =
-  process.env.NEXT_PUBLIC_FORMSUBMIT_ENDPOINT ?? `https://formsubmit.co/ajax/${RECIPIENT}`;
-
-const DISABLED = process.env.NEXT_PUBLIC_FORMS_DISABLED === "true";
+const ENDPOINT = "/api/contact";
 
 const TIMEOUT_MS = 12_000;
 
@@ -37,24 +31,11 @@ export interface SubmitPayload {
   fields: Record<string, string | number | undefined>;
 }
 
+function isDeliveryStatus(value: unknown): value is DeliveryStatus {
+  return value === "sent" || value === "failed" || value === "skipped";
+}
+
 export async function submitForm({ subject, fields }: SubmitPayload): Promise<DeliveryResult> {
-  if (DISABLED) {
-    return { status: "skipped", message: "Email delivery is turned off in this environment." };
-  }
-
-  const body: Record<string, string> = {
-    _subject: subject,
-    // FormSubmit shows a captcha page on the redirect flow; the AJAX flow needs
-    // it off or the request resolves without ever reaching the inbox.
-    _captcha: "false",
-    _template: "table",
-  };
-
-  for (const [key, value] of Object.entries(fields)) {
-    if (value === undefined || value === "") continue;
-    body[key] = String(value);
-  }
-
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
 
@@ -62,27 +43,26 @@ export async function submitForm({ subject, fields }: SubmitPayload): Promise<De
     const response = await fetch(ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/json" },
-      body: JSON.stringify(body),
+      // `website` is the honeypot: a real submission always leaves it empty.
+      body: JSON.stringify({ subject, fields, website: "" }),
       signal: controller.signal,
     });
 
-    if (!response.ok) {
-      return { status: "failed", message: `Mail relay returned ${response.status}.` };
-    }
-
     const data: unknown = await response.json().catch(() => null);
+    const status =
+      data && typeof data === "object" && "status" in data
+        ? (data as { status: unknown }).status
+        : undefined;
     const message =
       data && typeof data === "object" && "message" in data
         ? String((data as { message: unknown }).message)
         : undefined;
 
-    // FormSubmit returns 200 with a "confirm your email" message until the
-    // recipient activates the address for the first time.
-    if (message && /confirm/i.test(message)) {
-      return { status: "pending", message };
+    if (response.ok && isDeliveryStatus(status)) {
+      return { status, message };
     }
 
-    return { status: "sent", message };
+    return { status: "failed", message: message ?? `Mail relay returned ${response.status}.` };
   } catch (error) {
     const aborted = error instanceof DOMException && error.name === "AbortError";
     return { status: "failed", message: aborted ? "Request timed out." : "Network unavailable." };

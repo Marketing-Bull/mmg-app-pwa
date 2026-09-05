@@ -199,8 +199,19 @@ npm i -D playwright && npx playwright install chromium
 or point the script at a browser the machine already has, with
 `CHROME_PATH=/path/to/chrome`.
 
-Smoke asserts the image is served and that `/` still carries both meta tags, so
-a rename can't silently strip every preview.
+Smoke asserts the image is served and that `/` still carries both meta tags,
+including the absolute URL — so neither a rename nor a wrong host can silently
+strip every preview.
+
+**The host matters as much as the image.** `metadataBase` decides the absolute
+URL crawlers fetch, and a card whose image 404s renders blank however good the
+image is. It resolves in this order:
+
+1. `NEXT_PUBLIC_SITE_URL`, if set
+2. `VERCEL_PROJECT_PRODUCTION_URL`, which Vercel sets to the project's
+   production domain — so this follows the deployment, and keeps working the
+   day a custom domain is pointed at the project
+3. `https://mmg-app-pwa.vercel.app`, the current production domain
 
 ---
 

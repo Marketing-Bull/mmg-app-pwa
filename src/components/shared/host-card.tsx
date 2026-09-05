@@ -1,5 +1,6 @@
-import { Instagram, Mail, Phone } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 import Image from "next/image";
+import { InstagramIcon } from "@/components/ui/instagram-icon";
 import type { Host } from "@/lib/types";
 
 export function HostCard({ host, compact }: { host: Host; compact?: boolean }) {
@@ -108,7 +109,7 @@ export function HostCard({ host, compact }: { host: Host; compact?: boolean }) {
             rel="noreferrer"
             className="mmg-press bg-paper shadow-card inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-[0.78rem] font-semibold"
           >
-            <Instagram className="text-red size-3.5" />
+            <InstagramIcon className="text-red size-3.5" />
             Instagram
           </a>
         ) : null}

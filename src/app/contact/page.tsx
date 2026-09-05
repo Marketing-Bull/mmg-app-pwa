@@ -1,4 +1,4 @@
-import { Instagram, Mail, MapPin, MessageSquare, Phone, Ticket } from "lucide-react";
+import { Mail, MapPin, MessageSquare, Phone, Ticket } from "lucide-react";
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/contact/contact-form";
 import { HostCard } from "@/components/shared/host-card";
@@ -6,6 +6,7 @@ import { PageIntro } from "@/components/shared/section";
 import { AppBar } from "@/components/shell/app-bar";
 import { DemoTools } from "@/components/shell/demo-tools";
 import { Disclosure } from "@/components/ui/disclosure";
+import { InstagramIcon } from "@/components/ui/instagram-icon";
 import { List, ListRow } from "@/components/ui/list";
 import { Segmented } from "@/components/ui/segmented";
 import { getHost, hosts, site } from "@/lib/content";
@@ -82,7 +83,7 @@ export default function ContactPage() {
                     sub={site.email}
                   />
                   <ListRow
-                    icon={Instagram}
+                    icon={InstagramIcon}
                     href={site.instagram}
                     external
                     label="Instagram"

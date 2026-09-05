@@ -49,8 +49,12 @@ const ROUTES = [
       "Explore",
       "Get in touch",
       "All rights reserved",
-      // Link previews: the card image and the large-image Twitter card.
-      "/assets/brand/social-card.jpg",
+      // Link previews. The absolute host matters as much as the image: a
+      // metadataBase pointing at a domain this app doesn't serve makes every
+      // card come up blank. Neither NEXT_PUBLIC_SITE_URL nor Vercel's
+      // VERCEL_PROJECT_PRODUCTION_URL is set in CI, so this is the fallback
+      // baked in at build time.
+      "https://mmg-app-pwa.vercel.app/assets/brand/social-card.jpg",
       "summary_large_image",
     ],
   },

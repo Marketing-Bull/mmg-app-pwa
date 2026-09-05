@@ -46,8 +46,24 @@ const socialCard = {
   alt: `The ${site.shortName} app open on an iPhone, showing the home screen and the next event.`,
 };
 
+/*
+ * Absolute URLs for the link preview. This was hardcoded to
+ * millersmarketingconnects.com, which serves a different site entirely — so
+ * every og:image URL this app emitted 404'd and the card came up blank no
+ * matter what the image looked like.
+ *
+ * Vercel sets VERCEL_PROJECT_PRODUCTION_URL to the project's production
+ * domain, so the preview follows the deployment instead of a guess, and keeps
+ * working the day a custom domain is pointed at this project. Set
+ * NEXT_PUBLIC_SITE_URL to override it.
+ */
+const productionUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL;
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (productionUrl ? `https://${productionUrl}` : "https://mmg-app-pwa.vercel.app");
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://millersmarketingconnects.com"),
+  metadataBase: new URL(siteUrl),
   title: {
     default: `${site.name} — ${site.tagline}`,
     template: `%s · ${site.shortName}`,

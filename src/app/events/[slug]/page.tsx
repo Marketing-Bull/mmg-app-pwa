@@ -1,4 +1,4 @@
-import { CalendarDays, ExternalLink, Instagram, MapPin, Play, Users } from "lucide-react";
+import { CalendarDays, ExternalLink, MapPin, Play, Users } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -10,6 +10,7 @@ import { SeriesPill, Tag } from "@/components/events/series-pill";
 import { CommentThread } from "@/components/community/comment-thread";
 import { HostCard } from "@/components/shared/host-card";
 import { PartnerWall } from "@/components/shared/partner-wall";
+import { InstagramIcon } from "@/components/ui/instagram-icon";
 import { AppBar } from "@/components/shell/app-bar";
 import { Button } from "@/components/ui/button";
 import { Disclosure } from "@/components/ui/disclosure";
@@ -234,7 +235,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
           <a href={event.recap.videoUrl} target="_blank" rel="noreferrer">
             <Play className="fill-current" />
             {event.recap.videoLabel ?? "Watch the recap"}
-            <Instagram />
+            <InstagramIcon />
           </a>
         </Button>
       ) : null}

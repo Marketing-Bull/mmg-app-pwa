@@ -1,6 +1,7 @@
-import { Instagram, Mail, MapPin, Phone, Ticket } from "lucide-react";
+import { Mail, MapPin, Phone, Ticket } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { InstagramIcon } from "@/components/ui/instagram-icon";
 import { site } from "@/lib/content";
 
 const EXPLORE = [
@@ -107,7 +108,7 @@ export function SiteFooter() {
                 rel="noreferrer"
                 className="mmg-press bg-cream/10 hover:bg-cream/20 inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-[0.8rem] font-semibold transition-colors"
               >
-                <Instagram className="size-3.5" />
+                <InstagramIcon className="size-3.5" />
                 Instagram
               </a>
               <a

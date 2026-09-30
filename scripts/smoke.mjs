@@ -604,9 +604,12 @@ async function checkGhlGoLive() {
 }
 
 async function startServer(env) {
+  // Its own process group, so stopping it reaches `next start` itself and not
+  // just the npx wrapper — on Linux a SIGTERM to npx leaves the server running.
   const child = spawn("npx", ["next", "start", "-p", String(PORT)], {
     stdio: ["ignore", "pipe", "pipe"],
     env,
+    detached: true,
   });
   child.stdout.on("data", (d) => (serverLog += d));
   child.stderr.on("data", (d) => (serverLog += d));
@@ -614,12 +617,20 @@ async function startServer(env) {
   return child;
 }
 
+function killServer(child) {
+  try {
+    process.kill(-child.pid, "SIGTERM");
+  } catch {
+    // Already gone.
+  }
+}
+
 async function stopServer(child) {
-  if (child.exitCode !== null) return;
-  const exited = new Promise((r) => child.once("exit", r));
-  child.kill("SIGTERM");
+  const exited = child.exitCode === null ? new Promise((r) => child.once("exit", r)) : null;
+  killServer(child);
   await exited;
-  // Wait for the port to actually free up before the next server takes it.
+  // The next server must not start until this one has let go of the port —
+  // otherwise its checks would quietly run against this one.
   const deadline = Date.now() + 10_000;
   while (Date.now() < deadline) {
     try {
@@ -629,6 +640,7 @@ async function stopServer(child) {
       return;
     }
   }
+  throw new Error(`The first server is still answering on ${BASE} after being stopped.`);
 }
 
 await assertPortFree();
@@ -681,7 +693,7 @@ try {
   console.error(serverLog.slice(-2000));
   exitCode = 1;
 } finally {
-  server?.kill("SIGTERM");
+  if (server) killServer(server);
   kv.server.close();
   ghl.server.close();
 }

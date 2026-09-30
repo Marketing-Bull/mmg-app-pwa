@@ -7,7 +7,7 @@ import { EventActions } from "@/components/events/event-actions";
 import { EventArt } from "@/components/events/event-art";
 import { PhotoGallery } from "@/components/events/photo-gallery";
 import { SeriesPill, Tag } from "@/components/events/series-pill";
-import { CommentThread } from "@/components/community/comment-thread";
+import { EventDiscussion } from "@/components/community/event-discussion";
 import { HostCard } from "@/components/shared/host-card";
 import { PartnerWall } from "@/components/shared/partner-wall";
 import { InstagramIcon } from "@/components/ui/instagram-icon";
@@ -26,7 +26,6 @@ import {
   relativeToToday,
   venueLine,
 } from "@/lib/format";
-import { eventCommentKey } from "@/lib/keys";
 import type { AgendaItem } from "@/lib/types";
 
 export async function generateStaticParams() {
@@ -283,21 +282,9 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
     {
       value: "talk",
       label: "Talk",
-      count: event.comments.length || undefined,
       content: (
         <div id="discussion">
-          <CommentThread
-            storageKey={eventCommentKey(event.slug)}
-            seeded={event.comments}
-            placeholder={
-              upcoming ? "Ask a question about this event…" : "Share what you took away…"
-            }
-            emptyLabel={
-              upcoming
-                ? "No questions yet. Ask the first one — Andrew answers these."
-                : "No comments yet. Say hello to someone you met."
-            }
-          />
+          <EventDiscussion slug={event.slug} upcoming={upcoming} />
         </div>
       ),
     },

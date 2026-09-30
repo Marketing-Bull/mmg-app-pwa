@@ -7,6 +7,7 @@ import { TextAreaField, TextField } from "@/components/ui/field";
 import { Sheet } from "@/components/ui/sheet";
 import { site } from "@/lib/content";
 import { submitForm, type DeliveryStatus } from "@/lib/forms";
+import { ghlLead } from "@/lib/ghl-client";
 import { useStore } from "@/lib/store";
 import type { SponsorTier } from "@/lib/types";
 
@@ -68,6 +69,16 @@ export function TierInquiryDialog({
     addInquiry(inquiry);
     setSent(true);
     setSubmitting(false);
+
+    ghlLead({
+      name: inquiry.name,
+      email: inquiry.email,
+      phone: inquiry.phone,
+      company: inquiry.company,
+      form: "sponsorship",
+      interest: `${tier.name} — ${tier.price} ${tier.cadence}`,
+      message: inquiry.message,
+    });
 
     const result = await submitForm({
       subject: `Sponsorship inquiry — ${tier.name} (${tier.price} ${tier.cadence})`,

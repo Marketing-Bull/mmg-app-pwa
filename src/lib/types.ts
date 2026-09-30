@@ -1,5 +1,8 @@
 export type RoleId = "attorney" | "provider" | "sponsor";
 
+/** The answer a guest gave on the RSVP sheet. */
+export type RsvpStatus = "going" | "maybe" | "no";
+
 export interface Role {
   id: RoleId;
   label: string;
@@ -27,6 +30,8 @@ export interface Attendee {
   company: string;
   /** Present only on RSVPs created during this session. */
   isYou?: boolean;
+  /** Your own RSVP, when you answered Maybe. */
+  maybe?: boolean;
 }
 
 export interface AgendaItem {

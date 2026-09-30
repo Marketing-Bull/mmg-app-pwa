@@ -1,0 +1,12 @@
+{
+  "defaults": {
+    "enabled": true,
+    "pinned": {
+      "title": "From our partner Coach OS",
+      "body": "Coach OS builds AI systems for small businesses. Ask about it at the next mixer.",
+      "enabled": false
+    },
+    "seeds": []
+  },
+  "threads": {}
+}

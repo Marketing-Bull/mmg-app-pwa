@@ -10,7 +10,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import type { Comment, RoleId } from "./types";
+import type { Comment, RoleId, RsvpStatus } from "./types";
 
 const STORAGE_KEY = "mmg-app-v1";
 
@@ -26,6 +26,12 @@ export interface Rsvp extends Profile {
   slug: string;
   guests: number;
   createdAt: string;
+  /** Absent on RSVPs saved before Maybe / Can't make it existed — those were all "going". */
+  status?: RsvpStatus;
+}
+
+export function rsvpStatus(rsvp: Rsvp | undefined): RsvpStatus | null {
+  return rsvp ? (rsvp.status ?? "going") : null;
 }
 
 export interface SponsorInquiry {

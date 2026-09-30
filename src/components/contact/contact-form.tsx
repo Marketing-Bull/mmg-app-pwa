@@ -7,6 +7,7 @@ import { TextAreaField, TextField } from "@/components/ui/field";
 import { useToast } from "@/components/ui/toast";
 import { site } from "@/lib/content";
 import { submitForm, type DeliveryStatus } from "@/lib/forms";
+import { ghlLead } from "@/lib/ghl-client";
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
@@ -75,6 +76,16 @@ function ContactFormFields() {
       tone: "success",
       title: "Message sent",
       body: "Andrew personally reviews these and follows up.",
+    });
+
+    ghlLead({
+      name: name.trim(),
+      email: email.trim(),
+      phone: phone.trim(),
+      company: company.trim(),
+      form: "contact",
+      interest,
+      message: message.trim(),
     });
 
     const result = await submitForm({

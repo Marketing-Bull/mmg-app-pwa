@@ -46,17 +46,19 @@ CI (`.github/workflows/ci.yml`) runs the same sequence on every PR.
 
 ## Routes
 
-| Route            | What it is                                                                                             |
-| ---------------- | ------------------------------------------------------------------------------------------------------ |
-| `/`              | Home — hero, shortcut grid, next event, upcoming/recaps/series switcher                                |
-| `/events`        | Upcoming / Past / Series in one screen, filterable by series                                           |
-| `/events/[slug]` | Event detail — facts up top, then About / People / Talk tabs (+ Recap, Agenda where the event has one) |
-| `/events/past`   | Archive of past events with photo recaps and video highlights                                          |
-| `/sponsor`       | Tiers, the rooms, and questions — three tabs over one set of stats                                     |
-| `/discuss`       | Community hub — threads and event conversation, one tab each                                           |
-| `/discuss/[id]`  | A single thread with replies                                                                           |
-| `/contact`       | Call/text buttons, then Message / Channels / About Andrew tabs                                         |
-| `/offline`       | Shown by the service worker when a page isn't cached                                                   |
+| Route                | What it is                                                                                             |
+| -------------------- | ------------------------------------------------------------------------------------------------------ |
+| `/`                  | Home — hero, shortcut grid, next event, upcoming/recaps/series switcher                                |
+| `/events`            | Upcoming / Past / Series in one screen, filterable by series                                           |
+| `/events/[slug]`     | Event detail — facts up top, then About / People / Talk tabs (+ Recap, Agenda where the event has one) |
+| `/api/event-threads` | Per-event guest discussion behind the Talk tab — see [Guest discussions](#guest-discussions)           |
+| `/api/ghl`           | RSVP + lead capture into GoHighLevel — see [GoHighLevel](#gohighlevel)                                 |
+| `/events/past`       | Archive of past events with photo recaps and video highlights                                          |
+| `/sponsor`           | Tiers, the rooms, and questions — three tabs over one set of stats                                     |
+| `/discuss`           | Community hub — threads and event conversation, one tab each                                           |
+| `/discuss/[id]`      | A single thread with replies                                                                           |
+| `/contact`           | Call/text buttons, then Message / Channels / About Andrew tabs                                         |
+| `/offline`           | Shown by the service worker when a page isn't cached                                                   |
 
 Bottom tab bar: **Home · Events · Discuss · Sponsor · Contact**.
 
@@ -141,6 +143,70 @@ The route rejects oversized payloads, caps field count and length, carries a hon
 | `MMG_MAIL_TO`        | `contact@millersmarketinggroup.com`           | Destination inbox.                                       |
 | `MMG_MAIL_FROM`      | `MMG App <noreply@millersmarketinggroup.com>` | Must be on a domain verified in Resend.                  |
 | `MMG_FORMS_DISABLED` | —                                             | `true` on a preview that shouldn't reach the real inbox. |
+
+---
+
+## Guest discussions
+
+The Talk tab on every event page is a shared, server-stored thread
+(`src/lib/event-threads.ts`, `/api/event-threads`) rather than a browser-only
+comment box.
+
+- **RSVP-gated.** Anyone can read; only guests who RSVP'd Going or Maybe can
+  post. The gate trusts the RSVP status the browser reports — there are no
+  accounts — so moderation covers what gets through.
+- **Privacy-safe names.** Posts show first name + last initial ("Jordan A.").
+  The email a post was made under never leaves the server.
+- **Guard rails.** 500 characters, one post per 5 seconds, a profanity filter,
+  and three reports from different guests hide a message automatically.
+- **Moderation.** "Moderate" under each thread opens a panel that takes
+  `MMG_ADMIN_TOKEN` (held in memory, never saved): hide / unhide, mute a poster
+  for 24h, and switch the pinned partner slot on or off.
+- **Locks a week after the event**, so old threads don't collect spam.
+
+Defaults (including the pinned "From our partner Coach OS" slot, which ships
+switched **off**) live in `content/event-threads.json`; per-event overrides go
+under `threads` keyed by slug.
+
+---
+
+## GoHighLevel
+
+Every RSVP (Going / Maybe / Can't make it, plus cancellations) and every
+contact or sponsorship submission is also captured for GoHighLevel
+(`src/lib/ghl.ts`, `/api/ghl`). It runs alongside the Resend email and never
+delays the confirmation screen.
+
+**It is off until `GHL_ENABLED=true`, `GHL_TOKEN` and `GHL_LOCATION_ID` are
+set.** Until then captures go into an outbox and nothing is sent. The first
+submission after it's switched on drains the whole outbox into GHL, oldest
+first — so nothing captured before go-live is lost. A moderator can also drain
+it immediately:
+
+```bash
+curl -X POST https://<app>/api/ghl -H "x-admin-token: $MMG_ADMIN_TOKEN" \
+  -H "Content-Type: application/json" -d '{"action":"replay"}'
+curl https://<app>/api/ghl        # { mode, durable, queued }
+```
+
+Per capture, GHL gets: the contact upserted (matched on email, then phone) with
+source "MMG Connect App"; tags `mmg-app`, `rsvp:<event-slug>`,
+`rsvp-status:<going|maybe|no>`, `role:<role>` or `lead:<contact|sponsorship>`;
+a note with the details; the guest count in a **Guests** custom field if one
+exists; and, for Going, an opportunity in the first pipeline named **Events**,
+at its **RSVP'd** stage, if both exist. Missing field or pipeline means tags and
+note only — nothing fails. A send GHL rejects stays in the outbox and is
+retried; after five failures it's parked in `mmg:ghl:failed` for a person to
+look at.
+
+**The outbox needs durable storage on Vercel.** Connect an Upstash for Redis
+store (Vercel → Storage), which sets `KV_REST_API_URL` / `KV_REST_API_TOKEN`.
+Without it the outbox and discussion threads live in per-instance memory: fine
+locally, but a redeploy — including the one that switches GHL on — would wipe
+anything queued. `GET /api/ghl` reports `durable: false` when that's the case.
+
+`npm run smoke` proves the whole path against local stand-ins for Redis and
+GHL: capture while off, restart with credentials, replay in order.
 
 ---
 

@@ -10,11 +10,24 @@ import { downloadIcs } from "@/lib/calendar";
 import { roles, site } from "@/lib/content";
 import { formatFullDate, formatTimeRange } from "@/lib/format";
 import { submitForm, type DeliveryStatus } from "@/lib/forms";
+import { ghlRsvp } from "@/lib/ghl-client";
 import { useStore } from "@/lib/store";
-import type { MMGEvent, RoleId } from "@/lib/types";
+import type { MMGEvent, RoleId, RsvpStatus } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+const STATUSES: { id: RsvpStatus; label: string }[] = [
+  { id: "going", label: "Going" },
+  { id: "maybe", label: "Maybe" },
+  { id: "no", label: "Can\u2019t make it" },
+];
+
+const STATUS_LABEL: Record<RsvpStatus, string> = {
+  going: "Going",
+  maybe: "Maybe",
+  no: "Can't make it",
+};
 
 interface Errors {
   name?: string;
@@ -27,10 +40,12 @@ export function RsvpDialog({
   event,
   open,
   onOpenChange,
+  initialStatus = "going",
 }: {
   event: MMGEvent;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  initialStatus?: RsvpStatus;
 }) {
   const { profile, addRsvp } = useStore();
   const { toast } = useToast();
@@ -46,6 +61,7 @@ export function RsvpDialog({
   const [email, setEmail] = useState(profile?.email ?? "");
   const [phone, setPhone] = useState(profile?.phone ?? "");
   const [company, setCompany] = useState(profile?.company ?? "");
+  const [status, setStatus] = useState<RsvpStatus>(initialStatus);
   const [guests, setGuests] = useState(0);
   const [errors, setErrors] = useState<Errors>({});
   const [submitting, setSubmitting] = useState(false);
@@ -60,8 +76,11 @@ export function RsvpDialog({
     if (!name.trim()) next.name = "We need a name for the door list.";
     if (!email.trim()) next.email = "Required — this is where the confirmation goes.";
     else if (!EMAIL_RE.test(email.trim())) next.email = "That email doesn't look right.";
-    if (!phone.trim()) next.phone = "Required so Andrew can reach you.";
-    if (!company.trim()) next.company = "Required — it goes on your name tag.";
+    // Someone sending regrets only needs to tell us who they are.
+    if (status !== "no") {
+      if (!phone.trim()) next.phone = "Required so Andrew can reach you.";
+      if (!company.trim()) next.company = "Required — it goes on your name tag.";
+    }
     setErrors(next);
     return Object.keys(next).length === 0;
   };
@@ -77,7 +96,8 @@ export function RsvpDialog({
       phone: phone.trim(),
       company: company.trim(),
       role,
-      guests,
+      guests: status === "no" ? 0 : guests,
+      status,
       createdAt: new Date().toISOString(),
     };
 
@@ -86,17 +106,21 @@ export function RsvpDialog({
     addRsvp(rsvp);
     setConfirmed(true);
     setSubmitting(false);
-    downloadIcs(event, site.email);
+    if (status !== "no") downloadIcs(event, site.email);
+
+    // Into GoHighLevel alongside the email — queued until GHL is switched on.
+    ghlRsvp({ ...rsvp, event: { slug: event.slug, title: event.title, date: event.date } });
 
     const result = await submitForm({
-      subject: `RSVP — ${event.title} (${formatFullDate(event.date)})`,
+      subject: `RSVP (${STATUS_LABEL[status]}) — ${event.title} (${formatFullDate(event.date)})`,
       fields: {
+        RSVP: STATUS_LABEL[status],
         Name: rsvp.name,
         Email: rsvp.email,
         Phone: rsvp.phone,
         Company: rsvp.company,
         Role: roles.find((r) => r.id === role)?.label ?? role,
-        Guests: guests,
+        Guests: rsvp.guests,
         Event: event.title,
         "Event date": formatFullDate(event.date),
         Venue: `${event.venue.name}, ${event.venue.city}, ${event.venue.state}`,
@@ -107,6 +131,7 @@ export function RsvpDialog({
   };
 
   const total = 1 + guests;
+  const attending = status !== "no";
 
   const successFooter = useMemo(
     () => (
@@ -138,7 +163,11 @@ export function RsvpDialog({
     <div>
       <Button block size="lg" onClick={handleSubmit} disabled={submitting}>
         {submitting ? <Loader2 className="animate-spin" /> : null}
-        {submitting ? "Confirming…" : `Confirm RSVP${guests ? ` · ${total} spots` : ""}`}
+        {submitting
+          ? "Confirming…"
+          : attending
+            ? `Confirm RSVP${guests ? ` · ${total} spots` : ""}`
+            : "Send my regrets"}
       </Button>
       <p className="text-muted mt-2.5 text-center text-[0.72rem] leading-snug">
         Goes straight to Andrew at {site.email}. No account needed.
@@ -150,7 +179,7 @@ export function RsvpDialog({
     <Sheet
       open={open}
       onOpenChange={onOpenChange}
-      title={confirmed ? "You're on the list" : "RSVP"}
+      title={confirmed ? (attending ? "You're on the list" : "Thanks for letting us know") : "RSVP"}
       description={
         confirmed
           ? undefined
@@ -161,10 +190,41 @@ export function RsvpDialog({
                 .join(", "),
             ].join(" · ")
       }
-      footer={confirmed ? successFooter : formFooter}
+      footer={
+        confirmed ? (
+          attending ? (
+            successFooter
+          ) : (
+            <Button block onClick={() => onOpenChange(false)}>
+              Done
+            </Button>
+          )
+        ) : (
+          formFooter
+        )
+      }
     >
       {confirmed ? (
-        <SuccessPanel event={event} name={name} total={total} delivery={delivery} />
+        attending ? (
+          <SuccessPanel
+            event={event}
+            name={name}
+            total={total}
+            maybe={status === "maybe"}
+            delivery={delivery}
+          />
+        ) : (
+          <div className="text-center">
+            <h3 className="mt-2 font-serif text-[1.4rem] leading-tight font-semibold tracking-[-0.035em]">
+              Maybe next time, {name.split(" ")[0]}.
+            </h3>
+            <p className="text-muted mx-auto mt-2 max-w-[22rem] text-[0.86rem] leading-relaxed text-pretty">
+              Andrew will know you can&rsquo;t make{" "}
+              <span className="text-espresso font-semibold">{event.title}</span>. Change your mind
+              any time from this page.
+            </p>
+          </div>
+        )
       ) : (
         <div className="space-y-5">
           {returning ? (
@@ -173,6 +233,30 @@ export function RsvpDialog({
               confirm.
             </p>
           ) : null}
+
+          <fieldset>
+            <legend className="mb-2 text-[0.78rem] font-semibold tracking-[0.02em]">
+              Are you coming? <span className="text-red">*</span>
+            </legend>
+            <div className="grid grid-cols-3 gap-2">
+              {STATUSES.map((option) => (
+                <button
+                  key={option.id}
+                  type="button"
+                  onClick={() => setStatus(option.id)}
+                  aria-pressed={status === option.id}
+                  className={cn(
+                    "mmg-press rounded-2xl border px-2 py-2.5 text-[0.8rem] leading-snug font-semibold transition-colors",
+                    status === option.id
+                      ? "border-red bg-red/[0.07] text-red"
+                      : "bg-paper text-muted hover:text-espresso border-[var(--line-strong)]",
+                  )}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+          </fieldset>
 
           <fieldset>
             <legend className="mb-2 text-[0.78rem] font-semibold tracking-[0.02em]">
@@ -245,7 +329,7 @@ export function RsvpDialog({
             />
             <TextField
               label="Mobile phone"
-              required
+              required={attending}
               type="tel"
               inputMode="tel"
               autoComplete="tel"
@@ -256,7 +340,7 @@ export function RsvpDialog({
             />
             <TextField
               label="Company or firm"
-              required
+              required={attending}
               autoComplete="organization"
               placeholder="Alvarez Injury Law"
               value={company}
@@ -265,7 +349,12 @@ export function RsvpDialog({
             />
           </div>
 
-          <div className="bg-paper flex items-center justify-between rounded-2xl border border-[var(--line-strong)] px-3.5 py-3">
+          <div
+            className={cn(
+              "bg-paper flex items-center justify-between rounded-2xl border border-[var(--line-strong)] px-3.5 py-3",
+              !attending && "hidden",
+            )}
+          >
             <div>
               <p className="text-[0.82rem] font-semibold">Bringing anyone?</p>
               <p className="text-muted text-[0.74rem]">Colleagues from your team are welcome.</p>
@@ -302,11 +391,13 @@ function SuccessPanel({
   event,
   name,
   total,
+  maybe,
   delivery,
 }: {
   event: MMGEvent;
   name: string;
   total: number;
+  maybe: boolean;
   delivery: DeliveryStatus | null;
 }) {
   const { toast } = useToast();
@@ -348,7 +439,9 @@ function SuccessPanel({
       </div>
 
       <h3 className="mt-4 font-serif text-[1.5rem] leading-tight font-semibold tracking-[-0.035em]">
-        See you there, {name.split(" ")[0]}.
+        {maybe
+          ? `Hope to see you, ${name.split(" ")[0]}.`
+          : `See you there, ${name.split(" ")[0]}.`}
       </h3>
       <p className="text-muted mx-auto mt-2 max-w-[22rem] text-[0.86rem] leading-relaxed text-pretty">
         {total > 1 ? `${total} spots are` : "Your spot is"} held for{" "}

@@ -7,7 +7,8 @@ import { useToast } from "@/components/ui/toast";
 import { downloadIcs } from "@/lib/calendar";
 import { site } from "@/lib/content";
 import { formatFullDate } from "@/lib/format";
-import { useStore } from "@/lib/store";
+import { ghlRsvp } from "@/lib/ghl-client";
+import { rsvpStatus, useStore } from "@/lib/store";
 import type { MMGEvent } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { RsvpDialog } from "./rsvp-dialog";
@@ -26,11 +27,29 @@ export function EventActions({
   isPast: boolean;
   layout?: "panel" | "bar";
 }) {
-  const { hasRsvp, cancelRsvp, isSaved, toggleSaved, hydrated } = useStore();
+  const { rsvps, cancelRsvp, isSaved, toggleSaved, hydrated } = useStore();
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
 
-  const going = hydrated && hasRsvp(event.slug);
+  const rsvp = hydrated ? rsvps[event.slug] : undefined;
+  const status = rsvpStatus(rsvp);
+  // "Can't make it" is remembered, but the RSVP button stays up so they can change their mind.
+  const going = status === "going" || status === "maybe";
+  const goingLabel = status === "maybe" ? "You\u2019re a maybe" : "You\u2019re going";
+  const rsvpLabel = status === "no" ? "Changed your mind? RSVP" : "RSVP — takes 30 seconds";
+
+  const cancel = () => {
+    if (rsvp) {
+      ghlRsvp({
+        ...rsvp,
+        guests: 0,
+        status: "no",
+        event: { slug: event.slug, title: event.title, date: event.date },
+      });
+    }
+    cancelRsvp(event.slug);
+    toast({ tone: "info", title: "RSVP cancelled", body: "You can come back any time." });
+  };
   const saved = hydrated && isSaved(event.slug);
 
   const addToCalendar = () => {
@@ -87,7 +106,7 @@ export function EventActions({
             <>
               <span className="border-teal/35 bg-teal/[0.08] text-teal-dark inline-flex h-[3.25rem] flex-1 items-center gap-2 rounded-full border px-4 text-[0.88rem] font-semibold">
                 <Check className="size-[1.15rem] stroke-[3]" />
-                You&rsquo;re going
+                {goingLabel}
               </span>
               <Button
                 variant="outline"
@@ -102,7 +121,7 @@ export function EventActions({
           ) : (
             <Button size="lg" block onClick={() => setOpen(true)}>
               <Ticket />
-              RSVP — takes 30 seconds
+              {rsvpLabel}
             </Button>
           )}
 
@@ -148,7 +167,7 @@ export function EventActions({
                 <Check className="size-5 stroke-[3]" />
               </span>
               <div className="min-w-0 flex-1">
-                <p className="text-teal-dark text-[0.9rem] font-semibold">You&rsquo;re going</p>
+                <p className="text-teal-dark text-[0.9rem] font-semibold">{goingLabel}</p>
                 <p className="text-muted text-[0.75rem]">
                   Your spot is held. Name tags are at the door.
                 </p>
@@ -159,19 +178,7 @@ export function EventActions({
                 <CalendarPlus />
                 Calendar
               </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                block
-                onClick={() => {
-                  cancelRsvp(event.slug);
-                  toast({
-                    tone: "info",
-                    title: "RSVP cancelled",
-                    body: "You can come back any time.",
-                  });
-                }}
-              >
+              <Button variant="ghost" size="sm" block onClick={cancel}>
                 Cancel RSVP
               </Button>
             </div>
@@ -179,7 +186,7 @@ export function EventActions({
         ) : (
           <Button size="lg" block onClick={() => setOpen(true)}>
             <Ticket />
-            RSVP — takes 30 seconds
+            {rsvpLabel}
           </Button>
         )}
 

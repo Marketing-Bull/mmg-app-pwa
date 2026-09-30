@@ -4,7 +4,7 @@ import { Users } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Avatar } from "@/components/ui/avatar";
 import { roles } from "@/lib/content";
-import { useStore } from "@/lib/store";
+import { rsvpStatus, useStore } from "@/lib/store";
 import type { Attendee, MMGEvent, RoleId } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -20,16 +20,25 @@ export function AttendeeList({ event }: { event: MMGEvent }) {
   const { rsvps, hydrated } = useStore();
   const [expanded, setExpanded] = useState(false);
 
-  const rsvp = hydrated ? rsvps[event.slug] : undefined;
+  const saved = hydrated ? rsvps[event.slug] : undefined;
+  const status = rsvpStatus(saved);
+  // Regrets are remembered for the RSVP button, but they don't put you on the list.
+  const rsvp = status === "no" ? undefined : saved;
 
   // Your RSVP goes to the top of the list, exactly where you'd look for it.
   const attendees = useMemo<Attendee[]>(() => {
     if (!rsvp) return event.attendees;
     return [
-      { name: rsvp.name, role: rsvp.role, company: rsvp.company, isYou: true },
+      {
+        name: rsvp.name,
+        role: rsvp.role,
+        company: rsvp.company,
+        isYou: true,
+        maybe: status === "maybe",
+      },
       ...event.attendees,
     ];
-  }, [event.attendees, rsvp]);
+  }, [event.attendees, rsvp, status]);
 
   const guests = rsvp?.guests ?? 0;
   const total = event.attendingCount + (rsvp ? 1 + guests : 0);
@@ -73,6 +82,11 @@ export function AttendeeList({ event }: { event: MMGEvent }) {
                 {attendee.isYou ? (
                   <span className="bg-teal text-cream rounded-full px-1.5 py-[0.1rem] text-[0.62rem] font-bold tracking-[0.05em] uppercase">
                     You
+                  </span>
+                ) : null}
+                {attendee.maybe ? (
+                  <span className="bg-sand-light text-muted rounded-full px-1.5 py-[0.1rem] text-[0.62rem] font-bold tracking-[0.05em] uppercase">
+                    Maybe
                   </span>
                 ) : null}
               </div>

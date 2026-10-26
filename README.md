@@ -267,3 +267,9 @@ Intended to replace the static landing page at `millersmarketingconnects.com`.
 ## Not in v1
 
 Accounts and logins · sponsor payments · push notifications · a database · an admin dashboard for creating events · native App Store builds. Events are edited as JSON and shipped with a deploy.
+
+---
+
+## License
+
+Released under the [MIT License](LICENSE). Copyright (c) 2026 Marketing Bull, LLC. All rights reserved.

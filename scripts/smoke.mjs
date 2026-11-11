@@ -72,9 +72,12 @@ const ROUTES = [
   // Slugs come from the marketing site's feed. These two are asserted by name
   // so a feed change that silently empties the calendar fails the build rather
   // than shipping an app with no events in it.
+  // Only copy that renders whether the event is upcoming or past: once its date
+  // passes, the page swaps RSVP / "Add to calendar" / "Who's coming" for recap
+  // copy, and asserting those here would fail every build after the event.
   {
     path: "/events/fall-personal-injury-professionals-mixer",
-    expect: ["RSVP", "Add to calendar", "Open in Maps", "Who&#x27;s coming", "JOEY Aventura"],
+    expect: ["Fall Personal Injury Professionals Mixer", "Open in Maps", "JOEY Aventura"],
   },
   {
     path: "/events/seed-bowling-mixer",

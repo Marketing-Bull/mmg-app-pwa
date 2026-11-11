@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import type { ReactNode } from "react";
+import { Analytics } from "@vercel/analytics/next";
 import { InstallPrompt } from "@/components/shell/install-prompt";
 import { ServiceWorkerRegistrar } from "@/components/shell/service-worker";
 import { SiteFooter } from "@/components/shell/site-footer";
@@ -132,6 +133,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <ServiceWorkerRegistrar />
           </ToastProvider>
         </StoreProvider>
+        <Analytics />
       </body>
     </html>
   );
